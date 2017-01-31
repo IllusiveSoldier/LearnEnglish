@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Learn English (Alpha)</string>
+
+
+    <string name="title.dictionary">Словарь</string>
+    <string name="title.tasks">Задания</string>
+    <string name="title.settings">Настройки</string>
+    <string name="title.add_to_database_password">Добавить слово</string>
+    <string name="title.add">Добавить</string>
+    <string name="title.cancel">Отмена</string>
+    
+    <string name="hint.english_word">Слово на английском</string>
+    <string name="hint.translate_word">Перевод</string>
+</resources>
