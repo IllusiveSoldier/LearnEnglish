@@ -45,10 +45,15 @@ public final class Constant {
                 "Первое слово для словаря должно содержать в себе только латинские символы";
         public final static String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
                 "Слово для перевода должно содержать в себе только русские символы";
+        public final static String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
     }
 
 
     public final class KeysForDebug {
         public final static String ERROR_KEY_FOR_DEBUG = "ERROR_LEARN_ENGLISH";
+    }
+
+    public final class Dialog {
+        public final static String UNIQUE_NAME_ADD_WORD_TO_DATABASE_DIALOG = "addToDatabaseDialog";
     }
 }

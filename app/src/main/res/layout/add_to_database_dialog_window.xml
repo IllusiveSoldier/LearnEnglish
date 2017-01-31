@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:contentDescription="@string/title.add_to_database_password"
+        android:background="#FF4081"
+        />
+
+    <EditText
+        android:id="@+id/englishWordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint.english_word"
+        style="@style/edit_text_dialog_style"
+        />
+
+    <EditText
+        android:id="@+id/translateWordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint.translate_word"
+        style="@style/edit_text_dialog_style"
+        />
+
+</LinearLayout>

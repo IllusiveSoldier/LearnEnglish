@@ -6,11 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.UUID;
 
+import knack.college.learnenglish.exceptions.EmptyData;
 import knack.college.learnenglish.exceptions.MoreMaxSymbols;
 import knack.college.learnenglish.exceptions.NoEnglishWord;
 import knack.college.learnenglish.exceptions.NoRussianWord;
 import knack.college.learnenglish.model.database.DictionaryDatabaseHelper;
 
+import static knack.college.learnenglish.model.Constant.ExceptionMessage.NO_DATA_EXCEPTION_MESSAGE;
 import static knack.college.learnenglish.model.Constant.ExceptionMessage.NO_ENGLISH_WORD_EXCEPTION_MESSAGE;
 import static knack.college.learnenglish.model.Constant.ExceptionMessage.NO_RUSSIAN_WORD_EXCEPTION_MESSAGE;
 import static knack.college.learnenglish.model.Constant.ExceptionMessage.WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE;
@@ -55,7 +57,7 @@ public class Dictionary {
                         } else throw new NoRussianWord(NO_RUSSIAN_WORD_EXCEPTION_MESSAGE);
                     } else throw new NoEnglishWord(NO_ENGLISH_WORD_EXCEPTION_MESSAGE);
                 } else throw new MoreMaxSymbols(WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE);
-            }
+            } else throw new EmptyData(NO_DATA_EXCEPTION_MESSAGE);
         }
     }
 }
