@@ -20,13 +20,14 @@ import static knack.college.learnenglish.model.database.DictionaryContract.Dicti
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.ENGLISH_WORD_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.GUID_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.TRANSLATE_WORD_COLUMN_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDeleteAllRowsInTableQuery;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDropTableQuery;
 
 /** Класс, описывающий словарь */
 public class Dictionary {
 
     private Context context;
 
-    public Dictionary() {}
 
     public Dictionary(Context c) {
         context = c;
@@ -34,7 +35,7 @@ public class Dictionary {
 
 
     /** Метод, который добавляет слово на иностранном языке и слово-перевод в базу данных */
-    public void addWordWithTranslate(String englishWord, String translate) throws Exception{
+    public void addWordWithTranslate(String englishWord, String translate) throws Exception {
         Validator validator = new Validator();
 
         if (englishWord != null && translate != null) {
@@ -59,5 +60,23 @@ public class Dictionary {
                 } else throw new MoreMaxSymbols(WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE);
             } else throw new EmptyData(NO_DATA_EXCEPTION_MESSAGE);
         }
+    }
+
+
+    /** Метод, который удаляет таблицу со словарём */
+    public void deleteDictionary() throws Exception {
+        DictionaryDatabaseHelper helper = new DictionaryDatabaseHelper(context);
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        database.execSQL(getDropTableQuery().toString());
+    }
+
+
+    /** Метод, который удаляет все записи из таблицы со словарём */
+    public void clearDictionary() throws Exception {
+        DictionaryDatabaseHelper helper = new DictionaryDatabaseHelper(context);
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        database.execSQL(getDeleteAllRowsInTableQuery().toString());
     }
 }

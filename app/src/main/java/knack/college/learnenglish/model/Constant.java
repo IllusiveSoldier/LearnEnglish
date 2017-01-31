@@ -12,6 +12,9 @@ public final class Constant {
         public final static String PRIMARY_KEY_SQL_KEYWORD = "PRIMARY KEY ";
         public final static String ASC_SQL_KEYWORD = "ASC ";
         public final static String DESC_SQL_KEYWORD = "DESC ";
+        public final static String DELETE_SQL_KEYWORD = "DELETE ";
+        public final static String FROM_SQL_KEYWORD = "FROM ";
+        public final static String VACUUM_SQL_KEYWORD = "VACUUM ";
     }
 
 

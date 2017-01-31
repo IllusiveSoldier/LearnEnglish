@@ -4,11 +4,14 @@ import android.provider.BaseColumns;
 
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.ASC_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.CREATE_TABLE_SQL_KEYWORD;
+import static knack.college.learnenglish.model.Constant.DatabaseKeywords.DELETE_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.DROP_TABLE_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.EXISTS_TABLE_SQL_KEYWORD;
+import static knack.college.learnenglish.model.Constant.DatabaseKeywords.FROM_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.IF_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.INTEGER_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.PRIMARY_KEY_SQL_KEYWORD;
+import static knack.college.learnenglish.model.Constant.DatabaseKeywords.VACUUM_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseNumberValues.VARCHAR_255;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.COMMA;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.LEFT_BRACE;
@@ -67,6 +70,20 @@ public class DictionaryContract {
 
 
             return dropTableQuery;
+        }
+
+
+        /** Метод, который удаляет все записи из таблицы */
+        public static StringBuilder getDeleteAllRowsInTableQuery() {
+            StringBuilder getDeleteAllRowsInTableQuery = new StringBuilder();
+
+            getDeleteAllRowsInTableQuery.append(DELETE_SQL_KEYWORD).append(FROM_SQL_KEYWORD)
+                    .append(DICTIONARY_TABLE_NAME).append(SEMICOLON)
+                    .append(NEW_LINE)
+                    .append(VACUUM_SQL_KEYWORD).append(SEMICOLON);
+
+
+            return getDeleteAllRowsInTableQuery;
         }
     }
 }

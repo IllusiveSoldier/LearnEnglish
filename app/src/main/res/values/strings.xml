@@ -8,6 +8,8 @@
     <string name="title.add_to_database_password">Добавить слово</string>
     <string name="title.add">Добавить</string>
     <string name="title.cancel">Отмена</string>
+    <string name="title.deleteDictionary">Удалить словарь</string>
+    <string name="title.clearDictionary">Очистить словарь</string>
     
     <string name="hint.english_word">Слово на английском</string>
     <string name="hint.translate_word">Перевод</string>

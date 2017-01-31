@@ -22,7 +22,7 @@ public class DictionaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dectionary, container, false);
+        View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
 
         addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
         addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
