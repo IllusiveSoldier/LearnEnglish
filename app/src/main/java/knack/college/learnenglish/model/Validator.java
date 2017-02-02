@@ -4,8 +4,6 @@ import static knack.college.learnenglish.model.Constant.Number.MAX_WORD_LENGTH;
 
 public class Validator {
 
-    public Validator() {}
-
     /** Метод, который проверяет, что слово не больше 255 символов */
     public boolean isWordMoreMaxSymbols(String word) {
 
@@ -21,7 +19,6 @@ public class Validator {
         return isValidate;
     }
 
-
     /** Метод, который проверяет, что в слове только латинские буквы */
     public boolean isEnglishCharactersInWord(String word) {
 
@@ -36,7 +33,6 @@ public class Validator {
 
         return isValidate;
     }
-
 
     /** Метод, который проверяет, что в слове только русские символы */
     public boolean isRussianCharactersInWord(String word) {

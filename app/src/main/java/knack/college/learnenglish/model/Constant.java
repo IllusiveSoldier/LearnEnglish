@@ -1,5 +1,7 @@
 package knack.college.learnenglish.model;
 
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.OUID_COLUMN_NAME;
+
 public final class Constant {
 
     public final class DatabaseKeywords {
@@ -15,8 +17,9 @@ public final class Constant {
         public final static String DELETE_SQL_KEYWORD = "DELETE ";
         public final static String FROM_SQL_KEYWORD = "FROM ";
         public final static String VACUUM_SQL_KEYWORD = "VACUUM ";
+        public final static String DESC_OUID_SQL_KEYWORD = OUID_COLUMN_NAME + " DESC";
+        public final static String ASC_OUID_SQL_KEYWORD = OUID_COLUMN_NAME + " ASC";
     }
-
 
     public final class SpecialCharacters {
         public final static String NEW_LINE = "\n";
@@ -28,29 +31,25 @@ public final class Constant {
         public final static String SEMICOLON = "; ";
     }
 
-
     public final class DatabaseNumberValues {
         public final static String VARCHAR_255 = "VARCHAR(255)";
         public final static String VARCHAR_50 = "VARCHAR(50)";
         public final static String VARCHAR_36 = "VARCHAR(36)";
     }
 
-
-    public final class Number {
-        public final static int MAX_WORD_LENGTH = 255;
+    final class Number {
+         final static int MAX_WORD_LENGTH = 255;
     }
 
-
-    public final class ExceptionMessage {
-        public final static String WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE =
+    final class ExceptionMessage {
+        final static String WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE =
                 "Слово, которое вы ввели больше 255 символов.";
-        public final static String NO_ENGLISH_WORD_EXCEPTION_MESSAGE =
+        final static String NO_ENGLISH_WORD_EXCEPTION_MESSAGE =
                 "Первое слово для словаря должно содержать в себе только латинские символы";
-        public final static String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
+        final static String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
                 "Слово для перевода должно содержать в себе только русские символы";
-        public final static String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
+        final static String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
     }
-
 
     public final class KeysForDebug {
         public final static String ERROR_KEY_FOR_DEBUG = "ERROR_LEARN_ENGLISH";

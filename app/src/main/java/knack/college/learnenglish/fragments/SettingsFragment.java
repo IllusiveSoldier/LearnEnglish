@@ -30,7 +30,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     Dictionary dictionary = new Dictionary(getActivity().getApplicationContext());
-                    dictionary.clearDictionary();
+                    dictionary.clear();
                 } catch (Exception ex) {
                     Log.d(ERROR_KEY_FOR_DEBUG, ex.getMessage());
                 }

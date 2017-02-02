@@ -20,15 +20,13 @@ public class LearnEnglishActivity extends AppCompatActivity {
     private final static String ERROR_MESSAGE_TITLE = "ERROR";
 
     private TabLayout tabLayout;
-    private ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_english);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -58,10 +56,10 @@ public class LearnEnglishActivity extends AppCompatActivity {
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final ArrayList<Fragment> mFragmentList = new ArrayList<Fragment>();
-        private final ArrayList<String> mFragmentTitleList = new ArrayList<String>();
+        private final ArrayList<Fragment> mFragmentList = new ArrayList<>();
+        private final ArrayList<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -75,7 +73,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFrag(Fragment fragment, String title) {
+        void addFrag(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
