@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import knack.college.learnenglish.R;
@@ -29,8 +28,6 @@ public class AddWordToDatabase extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View view = inflater.inflate(R.layout.add_to_database_dialog_window, null);
-        final View toastView = inflater.inflate(R.layout.custom_toast,
-                (ViewGroup) view.findViewById(R.id.customToastContainer));
 
         englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
         translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);

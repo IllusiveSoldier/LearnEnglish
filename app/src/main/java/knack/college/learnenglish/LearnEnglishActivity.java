@@ -7,24 +7,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 import knack.college.learnenglish.fragments.DictionaryFragment;
 import knack.college.learnenglish.fragments.SettingsFragment;
 import knack.college.learnenglish.fragments.TaskFragment;
-
-import static knack.college.learnenglish.model.Constant.KeysForDebug.ERROR_KEY_FOR_DEBUG;
+import knack.college.learnenglish.model.LearnEnglishToast;
 
 public class LearnEnglishActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
 
+    private LearnEnglishToast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_english);
+
+        toast = new LearnEnglishToast(this);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -41,7 +43,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
             tabLayout.getTabAt(1).setIcon(R.mipmap.ic_event_note_black_24dp);
             tabLayout.getTabAt(2).setIcon(R.mipmap.ic_settings_black_24dp);
         } catch (Exception ex) {
-            Log.e(ERROR_KEY_FOR_DEBUG, ex.getMessage());
+            toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
         }
     }
 

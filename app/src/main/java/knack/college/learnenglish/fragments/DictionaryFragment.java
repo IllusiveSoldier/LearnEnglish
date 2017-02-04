@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +21,10 @@ import knack.college.learnenglish.R;
 import knack.college.learnenglish.adapters.DictionaryRecyclerViewAdapter;
 import knack.college.learnenglish.dialogs.AddWordToDatabase;
 import knack.college.learnenglish.model.Dictionary;
+import knack.college.learnenglish.model.LearnEnglishToast;
 import knack.college.learnenglish.model.WordFromDictionary;
 
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DATABASE_DIALOG;
-import static knack.college.learnenglish.model.Constant.KeysForDebug.ERROR_KEY_FOR_DEBUG;
 
 
 public class DictionaryFragment extends Fragment {
@@ -37,10 +36,14 @@ public class DictionaryFragment extends Fragment {
     private Random random = new Random();
     private ArrayList<String> colors = new ArrayList<>();
 
+    private LearnEnglishToast toast;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
+
+        toast = new LearnEnglishToast(getActivity());
 
         addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
         addToDatabaseButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(getRandomColor())));
@@ -65,7 +68,7 @@ public class DictionaryFragment extends Fragment {
                             .getApplicationContext()).getAllWordsList()
             );
         } catch (Exception ex) {
-            Log.d(ERROR_KEY_FOR_DEBUG, ex.getMessage());
+            toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
         }
 
         dictionarySwipeRefreshLayout = (SwipeRefreshLayout) view
@@ -81,7 +84,7 @@ public class DictionaryFragment extends Fragment {
                             (ArrayList<WordFromDictionary>) new Dictionary(getActivity()
                                     .getApplicationContext()).getAllWordsList());
                 } catch (Exception ex) {
-                    Log.d(ERROR_KEY_FOR_DEBUG, ex.getMessage());
+                    toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
                 }
 
                 dictionarySwipeRefreshLayout.setRefreshing(false);
