@@ -15,9 +15,9 @@ import knack.college.learnenglish.fragments.DictionaryFragment;
 import knack.college.learnenglish.fragments.SettingsFragment;
 import knack.college.learnenglish.fragments.TaskFragment;
 
-public class LearnEnglishActivity extends AppCompatActivity {
+import static knack.college.learnenglish.model.Constant.KeysForDebug.ERROR_KEY_FOR_DEBUG;
 
-    private final static String ERROR_MESSAGE_TITLE = "ERROR";
+public class LearnEnglishActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
 
@@ -41,7 +41,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
             tabLayout.getTabAt(1).setIcon(R.mipmap.ic_event_note_black_24dp);
             tabLayout.getTabAt(2).setIcon(R.mipmap.ic_settings_black_24dp);
         } catch (Exception ex) {
-            Log.e(ERROR_MESSAGE_TITLE, ex.getMessage());
+            Log.e(ERROR_KEY_FOR_DEBUG, ex.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
 
         adapter.addFrag(new DictionaryFragment(), getString(R.string.title_dictionary));
         adapter.addFrag(new TaskFragment(), getString(R.string.title_tasks));
-        adapter.addFrag(new SettingsFragment(), getString(R.string.title_settings));
+        adapter.addFrag(new SettingsFragment(), getString(R.string.title_profile));
 
         viewPager.setAdapter(adapter);
     }

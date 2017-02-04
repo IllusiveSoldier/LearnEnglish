@@ -39,7 +39,7 @@ public class Dictionary {
         context = c;
     }
 
-    /** Метод, который добавляет слово на иностранном языке и слово-перевод в базу данных */
+    /** Метод, который добавляет слово на иностранном языке и слово-перевод в словарь */
     public void addWordWithTranslate(String englishWord, String translate) throws Exception {
         Validator validator = new Validator();
 
@@ -67,7 +67,7 @@ public class Dictionary {
         }
     }
 
-    /** Метод, который удаляет таблицу со словарём */
+    /** Метод, который удаляет словарь */
     public void delete() throws Exception {
         DictionaryDatabaseHelper helper = new DictionaryDatabaseHelper(context);
         SQLiteDatabase database = helper.getWritableDatabase();
@@ -75,7 +75,7 @@ public class Dictionary {
         database.execSQL(getDropTableQuery().toString());
     }
 
-    /** Метод, который удаляет все записи из таблицы со словарём */
+    /** Метод, который очищяет словарь*/
     public void clear() throws Exception {
         DictionaryDatabaseHelper helper = new DictionaryDatabaseHelper(context);
         SQLiteDatabase database = helper.getWritableDatabase();

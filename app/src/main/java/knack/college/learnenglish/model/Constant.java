@@ -4,6 +4,8 @@ import static knack.college.learnenglish.model.database.DictionaryContract.Dicti
 
 public final class Constant {
 
+    public final static String ALL_WORDS_FROM_DICTIONARY = "allWordsFromDictionary";
+
     public final class DatabaseKeywords {
         public final static String CREATE_TABLE_SQL_KEYWORD = "CREATE TABLE ";
         public final static String DROP_TABLE_SQL_KEYWORD = "DROP TABLE ";

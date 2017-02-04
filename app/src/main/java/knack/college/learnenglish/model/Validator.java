@@ -48,4 +48,18 @@ public class Validator {
 
         return isValidate;
     }
+
+    /** Метод, который сравнивает, что перевод английского слова правильный */
+    public boolean isTranslation(String correctTranslationWord, String userTranslationWord) {
+        boolean isTranslation = false;
+
+        if (correctTranslationWord != null && userTranslationWord != null) {
+            if (!correctTranslationWord.isEmpty() && !userTranslationWord.isEmpty()) {
+                isTranslation = correctTranslationWord.equalsIgnoreCase(userTranslationWord);
+            }
+        }
+
+
+        return isTranslation;
+    }
 }
