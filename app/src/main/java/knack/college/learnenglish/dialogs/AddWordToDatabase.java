@@ -5,21 +5,21 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
-
-import static knack.college.learnenglish.model.Constant.KeysForDebug.ERROR_KEY_FOR_DEBUG;
+import knack.college.learnenglish.model.LearnEnglishToast;
 
 
 public class AddWordToDatabase extends DialogFragment {
 
     private EditText englishWordEditText;
     private EditText translateWordEditText;
+    private LearnEnglishToast toast;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -29,9 +29,14 @@ public class AddWordToDatabase extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View view = inflater.inflate(R.layout.add_to_database_dialog_window, null);
+        final View toastView = inflater.inflate(R.layout.custom_toast,
+                (ViewGroup) view.findViewById(R.id.customToastContainer));
 
         englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
         translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);
+
+        toast = new LearnEnglishToast(getActivity());
+
 
         builder.setView(view)
                 .setPositiveButton(R.string.title_add, new DialogInterface.OnClickListener() {
@@ -42,7 +47,7 @@ public class AddWordToDatabase extends DialogFragment {
                             dictionary.addWordWithTranslate(englishWordEditText.getText().toString(),
                                     translateWordEditText.getText().toString());
                         } catch (Exception ex) {
-                            Log.d(ERROR_KEY_FOR_DEBUG, ex.getMessage());
+                            toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
                         }
                     }
                 })
