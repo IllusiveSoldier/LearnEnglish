@@ -16,6 +16,7 @@
     <string name="title.check">Проверить</string>
     <string name="title.wordsIsEmpty">Слова закончились :)</string>
     <string name="title.notFoundWords">Слов нет :)</string>
+    <string name="title.numberOfWords">Количество слов в словаре</string>
 
     <string name="hint.english_word">Слово на английском</string>
     <string name="hint.translate_word">Перевод</string>

@@ -21,6 +21,9 @@ public final class Constant {
         public final static String VACUUM_SQL_KEYWORD = "VACUUM ";
         public final static String DESC_OUID_SQL_KEYWORD = OUID_COLUMN_NAME + " DESC";
         public final static String ASC_OUID_SQL_KEYWORD = OUID_COLUMN_NAME + " ASC";
+        public final static String SELECT_SQL_KEYWORD = "SELECT ";
+        public final static String COUNT_SQL_KEYWORD = "count";
+        public final static String STAR_SQL_KEYWORD = "*";
     }
 
     public final class SpecialCharacters {
@@ -29,7 +32,9 @@ public final class Constant {
         public final static String SPACE = " ";
         public final static String COMMA = ", ";
         public final static String LEFT_BRACE = "( ";
+        public final static String LEFT_BRACE_WITHOUT_SPACE = "(";
         public final static String RIGHT_BRACE = ") ";
+        public final static String RIGHT_BRACE_WITHOUT_SPACE = ")";
         public final static String SEMICOLON = "; ";
     }
 

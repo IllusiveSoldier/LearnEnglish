@@ -27,6 +27,7 @@ import static knack.college.learnenglish.model.database.DictionaryContract.Dicti
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.GUID_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.OUID_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.TRANSLATE_WORD_COLUMN_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getCountRowsInTableQuery;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDeleteAllRowsInTableQuery;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDropTableQuery;
 
@@ -111,8 +112,10 @@ public class Dictionary {
     public List<WordFromDictionary> getAllWordsList() throws Exception {
         List<WordFromDictionary> allWordsList = new ArrayList<>();
 
+        Cursor cursor = null;
+
         try {
-            Cursor cursor = getAllWordsCursor();
+            cursor = getAllWordsCursor();
 
             while (cursor.moveToNext()) {
                 WordFromDictionary word = new WordFromDictionary();
@@ -127,9 +130,27 @@ public class Dictionary {
             }
         } catch (Exception ex) {
             Log.d(ERROR_KEY_FOR_DEBUG, ex.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
 
         return allWordsList;
+    }
+
+    /** Метод, который возвращает количество слов в словаре */
+    public int getNumberOfWords() throws Exception {
+        int count;
+        DictionaryDatabaseHelper helper = new DictionaryDatabaseHelper(context);
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+        Cursor cursor = database.rawQuery(getCountRowsInTableQuery().toString(), null);
+        cursor.moveToFirst();
+        count = cursor.getInt(0);
+        cursor.close();
+
+        return count;
     }
 }

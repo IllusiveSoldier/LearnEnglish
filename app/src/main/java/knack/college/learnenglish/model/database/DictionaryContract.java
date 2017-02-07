@@ -3,6 +3,7 @@ package knack.college.learnenglish.model.database;
 import android.provider.BaseColumns;
 
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.ASC_SQL_KEYWORD;
+import static knack.college.learnenglish.model.Constant.DatabaseKeywords.COUNT_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.CREATE_TABLE_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.DELETE_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.DROP_TABLE_SQL_KEYWORD;
@@ -11,21 +12,22 @@ import static knack.college.learnenglish.model.Constant.DatabaseKeywords.FROM_SQ
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.IF_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.INTEGER_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.PRIMARY_KEY_SQL_KEYWORD;
+import static knack.college.learnenglish.model.Constant.DatabaseKeywords.SELECT_SQL_KEYWORD;
+import static knack.college.learnenglish.model.Constant.DatabaseKeywords.STAR_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.VACUUM_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseNumberValues.VARCHAR_255;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.COMMA;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.LEFT_BRACE;
+import static knack.college.learnenglish.model.Constant.SpecialCharacters.LEFT_BRACE_WITHOUT_SPACE;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.NEW_LINE;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.RIGHT_BRACE;
+import static knack.college.learnenglish.model.Constant.SpecialCharacters.RIGHT_BRACE_WITHOUT_SPACE;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.SEMICOLON;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.SPACE;
 import static knack.college.learnenglish.model.Constant.SpecialCharacters.TAB;
 
 /** Класс-контракт, определяющий параметры таблицы */
 public class DictionaryContract {
-
-    public DictionaryContract() {}
-
 
     public static abstract class Dictionary implements BaseColumns {
         /** Название таблицы для словаря */
@@ -60,7 +62,6 @@ public class DictionaryContract {
             return createTableQuery;
         }
 
-
         /** Метод, который возвращает текст запрсоа на удаление таблицы */
         public static StringBuilder getDropTableQuery() {
             StringBuilder dropTableQuery = new StringBuilder();
@@ -72,8 +73,7 @@ public class DictionaryContract {
             return dropTableQuery;
         }
 
-
-        /** Метод, который удаляет все записи из таблицы */
+        /** Метод, который возвращает текст запроса на удаление всех записей из таблицы */
         public static StringBuilder getDeleteAllRowsInTableQuery() {
             StringBuilder getDeleteAllRowsInTableQuery = new StringBuilder();
 
@@ -84,6 +84,20 @@ public class DictionaryContract {
 
 
             return getDeleteAllRowsInTableQuery;
+        }
+
+        /** Метод, который возвращает текст запроса на выборку количества слов из таблицы */
+        public static StringBuilder getCountRowsInTableQuery() {
+            StringBuilder getCountRowsInTableQuery = new StringBuilder();
+
+            getCountRowsInTableQuery.append(SELECT_SQL_KEYWORD).append(COUNT_SQL_KEYWORD)
+                    .append(LEFT_BRACE_WITHOUT_SPACE).append(STAR_SQL_KEYWORD)
+                    .append(RIGHT_BRACE_WITHOUT_SPACE)
+                    .append(NEW_LINE)
+                    .append(FROM_SQL_KEYWORD).append(DICTIONARY_TABLE_NAME);
+
+
+            return getCountRowsInTableQuery;
         }
     }
 }

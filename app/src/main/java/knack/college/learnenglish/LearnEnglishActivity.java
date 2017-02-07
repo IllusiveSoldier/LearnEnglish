@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import knack.college.learnenglish.fragments.DictionaryFragment;
-import knack.college.learnenglish.fragments.SettingsFragment;
+import knack.college.learnenglish.fragments.ProfileFragment;
 import knack.college.learnenglish.fragments.TaskFragment;
 import knack.college.learnenglish.model.LearnEnglishToast;
 
@@ -52,7 +52,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
 
         adapter.addFrag(new DictionaryFragment(), getString(R.string.title_dictionary));
         adapter.addFrag(new TaskFragment(), getString(R.string.title_tasks));
-        adapter.addFrag(new SettingsFragment(), getString(R.string.title_profile));
+        adapter.addFrag(new ProfileFragment(), getString(R.string.title_profile));
 
         viewPager.setAdapter(adapter);
     }

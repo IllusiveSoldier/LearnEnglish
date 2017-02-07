@@ -1,17 +1,43 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="knack.college.learnenglish.fragments.SettingsFragment">
+    tools:context="knack.college.learnenglish.fragments.ProfileFragment">
 
-    <Button
-        android:id="@+id/deleteDictionaryButton"
+    <TextView
+        android:id="@+id/numberOfWordsTitle"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:text="@string/title.numberOfWords"
+        />
+    <TextView
+        android:id="@+id/numberOfWordsValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfWordsTitle"
+        android:textSize="35sp"
+        android:textAlignment="center"
+        />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/deleteDictionaryButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/title.clearDictionary"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:src="@mipmap/ic_delete_forever_black_24dp"
 
-</FrameLayout>
+        />
+</RelativeLayout>
