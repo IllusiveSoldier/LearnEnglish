@@ -153,4 +153,16 @@ public class Dictionary {
 
         return count;
     }
+
+    /** Метод, который удаляет слово из словаря */
+    public void deleteWord(String wordGuid) throws Exception {
+        if (wordGuid != null) {
+            if (!wordGuid.isEmpty()) {
+                DictionaryDatabaseHelper helper = new DictionaryDatabaseHelper(context);
+                SQLiteDatabase database = helper.getWritableDatabase();
+                database.delete(DICTIONARY_TABLE_NAME, GUID_COLUMN_NAME + " = " + "'"
+                        + wordGuid + "'", null);
+            }
+        }
+    }
 }

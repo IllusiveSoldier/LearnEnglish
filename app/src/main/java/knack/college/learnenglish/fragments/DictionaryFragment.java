@@ -8,23 +8,27 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import knack.college.learnenglish.R;
-import knack.college.learnenglish.adapters.DictionaryRecyclerViewAdapter;
-import knack.college.learnenglish.dialogs.AddWordToDatabase;
+import knack.college.learnenglish.dialogs.AddWordToDictionaryDialog;
+import knack.college.learnenglish.dialogs.DeleteWordFromDictionaryDialog;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.LearnEnglishToast;
 import knack.college.learnenglish.model.WordFromDictionary;
 
-import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DATABASE_DIALOG;
+import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG;
+import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG;
 
 
 public class DictionaryFragment extends Fragment {
@@ -38,6 +42,12 @@ public class DictionaryFragment extends Fragment {
 
     private LearnEnglishToast toast;
 
+    private LearnEnglishAdapter learnEnglishAdapter;
+
+    private Dictionary dictionary;
+
+    private ArrayList<WordFromDictionary> wordFromDictionaries = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,14 +55,16 @@ public class DictionaryFragment extends Fragment {
 
         toast = new LearnEnglishToast(getActivity());
 
+        dictionary = new Dictionary(getActivity().getApplicationContext());
+
         addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
         addToDatabaseButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(getRandomColor())));
         addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment dialogFragment = new AddWordToDatabase();
+                DialogFragment dialogFragment = new AddWordToDictionaryDialog();
                 dialogFragment.show(getActivity().getFragmentManager(),
-                        UNIQUE_NAME_ADD_WORD_TO_DATABASE_DIALOG);
+                        UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG);
             }
         });
 
@@ -63,10 +75,9 @@ public class DictionaryFragment extends Fragment {
                     .getApplicationContext()));
             dictionaryRecyclerView.setHasFixedSize(true);
 
-            initializeAdapter (
-                    (ArrayList<WordFromDictionary>) new Dictionary(getActivity()
-                            .getApplicationContext()).getAllWordsList()
-            );
+            wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary.getAllWordsList();
+            learnEnglishAdapter = new LearnEnglishAdapter();
+            dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
         } catch (Exception ex) {
             toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
         }
@@ -80,9 +91,14 @@ public class DictionaryFragment extends Fragment {
                 dictionarySwipeRefreshLayout.setRefreshing(true);
 
                 try {
-                    initializeAdapter (
-                            (ArrayList<WordFromDictionary>) new Dictionary(getActivity()
-                                    .getApplicationContext()).getAllWordsList());
+                    wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary
+                            .getAllWordsList();
+                    if (wordFromDictionaries.size() == learnEnglishAdapter.getItemCount()) {
+                        learnEnglishAdapter.notifyDataSetChanged();
+                    } else {
+                        learnEnglishAdapter = new LearnEnglishAdapter();
+                        dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
+                    }
                 } catch (Exception ex) {
                     toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
                 }
@@ -96,9 +112,65 @@ public class DictionaryFragment extends Fragment {
     }
 
 
+    private class LearnEnglishHolder extends RecyclerView.ViewHolder
+            implements View.OnLongClickListener {
+        CardView dictionaryCardView;
+        TextView dictionaryEnglishWordTextView;
+        TextView dictionaryTranslateWordTextView;
+        ImageView learnEnglishWordItemImageView;
 
-    private void initializeAdapter(ArrayList<WordFromDictionary> words) throws Exception {
-        dictionaryRecyclerView.setAdapter(new DictionaryRecyclerViewAdapter(words));
+        LearnEnglishHolder(View itemView) {
+            super(itemView);
+
+            itemView.setOnLongClickListener(this);
+            dictionaryCardView = (CardView) itemView.findViewById(R.id.dictionaryCardView);
+            dictionaryEnglishWordTextView = (TextView) itemView
+                    .findViewById(R.id.dictionaryEnglishWordTextView);
+            dictionaryTranslateWordTextView = (TextView) itemView
+                    .findViewById(R.id.dictionaryTranslateWordTextView);
+            learnEnglishWordItemImageView = (ImageView) itemView
+                    .findViewById(R.id.learnEnglishWordItemImageView);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            try {
+                DialogFragment dialogFragment = new DeleteWordFromDictionaryDialog();
+                dialogFragment.show(getActivity().getFragmentManager(),
+                        UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG);
+            } catch (Exception ex) {
+                toast.show(ex);
+            }
+
+
+            return false;
+        }
+    }
+
+    private class LearnEnglishAdapter extends RecyclerView.Adapter<LearnEnglishHolder> {
+
+        @Override
+        public LearnEnglishHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new LearnEnglishHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.learn_english_word_item, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(LearnEnglishHolder holder, int position) {
+            wordFromDictionaries.get(position);
+
+            holder.dictionaryEnglishWordTextView
+                    .setText(wordFromDictionaries.get(position).getEnglishWord());
+            holder.dictionaryTranslateWordTextView
+                    .setText(wordFromDictionaries.get(position).getTranslateWord());
+            holder.learnEnglishWordItemImageView.setBackgroundColor(Color
+                    .parseColor(getRandomColor()));
+        }
+
+        @Override
+        public int getItemCount() {
+            return wordFromDictionaries.size();
+        }
     }
 
     private String getRandomColor() {

@@ -65,6 +65,27 @@ public class LearnEnglishToast {
         toast.show();
     }
 
+    /** Метод, который показывает Toast */
+    public void show(String message) {
+        textView.setText(message);
+
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+    }
+
+    /** Метод, который показывает Toast */
+    public void show(Throwable ex) {
+        imageView.setImageResource(R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+        textView.setText(ex.getMessage());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+    }
+
     /** Метод, который иницилизирует LayoutInflater, View, ImageView, TextView, Toast
      * в конструкторе после определения Activity, изображения и сообщения */
     private void initializeViewAndToast() {
