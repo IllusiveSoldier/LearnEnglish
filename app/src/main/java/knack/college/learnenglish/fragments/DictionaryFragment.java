@@ -1,7 +1,9 @@
 package knack.college.learnenglish.fragments;
 
 
-import android.app.DialogFragment;
+import android.app.Activity;
+import android.support.v4.app.DialogFragment;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,7 +30,6 @@ import knack.college.learnenglish.model.LearnEnglishToast;
 import knack.college.learnenglish.model.WordFromDictionary;
 
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG;
-import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG;
 
 
 public class DictionaryFragment extends Fragment {
@@ -37,16 +38,18 @@ public class DictionaryFragment extends Fragment {
     RecyclerView dictionaryRecyclerView;
     SwipeRefreshLayout dictionarySwipeRefreshLayout;
 
+    private static final int REQUEST_SELECTED = 1;
+
     private Random random = new Random();
     private ArrayList<String> colors = new ArrayList<>();
 
     private LearnEnglishToast toast;
 
     private LearnEnglishAdapter learnEnglishAdapter;
-
     private Dictionary dictionary;
-
     private ArrayList<WordFromDictionary> wordFromDictionaries = new ArrayList<>();
+
+    private int itemId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +66,7 @@ public class DictionaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 DialogFragment dialogFragment = new AddWordToDictionaryDialog();
-                dialogFragment.show(getActivity().getFragmentManager(),
+                dialogFragment.show(getActivity().getSupportFragmentManager(),
                         UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG);
             }
         });
@@ -111,6 +114,25 @@ public class DictionaryFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_SELECTED:
+                    int selected = data.getIntExtra(DeleteWordFromDictionaryDialog.TAG_SELECTED, -1);
+                    if (selected == 1) {
+                        try {
+                            dictionary.deleteWord(wordFromDictionaries.get(itemId).getGuid());
+                        } catch (Exception ex) {
+                            toast.show(ex);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
 
     private class LearnEnglishHolder extends RecyclerView.ViewHolder
             implements View.OnLongClickListener {
@@ -135,9 +157,8 @@ public class DictionaryFragment extends Fragment {
         @Override
         public boolean onLongClick(View v) {
             try {
-                DialogFragment dialogFragment = new DeleteWordFromDictionaryDialog();
-                dialogFragment.show(getActivity().getFragmentManager(),
-                        UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG);
+                itemId = dictionaryRecyclerView.getChildLayoutPosition(v);
+                openWeightPicker();
             } catch (Exception ex) {
                 toast.show(ex);
             }
@@ -193,5 +214,11 @@ public class DictionaryFragment extends Fragment {
 
 
         return colors.get(random.nextInt(colors.size()));
+    }
+
+    public void openWeightPicker() {
+        DialogFragment fragment = new DeleteWordFromDictionaryDialog();
+        fragment.setTargetFragment(this, REQUEST_SELECTED);
+        fragment.show(getFragmentManager(), fragment.getClass().getName());
     }
 }

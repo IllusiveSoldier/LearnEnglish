@@ -1,13 +1,14 @@
 package knack.college.learnenglish.dialogs;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.LearnEnglishToast;
@@ -15,6 +16,7 @@ import knack.college.learnenglish.model.LearnEnglishToast;
 public class DeleteWordFromDictionaryDialog extends DialogFragment {
 
     private LearnEnglishToast toast;
+    public static final String TAG_SELECTED = "selected";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -23,24 +25,26 @@ public class DeleteWordFromDictionaryDialog extends DialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.add_word_to_dictonary_dialog_window, null);
+        View view = inflater.inflate(R.layout.delete_word_from_dictionary_dialog_window, null);
 
         toast = new LearnEnglishToast(getActivity());
 
         builder.setView(view)
-                .setPositiveButton(R.string.title_add, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.title_delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        try {
-
-                        } catch (Exception ex) {
-                            toast.show(ex);
-                        }
+                        Intent intent = new Intent();
+                        intent.putExtra(TAG_SELECTED, 1);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(),
+                                Activity.RESULT_OK, intent);
                     }
                 })
                 .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        DeleteWordFromDictionaryDialog.this.getDialog().cancel();
+                        Intent intent = new Intent();
+                        intent.putExtra(TAG_SELECTED, 0);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(),
+                                Activity.RESULT_CANCELED, intent);
                     }
                 });
 
