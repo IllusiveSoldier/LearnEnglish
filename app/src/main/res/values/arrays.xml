@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="assignmentSelect">
+        <item>Показать статистику</item>
+        <item>Очистить статистику</item>
+        <item>Восстановить словарь по умолчанию</item>
+        <item>Очистить словарь</item>
+    </string-array>
+</resources>

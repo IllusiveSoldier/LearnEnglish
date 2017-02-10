@@ -42,7 +42,7 @@ public class DictionaryContract {
         public final static String TRANSLATE_WORD_COLUMN_NAME = "TRANSLATE_WORD";
 
         /** Метод, который возвращает текст запрсоа на создание таблицы */
-        public static StringBuilder getCreateTableQuery() {
+        public static StringBuilder getCreateDictionaryTableQuery() {
             StringBuilder createTableQuery = new StringBuilder();
 
             createTableQuery.append(CREATE_TABLE_SQL_KEYWORD).append(DICTIONARY_TABLE_NAME).append(NEW_LINE)
@@ -63,7 +63,7 @@ public class DictionaryContract {
         }
 
         /** Метод, который возвращает текст запрсоа на удаление таблицы */
-        public static StringBuilder getDropTableQuery() {
+        public static StringBuilder getDropDictionaryTableQuery() {
             StringBuilder dropTableQuery = new StringBuilder();
 
             dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD)

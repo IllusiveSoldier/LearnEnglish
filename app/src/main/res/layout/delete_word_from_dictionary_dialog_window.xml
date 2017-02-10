@@ -10,5 +10,4 @@
         android:contentDescription="@string/title.add_to_database_password"
         android:background="@color/colorAccent"
         />
-
 </LinearLayout>

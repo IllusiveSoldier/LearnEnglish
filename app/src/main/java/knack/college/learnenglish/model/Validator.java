@@ -26,7 +26,7 @@ public class Validator {
 
         if (word != null) {
             if (!word.isEmpty()) {
-                isValidate = word.matches("^[a-zA-Z]+$");
+                isValidate = word.matches("^[a-zA-Z ]+$");
             }
         }
 
@@ -41,7 +41,7 @@ public class Validator {
 
         if (word != null)  {
             if (!word.isEmpty()) {
-                isValidate = word.matches("^[а-яА-Я]+$");
+                isValidate = word.matches("^[а-яА-Я ]+$");
             }
         }
 

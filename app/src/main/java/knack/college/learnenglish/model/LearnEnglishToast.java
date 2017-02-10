@@ -66,6 +66,17 @@ public class LearnEnglishToast {
     }
 
     /** Метод, который показывает Toast */
+    public void show(String mes, int img, int duration) {
+        imageView.setImageResource(img);
+        textView.setText(mes);
+
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(duration);
+        toast.setView(view);
+        toast.show();
+    }
+
+    /** Метод, который показывает Toast */
     public void show(String message) {
         textView.setText(message);
 

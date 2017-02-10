@@ -2,12 +2,12 @@ package knack.college.learnenglish.fragments;
 
 
 import android.app.Activity;
-import android.support.v4.app.DialogFragment;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -20,16 +20,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.dialogs.AddWordToDictionaryDialog;
 import knack.college.learnenglish.dialogs.DeleteWordFromDictionaryDialog;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.LearnEnglishToast;
+import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.WordFromDictionary;
 
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG;
+import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG;
 
 
 public class DictionaryFragment extends Fragment {
@@ -40,10 +41,8 @@ public class DictionaryFragment extends Fragment {
 
     private static final int REQUEST_SELECTED = 1;
 
-    private Random random = new Random();
-    private ArrayList<String> colors = new ArrayList<>();
-
     private LearnEnglishToast toast;
+    private RandomColor color = new RandomColor();
 
     private LearnEnglishAdapter learnEnglishAdapter;
     private Dictionary dictionary;
@@ -61,7 +60,8 @@ public class DictionaryFragment extends Fragment {
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
-        addToDatabaseButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(getRandomColor())));
+        addToDatabaseButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(color
+                .getRandomColor())));
         addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +87,7 @@ public class DictionaryFragment extends Fragment {
 
         dictionarySwipeRefreshLayout = (SwipeRefreshLayout) view
                 .findViewById(R.id.dictionarySwipeRefreshLayout);
-        dictionarySwipeRefreshLayout.setColorSchemeColors(Color.parseColor(getRandomColor()));
+        dictionarySwipeRefreshLayout.setColorSchemeColors(Color.parseColor(color.getRandomColor()));
         dictionarySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -133,7 +133,6 @@ public class DictionaryFragment extends Fragment {
         }
     }
 
-
     private class LearnEnglishHolder extends RecyclerView.ViewHolder
             implements View.OnLongClickListener {
         CardView dictionaryCardView;
@@ -163,7 +162,6 @@ public class DictionaryFragment extends Fragment {
                 toast.show(ex);
             }
 
-
             return false;
         }
     }
@@ -185,7 +183,7 @@ public class DictionaryFragment extends Fragment {
             holder.dictionaryTranslateWordTextView
                     .setText(wordFromDictionaries.get(position).getTranslateWord());
             holder.learnEnglishWordItemImageView.setBackgroundColor(Color
-                    .parseColor(getRandomColor()));
+                    .parseColor(color.getRandomColor()));
         }
 
         @Override
@@ -194,31 +192,9 @@ public class DictionaryFragment extends Fragment {
         }
     }
 
-    private String getRandomColor() {
-        colors.add("#FF1744");
-        colors.add("#F50057");
-        colors.add("#D500F9");
-        colors.add("#651FFF");
-        colors.add("#3D5AFE");
-        colors.add("#2979FF");
-        colors.add("#00B0FF");
-        colors.add("#00E5FF");
-        colors.add("#1DE9B6");
-        colors.add("#00E676");
-        colors.add("#76FF03");
-        colors.add("#C6FF00");
-        colors.add("#FFEA00");
-        colors.add("#FFC400");
-        colors.add("#FF9100");
-        colors.add("#FF3D00");
-
-
-        return colors.get(random.nextInt(colors.size()));
-    }
-
     public void openWeightPicker() {
         DialogFragment fragment = new DeleteWordFromDictionaryDialog();
         fragment.setTargetFragment(this, REQUEST_SELECTED);
-        fragment.show(getFragmentManager(), fragment.getClass().getName());
+        fragment.show(getFragmentManager(), UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG);
     }
 }

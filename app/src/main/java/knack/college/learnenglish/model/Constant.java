@@ -13,6 +13,7 @@ public final class Constant {
         public final static String EXISTS_TABLE_SQL_KEYWORD = "EXISTS ";
         public final static String INTEGER_SQL_KEYWORD = "INTEGER ";
         public final static String VARCHAR_SQL_KEYWORD = "VARCHAR ";
+        public final static String DATETIME_SQL_KEYWORD = "DATETIME ";
         public final static String PRIMARY_KEY_SQL_KEYWORD = "PRIMARY KEY ";
         public final static String ASC_SQL_KEYWORD = "ASC ";
         public final static String DESC_SQL_KEYWORD = "DESC ";
@@ -66,5 +67,6 @@ public final class Constant {
     public final class Dialog {
         public final static String UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG = "addToDictionaryDialog";
         public final static String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG = "deleteFromDictionaryDialog";
+        public final static String UNIQUE_NAME_ASSIGNMENT_DIALOG = "assignment";
     }
 }

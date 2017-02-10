@@ -7,6 +7,7 @@
     <string name="title.settings">Настройки</string>
     <string name="title.profile">Профиль</string>
     <string name="title.add_to_database_password">Добавить слово</string>
+    <string name="title.delete_word">Удалить слово</string>
     <string name="title.add">Добавить</string>
     <string name="title.delete">Удалить</string>
     <string name="title.cancel">Отмена</string>
@@ -18,6 +19,7 @@
     <string name="title.wordsIsEmpty">Слова закончились :)</string>
     <string name="title.notFoundWords">Слов нет :)</string>
     <string name="title.numberOfWords">Количество слов в словаре</string>
+    <string name="title.whatToDo">Что сделать?</string>
 
     <string name="hint.english_word">Слово на английском</string>
     <string name="hint.translate_word">Перевод</string>

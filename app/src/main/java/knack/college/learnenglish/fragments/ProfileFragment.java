@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import knack.college.learnenglish.R;
-import knack.college.learnenglish.model.Dictionary;
+import knack.college.learnenglish.dialogs.AssignmentDialog;
 import knack.college.learnenglish.model.LearnEnglishStatistic;
 import knack.college.learnenglish.model.LearnEnglishToast;
+
+import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ASSIGNMENT_DIALOG;
 
 
 public class ProfileFragment extends Fragment {
@@ -45,8 +48,9 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    Dictionary dictionary = new Dictionary(getActivity().getApplicationContext());
-                    dictionary.clear();
+                    DialogFragment dialogFragment = new AssignmentDialog();
+                    dialogFragment.show(getActivity().getSupportFragmentManager(),
+                            UNIQUE_NAME_ASSIGNMENT_DIALOG);
                 } catch (Exception ex) {
                     toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
                 }
