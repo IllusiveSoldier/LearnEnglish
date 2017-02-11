@@ -2,6 +2,7 @@ package knack.college.learnenglish.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -11,15 +12,16 @@ import android.widget.EditText;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
-import knack.college.learnenglish.model.LearnEnglishToast;
+import knack.college.learnenglish.model.toasts.Toast;
 
 
 public class AddWordToDictionaryDialog extends DialogFragment {
 
     private EditText englishWordEditText;
     private EditText translateWordEditText;
-    private LearnEnglishToast toast;
+    private Toast toast;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -32,7 +34,7 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
         translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);
 
-        toast = new LearnEnglishToast(getActivity());
+        toast = new Toast(getActivity());
 
 
         builder.setView(view)
@@ -40,11 +42,12 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         try {
-                            Dictionary dictionary = new Dictionary(getActivity().getApplicationContext());
+                            Dictionary dictionary = new Dictionary(getActivity()
+                                    .getApplicationContext());
                             dictionary.addWordWithTranslate(englishWordEditText.getText().toString(),
                                     translateWordEditText.getText().toString());
                         } catch (Exception ex) {
-                            toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+                            toast.show(ex);
                         }
                     }
                 })
@@ -53,7 +56,6 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                         AddWordToDictionaryDialog.this.getDialog().cancel();
                     }
                 });
-
 
         return builder.create();
     }

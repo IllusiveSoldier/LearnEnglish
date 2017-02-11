@@ -13,20 +13,19 @@ import java.util.ArrayList;
 import knack.college.learnenglish.fragments.DictionaryFragment;
 import knack.college.learnenglish.fragments.ProfileFragment;
 import knack.college.learnenglish.fragments.TaskFragment;
-import knack.college.learnenglish.model.LearnEnglishToast;
+import knack.college.learnenglish.model.toasts.Toast;
 
 public class LearnEnglishActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
-
-    private LearnEnglishToast toast;
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_english);
 
-        toast = new LearnEnglishToast(this);
+        toast = new Toast(this);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -43,7 +42,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
             tabLayout.getTabAt(1).setIcon(R.mipmap.ic_event_note_black_24dp);
             tabLayout.getTabAt(2).setIcon(R.mipmap.ic_settings_black_24dp);
         } catch (Exception ex) {
-            toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+            toast.show(ex);
         }
     }
 

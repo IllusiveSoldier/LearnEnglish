@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import knack.college.learnenglish.exceptions.EmptyData;
@@ -70,44 +68,6 @@ public class Dictionary {
         }
     }
 
-    /** Метод, который добавляет слово на иностранном языке и слово-перевод в словарь */
-    public void addWordWithTranslate(HashMap<String, String> words) throws Exception {
-        Validator validator = new Validator();
-
-        for (Map.Entry<String, String> entry : words.entrySet()) {
-            String englishWord = entry.getKey();
-            String translate = entry.getValue();
-            if (englishWord != null && translate != null) {
-                if (!englishWord.isEmpty() && !translate.isEmpty()) {
-                    if (!validator.isWordMoreMaxSymbols(englishWord)
-                            && !validator.isWordMoreMaxSymbols(translate)) {
-                        if (validator.isEnglishCharactersInWord(englishWord)) {
-                            if (validator.isRussianCharactersInWord(translate)) {
-                                LearnEnglishDatabaseHelper helper =
-                                        new LearnEnglishDatabaseHelper(context);
-
-                                SQLiteDatabase database = helper.getWritableDatabase();
-
-                                ContentValues values = new ContentValues();
-                                values.put(GUID_COLUMN_NAME,
-                                        UUID.randomUUID().toString());
-                                values.put(ENGLISH_WORD_COLUMN_NAME, englishWord);
-                                values.put(TRANSLATE_WORD_COLUMN_NAME, translate);
-
-                                database.insert(DICTIONARY_TABLE_NAME, null, values);
-                            } else throw new NoRussianWord(NO_RUSSIAN_WORD_EXCEPTION_MESSAGE);
-                        } else throw new NoEnglishWord(NO_ENGLISH_WORD_EXCEPTION_MESSAGE);
-                    } else throw new MoreMaxSymbols(WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE);
-                } else throw new EmptyData(NO_DATA_EXCEPTION_MESSAGE);
-            }
-        }
-    }
-
-    /** Метод, который восстанавливает словарь на дефолтные слова */
-    public void defaultWords() throws Exception {
-        addWordWithTranslate(new DefaultWords().getDefaultWords());
-    }
-
     /** Метод, который удаляет словарь */
     public void delete() throws Exception {
         LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
@@ -135,7 +95,6 @@ public class Dictionary {
                 ENGLISH_WORD_COLUMN_NAME,
                 TRANSLATE_WORD_COLUMN_NAME
         };
-
 
         return database.query(
                 DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME,
@@ -176,7 +135,6 @@ public class Dictionary {
             }
         }
 
-
         return allWordsList;
     }
 
@@ -203,32 +161,6 @@ public class Dictionary {
                 database.delete(DICTIONARY_TABLE_NAME, GUID_COLUMN_NAME + " = " + "'"
                         + wordGuid + "'", null);
             }
-        }
-    }
-
-    private final class DefaultWords {
-        private final HashMap<String, String> defaultWords = new HashMap<>();
-
-        // Конструкторы
-        DefaultWords() {
-            initializeDefaultWords();
-        }
-
-        private void initializeDefaultWords() {
-            defaultWords.put("Hello", "Привет");
-            defaultWords.put("Good morning", "Доброе утро");
-            defaultWords.put("Goodbye", "Пока");
-            defaultWords.put("Sun", "Солнце");
-            defaultWords.put("Day", "День");
-            defaultWords.put("Night", "Ночь");
-            defaultWords.put("Phone", "Телефон");
-            defaultWords.put("Language", "Язык");
-            defaultWords.put("Learn", "Изучать");
-            defaultWords.put("Number", "Номер");
-        }
-
-        HashMap<String, String> getDefaultWords() {
-            return defaultWords;
         }
     }
 }

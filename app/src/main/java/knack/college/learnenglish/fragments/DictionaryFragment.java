@@ -25,7 +25,7 @@ import knack.college.learnenglish.R;
 import knack.college.learnenglish.dialogs.AddWordToDictionaryDialog;
 import knack.college.learnenglish.dialogs.DeleteWordFromDictionaryDialog;
 import knack.college.learnenglish.model.Dictionary;
-import knack.college.learnenglish.model.LearnEnglishToast;
+import knack.college.learnenglish.model.toasts.Toast;
 import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.WordFromDictionary;
 
@@ -41,7 +41,7 @@ public class DictionaryFragment extends Fragment {
 
     private static final int REQUEST_SELECTED = 1;
 
-    private LearnEnglishToast toast;
+    private Toast toast;
     private RandomColor color = new RandomColor();
 
     private LearnEnglishAdapter learnEnglishAdapter;
@@ -55,7 +55,7 @@ public class DictionaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
 
-        toast = new LearnEnglishToast(getActivity());
+        toast = new Toast(getActivity());
 
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
@@ -82,7 +82,7 @@ public class DictionaryFragment extends Fragment {
             learnEnglishAdapter = new LearnEnglishAdapter();
             dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
         } catch (Exception ex) {
-            toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+            toast.show(ex);
         }
 
         dictionarySwipeRefreshLayout = (SwipeRefreshLayout) view
@@ -103,7 +103,7 @@ public class DictionaryFragment extends Fragment {
                         dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
                     }
                 } catch (Exception ex) {
-                    toast.show(ex.getMessage(), R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+                    toast.show(ex);
                 }
 
                 dictionarySwipeRefreshLayout.setRefreshing(false);

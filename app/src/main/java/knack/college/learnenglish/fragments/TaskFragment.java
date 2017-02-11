@@ -11,21 +11,21 @@ import android.widget.Button;
 
 import knack.college.learnenglish.DictionaryTrainingActivity;
 import knack.college.learnenglish.R;
-import knack.college.learnenglish.model.LearnEnglishToast;
+import knack.college.learnenglish.model.toasts.Toast;
 
 
 public class TaskFragment extends Fragment {
 
     Button beginDictionaryTrainingButton;
 
-    private LearnEnglishToast toast;
+    private Toast toast;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task, container, false);
 
-        toast = new LearnEnglishToast(getActivity());
+        toast = new Toast(getActivity());
 
         beginDictionaryTrainingButton = (Button) view.findViewById(R.id.beginDictionaryTrainingButton);
         beginDictionaryTrainingButton.setOnClickListener(new View.OnClickListener() {
