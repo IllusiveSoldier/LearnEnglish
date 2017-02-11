@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -25,9 +26,9 @@ import knack.college.learnenglish.R;
 import knack.college.learnenglish.dialogs.AddWordToDictionaryDialog;
 import knack.college.learnenglish.dialogs.DeleteWordFromDictionaryDialog;
 import knack.college.learnenglish.model.Dictionary;
-import knack.college.learnenglish.model.toasts.Toast;
 import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.WordFromDictionary;
+import knack.college.learnenglish.model.toasts.Toast;
 
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG;
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG;
@@ -56,7 +57,6 @@ public class DictionaryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
 
         toast = new Toast(getActivity());
-
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
@@ -71,20 +71,6 @@ public class DictionaryFragment extends Fragment {
             }
         });
 
-        dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionaryRecyclerView);
-
-        try {
-            dictionaryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
-                    .getApplicationContext()));
-            dictionaryRecyclerView.setHasFixedSize(true);
-
-            wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary.getAllWordsList();
-            learnEnglishAdapter = new LearnEnglishAdapter();
-            dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
-        } catch (Exception ex) {
-            toast.show(ex);
-        }
-
         dictionarySwipeRefreshLayout = (SwipeRefreshLayout) view
                 .findViewById(R.id.dictionarySwipeRefreshLayout);
         dictionarySwipeRefreshLayout.setColorSchemeColors(Color.parseColor(color.getRandomColor()));
@@ -94,8 +80,7 @@ public class DictionaryFragment extends Fragment {
                 dictionarySwipeRefreshLayout.setRefreshing(true);
 
                 try {
-                    wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary
-                            .getAllWordsList();
+                    new GetWordsTask().execute(R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
                     if (wordFromDictionaries.size() == learnEnglishAdapter.getItemCount()) {
                         learnEnglishAdapter.notifyDataSetChanged();
                     } else {
@@ -110,6 +95,19 @@ public class DictionaryFragment extends Fragment {
             }
         });
 
+        dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionaryRecyclerView);
+
+        try {
+            dictionaryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
+                    .getApplicationContext()));
+            dictionaryRecyclerView.setHasFixedSize(true);
+
+            new GetWordsTask().execute(R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+            learnEnglishAdapter = new LearnEnglishAdapter();
+            dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
+        } catch (Exception ex) {
+            toast.show(ex);
+        }
 
         return view;
     }
@@ -196,5 +194,35 @@ public class DictionaryFragment extends Fragment {
         DialogFragment fragment = new DeleteWordFromDictionaryDialog();
         fragment.setTargetFragment(this, REQUEST_SELECTED);
         fragment.show(getFragmentManager(), UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG);
+    }
+
+    private class GetWordsTask extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            try {
+                wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary
+                        .getAllWordsList();
+            } catch (Exception ex) {
+                toast.show(ex.getMessage(), params[0]);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
     }
 }
