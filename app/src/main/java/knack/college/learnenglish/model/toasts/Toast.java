@@ -96,6 +96,22 @@ public class Toast {
         toast.show();
     }
 
+    /** Метод, который показывает Toast */
+    public void showSafe(final Throwable ex) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                imageView.setImageResource(R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+                textView.setText(ex.getMessage());
+
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(android.widget.Toast.LENGTH_LONG);
+                toast.setView(view);
+                toast.show();
+            }
+        });
+    }
+
     /** Метод, который иницилизирует LayoutInflater, View, ImageView, TextView, Toast
      * в конструкторе после определения Activity, изображения и сообщения */
     private void initializeViewAndToast() {

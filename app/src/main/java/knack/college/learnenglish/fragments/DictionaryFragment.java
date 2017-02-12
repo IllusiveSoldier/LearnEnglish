@@ -80,7 +80,7 @@ public class DictionaryFragment extends Fragment {
                 dictionarySwipeRefreshLayout.setRefreshing(true);
 
                 try {
-                    new GetWordsTask().execute(R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+                    new GetWordsTask().execute();
                     if (wordFromDictionaries.size() == learnEnglishAdapter.getItemCount()) {
                         learnEnglishAdapter.notifyDataSetChanged();
                     } else {
@@ -102,7 +102,7 @@ public class DictionaryFragment extends Fragment {
                     .getApplicationContext()));
             dictionaryRecyclerView.setHasFixedSize(true);
 
-            new GetWordsTask().execute(R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
+            new GetWordsTask().execute();
             learnEnglishAdapter = new LearnEnglishAdapter();
             dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
         } catch (Exception ex) {
@@ -121,7 +121,7 @@ public class DictionaryFragment extends Fragment {
                     int selected = data.getIntExtra(DeleteWordFromDictionaryDialog.TAG_SELECTED, -1);
                     if (selected == 1) {
                         try {
-                            dictionary.deleteWord(wordFromDictionaries.get(itemId).getGuid());
+                            new DeleteWordTask().execute();
                         } catch (Exception ex) {
                             toast.show(ex);
                         }
@@ -196,7 +196,7 @@ public class DictionaryFragment extends Fragment {
         fragment.show(getFragmentManager(), UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG);
     }
 
-    private class GetWordsTask extends AsyncTask<Integer, Void, Void> {
+    private class GetWordsTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -204,12 +204,40 @@ public class DictionaryFragment extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Integer... params) {
+        protected Void doInBackground(Void... params) {
             try {
                 wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary
                         .getAllWordsList();
             } catch (Exception ex) {
-                toast.show(ex.getMessage(), params[0]);
+                toast.showSafe(ex);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    private class DeleteWordTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                dictionary.deleteWord(wordFromDictionaries.get(itemId).getGuid());
+            } catch (Exception ex) {
+                toast.showSafe(ex);
             }
 
             return null;
