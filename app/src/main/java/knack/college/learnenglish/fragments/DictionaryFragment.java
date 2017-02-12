@@ -71,6 +71,20 @@ public class DictionaryFragment extends Fragment {
             }
         });
 
+        dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionaryRecyclerView);
+
+        try {
+            dictionaryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
+                    .getApplicationContext()));
+            dictionaryRecyclerView.setHasFixedSize(true);
+
+            new GetWordsTask().execute();
+            learnEnglishAdapter = new LearnEnglishAdapter();
+            dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
+        } catch (Exception ex) {
+            toast.show(ex);
+        }
+
         dictionarySwipeRefreshLayout = (SwipeRefreshLayout) view
                 .findViewById(R.id.dictionarySwipeRefreshLayout);
         dictionarySwipeRefreshLayout.setColorSchemeColors(Color.parseColor(color.getRandomColor()));
@@ -94,20 +108,6 @@ public class DictionaryFragment extends Fragment {
                 dictionarySwipeRefreshLayout.setRefreshing(false);
             }
         });
-
-        dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionaryRecyclerView);
-
-        try {
-            dictionaryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
-                    .getApplicationContext()));
-            dictionaryRecyclerView.setHasFixedSize(true);
-
-            new GetWordsTask().execute();
-            learnEnglishAdapter = new LearnEnglishAdapter();
-            dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
-        } catch (Exception ex) {
-            toast.show(ex);
-        }
 
         return view;
     }

@@ -2,10 +2,11 @@ package knack.college.learnenglish.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.content.DialogInterface;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -19,7 +20,9 @@ public class AddWordToDictionaryDialog extends DialogFragment {
 
     private EditText englishWordEditText;
     private EditText translateWordEditText;
+
     private Toast toast;
+    private Dictionary dictionary;
 
     @NonNull
     @Override
@@ -34,17 +37,15 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
         translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);
 
+        dictionary = new Dictionary(getActivity().getApplicationContext());
         toast = new Toast(getActivity());
-
 
         builder.setView(view)
                 .setPositiveButton(R.string.title_add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         try {
-                            Dictionary dictionary = new Dictionary(getActivity()
-                                    .getApplicationContext());
-                            dictionary.addWordWithTranslate(englishWordEditText.getText().toString(),
+                            new AddWordTask().execute(englishWordEditText.getText().toString(),
                                     translateWordEditText.getText().toString());
                         } catch (Exception ex) {
                             toast.show(ex);
@@ -58,5 +59,33 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    private class AddWordTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                dictionary.addWordWithTranslate(params[0], params[1]);
+            } catch (Exception ex) {
+                toast.showSafe(ex);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
     }
 }
