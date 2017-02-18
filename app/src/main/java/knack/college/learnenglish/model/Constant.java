@@ -50,14 +50,15 @@ public final class Constant {
          final static int MAX_WORD_LENGTH = 255;
     }
 
-    final class ExceptionMessage {
-        final static String WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE =
+    public final class ExceptionMessage {
+        public final static String WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE =
                 "Слово, которое вы ввели больше 255 символов.";
-        final static String NO_ENGLISH_WORD_EXCEPTION_MESSAGE =
+        public final static String NO_ENGLISH_WORD_EXCEPTION_MESSAGE =
                 "Первое слово для словаря должно содержать в себе только латинские символы";
-        final static String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
+        public final static String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
                 "Слово для перевода должно содержать в себе только русские символы";
-        final static String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
+        public final static String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
+        public final static String TRANSLATION_ERROR_MESSAGE = "Не удалось перевести";
     }
 
     public final class KeysForDebug {
@@ -68,5 +69,14 @@ public final class Constant {
         public final static String UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG = "addToDictionaryDialog";
         public final static String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG = "deleteFromDictionaryDialog";
         public final static String UNIQUE_NAME_ASSIGNMENT_DIALOG = "assignment";
+    }
+
+    public final class Translator {
+        public final static String BASE_TRANSLATE_URL =
+                "https://translate.yandex.net/api/v1.5/tr.json/translate?key=";
+        public final static String EN_RU = "en-ru";
+        public final static String RU_EN = "ru-en";
+        public final static String LANG = "&lang=";
+        public final static String TEXT = "&text=";
     }
 }

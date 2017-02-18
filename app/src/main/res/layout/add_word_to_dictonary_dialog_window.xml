@@ -3,30 +3,44 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:contentDescription="@string/title.add_to_database_password"
         android:background="@color/green"
         />
-
-    <EditText
-        android:id="@+id/englishWordEditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint.english_word"
-        android:inputType="textAutoCorrect|textAutoComplete|textShortMessage"
-        style="@style/edit_text_dialog_style"
-        />
-
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/englishWordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/hint.english_word"
+            android:inputType="textAutoCorrect|textAutoComplete|textShortMessage"
+            style="@style/edit_text_dialog_style"
+            />
+        <ImageView
+            android:id="@+id/translateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/hint.translate_word"
+            android:src="@mipmap/ic_translate_black_48dp"
+            android:contentDescription="@string/hint.translate_word"
+            />
+    </LinearLayout>
     <EditText
         android:id="@+id/translateWordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint.translate_word"
+        android:hint="@string/hint.russian_word"
         android:inputType="textAutoCorrect|textAutoComplete|textShortMessage"
         style="@style/edit_text_dialog_style"
         />
-
 </LinearLayout>
