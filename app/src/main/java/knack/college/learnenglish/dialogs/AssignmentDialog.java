@@ -11,10 +11,12 @@ import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.toasts.Toast;
 
+import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_CLEAR_DICTIONARY_DIALOG;
+
 
 public class AssignmentDialog extends DialogFragment {
 
-    private Dictionary dictionary;
+    Dictionary dictionary;
     private Toast toast;
 
     @NonNull
@@ -30,7 +32,9 @@ public class AssignmentDialog extends DialogFragment {
                         switch (which) {
                             case 3:
                                 try {
-                                    dictionary.clear();
+                                    DialogFragment dialogFragment = new ClearDictionaryDialog();
+                                    dialogFragment.show(getActivity().getSupportFragmentManager(),
+                                            UNIQUE_NAME_CLEAR_DICTIONARY_DIALOG);
                                 } catch (Exception ex) {
                                     toast.show(ex);
                                 }

@@ -20,6 +20,7 @@
     <string name="title.notFoundWords">Слов нет :)</string>
     <string name="title.numberOfWords">Количество слов в словаре</string>
     <string name="title.whatToDo">Что сделать?</string>
+    <string name="title.question.clear_dictionary">Очистить словарь?</string>
 
     <string name="hint.english_word">Слово на английском</string>
     <string name="hint.russian_word">Слово на русском</string>

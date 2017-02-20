@@ -48,7 +48,7 @@ public class DictionaryFragment extends Fragment {
     private Dictionary dictionary;
     private ArrayList<WordFromDictionary> wordFromDictionaries = new ArrayList<>();
 
-    private int itemId = 0;
+    int itemId = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

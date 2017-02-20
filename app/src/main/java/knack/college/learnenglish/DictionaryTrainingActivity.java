@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Random;
 
 import knack.college.learnenglish.model.Dictionary;
-import knack.college.learnenglish.model.toasts.Toast;
 import knack.college.learnenglish.model.Validator;
 import knack.college.learnenglish.model.WordFromDictionary;
+import knack.college.learnenglish.model.toasts.Toast;
 
 public class DictionaryTrainingActivity extends AppCompatActivity {
 
@@ -116,7 +116,6 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                     dictionaryTrainingEnglishWordTextView.setText(
                             wordFromDictionaries.get(randomIndex).getEnglishWord());
                 } else if (wordFromDictionaries.size() == 0) {
-                    // TODO Сюда запись со статистикой
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
                     toast.show(getResources().getString(R.string.title_wordsIsEmpty),
@@ -138,7 +137,6 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                     dictionaryTrainingEnglishWordTextView.setText(
                             wordFromDictionaries.get(randomIndex).getEnglishWord());
                 } else if (wordFromDictionaries.size() == 0) {
-                    // TODO Сюда запись со статистикой
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
                     toast.show(getResources().getString(R.string.title_wordsIsEmpty),

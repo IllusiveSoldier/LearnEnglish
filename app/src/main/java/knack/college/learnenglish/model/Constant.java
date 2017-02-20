@@ -66,9 +66,13 @@ public final class Constant {
     }
 
     public final class Dialog {
-        public final static String UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG = "addToDictionaryDialog";
-        public final static String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG = "deleteFromDictionaryDialog";
-        public final static String UNIQUE_NAME_ASSIGNMENT_DIALOG = "assignment";
+        public final static String UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG =
+                "addToDictionaryDialog";
+        public final static String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG =
+                "deleteFromDictionaryDialog";
+        public final static String UNIQUE_NAME_ASSIGNMENT_DIALOG =
+                "assignment";
+        public final static String UNIQUE_NAME_CLEAR_DICTIONARY_DIALOG = "ClearDictionaryDialog";
     }
 
     public final class Translator {
