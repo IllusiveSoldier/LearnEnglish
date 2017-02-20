@@ -17,6 +17,7 @@ import java.util.Random;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.Validator;
 import knack.college.learnenglish.model.WordFromDictionary;
+import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.Toast;
 
 public class DictionaryTrainingActivity extends AppCompatActivity {
@@ -33,8 +34,13 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
     // Случайный индекс для поиска слов
     int randomIndex = 0;
 
+    int wordsCount;
+    int correctAnswer;
+    int wrongAnswer;
+
     Random random = new Random();
     Validator validator = new Validator();
+    DictionaryTrainingStatistic statistic;
 
     private Toast toast;
     int[] themes = {
@@ -50,6 +56,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dictionary_training);
 
         toast = new Toast(this);
+        statistic = new DictionaryTrainingStatistic(this);
 
         dictionaryTrainingEnglishWordTextView = (TextView)
                 findViewById(R.id.dictionaryTrainingEnglishWordTextView);
@@ -60,6 +67,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
         try {
             // При загрузке Activity получаем коллекцию слов
             wordFromDictionaries = new Dictionary(getApplicationContext()).getAllWordsList();
+            wordsCount = wordFromDictionaries.size();
             // Генерируем псевдослучайный индекс для коллекции слов,
             // по которому получим случайное слово
             if (wordFromDictionaries.size() > 0) {
@@ -108,6 +116,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
             if (validator.isTranslation(wordFromDictionaries.get(randomIndex)
                     .getTranslateWord(), dictionaryTrainingTranslateWordEditText.getText()
                     .toString())) {
+                correctAnswer++;
                 trueOrFalseIndicator.setBackgroundColor(
                         ContextCompat.getColor(getApplicationContext(), R.color.green)
                 );
@@ -122,6 +131,11 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                     dictionaryTrainingEnglishWordTextView.setText(
                             wordFromDictionaries.get(randomIndex).getEnglishWord());
                 } else if (wordFromDictionaries.size() == 0) {
+                    statistic.setWordsCount(wordsCount);
+                    statistic.setCorrectAnswer(correctAnswer);
+                    statistic.setWrongAnswer(wrongAnswer);
+                    statistic.addRecord();
+
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
                     toast.show(getResources().getString(R.string.title_wordsIsEmpty),
@@ -129,6 +143,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
             } else {
+                wrongAnswer++;
                 trueOrFalseIndicator.setBackgroundColor(
                         ContextCompat.getColor(getApplicationContext(), R.color.red)
                 );
@@ -143,6 +158,11 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                     dictionaryTrainingEnglishWordTextView.setText(
                             wordFromDictionaries.get(randomIndex).getEnglishWord());
                 } else if (wordFromDictionaries.size() == 0) {
+                    statistic.setWordsCount(wordsCount);
+                    statistic.setCorrectAnswer(correctAnswer);
+                    statistic.setWrongAnswer(wrongAnswer);
+                    statistic.addRecord();
+
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
                     toast.show(getResources().getString(R.string.title_wordsIsEmpty),

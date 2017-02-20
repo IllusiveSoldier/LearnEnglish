@@ -2,6 +2,7 @@ package knack.college.learnenglish.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -10,20 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import knack.college.learnenglish.DictionaryTrainingActivity;
 import knack.college.learnenglish.R;
+import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.toasts.Toast;
 
 
 public class TaskFragment extends Fragment {
-
-//    Button beginDictionaryTrainingButton;
     RecyclerView taskRecyclerView;
 
     Toast toast;
     LearnEnglishAdapter learnEnglishAdapter;
+    private RandomColor color = new RandomColor();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,22 +42,13 @@ public class TaskFragment extends Fragment {
         learnEnglishAdapter = new LearnEnglishAdapter();
         taskRecyclerView.setAdapter(learnEnglishAdapter);
 
-//        beginDictionaryTrainingButton = (Button) view.findViewById(R.id.beginDictionaryTrainingButton);
-//        beginDictionaryTrainingButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity().getApplicationContext(),
-//                        DictionaryTrainingActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         return view;
     }
 
     private class LearnEnglishHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         CardView taskCardView;
+        ImageView taskItemImageView;
         TextView taskName;
 
         LearnEnglishHolder(View itemView) {
@@ -63,6 +56,7 @@ public class TaskFragment extends Fragment {
 
             itemView.setOnClickListener(this);
             taskCardView = (CardView) itemView.findViewById(R.id.taskCardView);
+            taskItemImageView = (ImageView) itemView.findViewById(R.id.taskItemImageView);
             taskName = (TextView) itemView.findViewById(R.id.taskName);
         }
 
@@ -85,6 +79,7 @@ public class TaskFragment extends Fragment {
         @Override
         public void onBindViewHolder(LearnEnglishHolder holder, int position) {
             holder.taskName.setText("Прогон по словарю");
+            holder.taskItemImageView.setBackgroundColor(Color.parseColor(color.getRandomColor()));
         }
 
         @Override
