@@ -37,9 +37,15 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
     Validator validator = new Validator();
 
     private Toast toast;
+    int[] themes = {
+            R.style.SeaTheme,
+            R.style.OrangeTheme,
+            R.style.SalatTheme
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(themes[random.nextInt(themes.length)]);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary_training);
 
