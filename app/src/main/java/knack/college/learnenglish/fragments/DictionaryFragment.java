@@ -121,8 +121,7 @@ public class DictionaryFragment extends Fragment {
                     int selected = data.getIntExtra(DeleteWordFromDictionaryDialog.TAG_SELECTED, -1);
                     if (selected == 1) {
                         try {
-                            wordFromDictionaries = (ArrayList<WordFromDictionary>)
-                                    dictionary.getAllWordsList();
+                            dictionary.deleteWord(wordFromDictionaries.get(itemId).getGuid());
                         } catch (Exception ex) {
                             toast.show(ex);
                         }

@@ -21,6 +21,7 @@ import knack.college.learnenglish.model.toasts.Toast;
 import knack.college.learnenglish.model.translate.TranslateDAO;
 import knack.college.learnenglish.model.translate.Translator;
 
+import static knack.college.learnenglish.model.Constant.ExceptionMessage.ENTER_WORDS_FOR_TRANSLATE_MESSAGE;
 import static knack.college.learnenglish.model.Constant.ExceptionMessage.TRANSLATION_ERROR_MESSAGE;
 import static knack.college.learnenglish.model.Constant.Translator.EN_RU;
 import static knack.college.learnenglish.model.Constant.Translator.RU_EN;
@@ -82,6 +83,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                             if (!russianWord.isEmpty()) {
                                 new GetTranslateWord().execute(russianWord, EN_RU);
                             }
+                        } else {
+                            toast.show(ENTER_WORDS_FOR_TRANSLATE_MESSAGE);
                         }
                     } else if (translateWordEditText.getText().toString().isEmpty()) {
                         if (!englishWordEditText.getText().toString().isEmpty()) {
@@ -89,6 +92,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                             if (!englishWord.isEmpty()) {
                                 new GetTranslateWord().execute(englishWord, RU_EN);
                             }
+                        } else {
+                            toast.show(ENTER_WORDS_FOR_TRANSLATE_MESSAGE);
                         }
                     }
                 } catch (Exception ex) {

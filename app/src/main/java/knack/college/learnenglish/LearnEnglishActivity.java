@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import knack.college.learnenglish.fragments.DictionaryFragment;
 import knack.college.learnenglish.fragments.ProfileFragment;
@@ -20,16 +19,9 @@ public class LearnEnglishActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private Toast toast;
-    int[] themes = {
-            R.style.SeaTheme,
-            R.style.OrangeTheme,
-            R.style.SalatTheme
-    };
-    Random random = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(themes[random.nextInt(themes.length)]);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_english);
 

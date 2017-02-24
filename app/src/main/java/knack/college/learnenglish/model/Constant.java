@@ -58,6 +58,7 @@ public final class Constant {
         public final static String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
                 "Слово для перевода должно содержать в себе только русские символы";
         public final static String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
+        public final static String ENTER_WORDS_FOR_TRANSLATE_MESSAGE = "Введите слово для перевода";
         public final static String TRANSLATION_ERROR_MESSAGE = "Не удалось перевести";
     }
 
