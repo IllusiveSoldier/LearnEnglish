@@ -1,5 +1,6 @@
 package knack.college.learnenglish;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_learn_english);
 
         toast = new Toast(this);
@@ -83,5 +85,15 @@ public class LearnEnglishActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    protected void onPause () {
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
     }
 }

@@ -5,14 +5,15 @@
     android:id="@+id/activity_dictionary_training"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="knack.college.learnenglish.DictionaryTrainingActivity">
-
-
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@color/white"
+        style="?android:attr/progressBarStyleHorizontal"
+        />
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -25,41 +26,28 @@
     <TextView
         android:id="@+id/dictionaryTrainingEnglishWordTextView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:textSize="20sp"
+        android:textSize="60sp"
         android:textAlignment="center"
-        />
-    <EditText
-        android:id="@+id/dictionaryTrainingTranslateWordEditText"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:inputType="textAutoComplete|textAutoCorrect|textShortMessage"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        />
-    <ImageView
-        android:id="@+id/trueOrFalseIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
+        <EditText
+            android:id="@+id/dictionaryTrainingTranslateWordEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete|textAutoCorrect|textShortMessage"
+            android:layout_weight="1"
+            />
+        <ImageButton
             android:id="@+id/checkAnswerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title.check"
-            android:textAllCaps="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="1"
+            android:background="@mipmap/ic_check_circle_black_48dp"
             />
         <ImageButton
             android:id="@+id/helpAnswerButton"

@@ -5,6 +5,7 @@ import android.provider.BaseColumns;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.ASC_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.COUNT_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.CREATE_TABLE_SQL_KEYWORD;
+import static knack.college.learnenglish.model.Constant.DatabaseKeywords.DATETIME_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.DELETE_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.DROP_TABLE_SQL_KEYWORD;
 import static knack.college.learnenglish.model.Constant.DatabaseKeywords.EXISTS_TABLE_SQL_KEYWORD;
@@ -40,6 +41,8 @@ public class DictionaryContract {
         public final static String ENGLISH_WORD_COLUMN_NAME = "ENGLISH_WORD";
         /** Слово-перевод */
         public final static String TRANSLATE_WORD_COLUMN_NAME = "TRANSLATE_WORD";
+        /** Дата последней тренировки слова */
+        public final static String LAST_TRAINING_DATE = "LAST_TRAINING_DATE";
 
         /** Метод, который возвращает текст запрсоа на создание таблицы */
         public static StringBuilder getCreateDictionaryTableQuery() {
@@ -55,6 +58,8 @@ public class DictionaryContract {
                             .append(TAB).append(ENGLISH_WORD_COLUMN_NAME).append(SPACE).append(VARCHAR_255)
                                 .append(COMMA).append(NEW_LINE)
                             .append(TAB).append(TRANSLATE_WORD_COLUMN_NAME).append(SPACE).append(VARCHAR_255)
+                                .append(COMMA).append(NEW_LINE)
+                            .append(TAB).append(LAST_TRAINING_DATE).append(SPACE).append(DATETIME_SQL_KEYWORD)
                                 .append(NEW_LINE)
                             .append(RIGHT_BRACE).append(SEMICOLON);
 

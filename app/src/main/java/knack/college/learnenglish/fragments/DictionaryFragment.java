@@ -174,8 +174,6 @@ public class DictionaryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(LearnEnglishHolder holder, int position) {
-            wordFromDictionaries.get(position);
-
             holder.dictionaryEnglishWordTextView
                     .setText(wordFromDictionaries.get(position).getEnglishWord());
             holder.dictionaryTranslateWordTextView

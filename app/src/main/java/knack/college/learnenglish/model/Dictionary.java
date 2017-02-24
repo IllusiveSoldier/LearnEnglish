@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +27,7 @@ import static knack.college.learnenglish.model.Constant.KeysForDebug.ERROR_KEY_F
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.ENGLISH_WORD_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.GUID_COLUMN_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.LAST_TRAINING_DATE;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.OUID_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.TRANSLATE_WORD_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getCountRowsInTableQuery;
@@ -35,6 +38,8 @@ import static knack.college.learnenglish.model.database.DictionaryContract.Dicti
 public class Dictionary {
 
     private Context context;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private String currentDate = sdf.format(new Date());
 
     public Dictionary(Context c) {
         context = c;
@@ -93,7 +98,8 @@ public class Dictionary {
                 OUID_COLUMN_NAME,
                 GUID_COLUMN_NAME,
                 ENGLISH_WORD_COLUMN_NAME,
-                TRANSLATE_WORD_COLUMN_NAME
+                TRANSLATE_WORD_COLUMN_NAME,
+                LAST_TRAINING_DATE
         };
 
         return database.query(
@@ -158,9 +164,76 @@ public class Dictionary {
             if (!wordGuid.isEmpty()) {
                 LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
                 SQLiteDatabase database = helper.getWritableDatabase();
-                database.delete(DICTIONARY_TABLE_NAME, GUID_COLUMN_NAME + " = " + "'"
-                        + wordGuid + "'", null);
+                database.delete(
+                        DICTIONARY_TABLE_NAME,
+                        GUID_COLUMN_NAME + " = " + "'" + wordGuid + "'",
+                        null
+                );
             }
         }
+    }
+
+    /** Метод, который слову сетает последнюю дату тренировки */
+    public void setLastTrainingWordDate(String wordGuid) throws Exception {
+        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        // Current date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = sdf.format(new Date());
+
+        // New value
+        ContentValues values = new ContentValues();
+        values.put(LAST_TRAINING_DATE, strDate);
+
+        db.update(
+            DICTIONARY_TABLE_NAME,
+            values,
+            GUID_COLUMN_NAME + " = " + "'" + wordGuid + "'",
+            null
+        );
+    }
+
+    /** Метод, который возвращает курсор с словами, в которых не проставлена
+     * дата последней тренировки
+     * или с момента тренировки прошло больше 1 дня */
+    public Cursor getForgottenWordsCursor() throws Exception {
+        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
+        SQLiteDatabase database = helper.getReadableDatabase();
+
+        return database.rawQuery("SELECT " + OUID_COLUMN_NAME + ", " + GUID_COLUMN_NAME + ", " +
+                ENGLISH_WORD_COLUMN_NAME + ", " + TRANSLATE_WORD_COLUMN_NAME + ", " +
+                LAST_TRAINING_DATE + " FROM DICTIONARY AS dictionary WHERE julianday('" + currentDate +
+                "') - julianday(dictionary.LAST_TRAINING_DATE) >= 1" , null);
+    }
+
+    /** Метод, который возвращает коллекцию слов, в которых не проставлена
+     * дата последней тренировки
+     * или с момента тренировки прошло больше 1 дня */
+    public List<WordFromDictionary> getForgottenWords() throws Exception {
+        List<WordFromDictionary> allWordsList = new ArrayList<>();
+        Cursor cursor = null;
+
+        try {
+            cursor = getForgottenWordsCursor();
+
+            while (cursor.moveToNext()) {
+                WordFromDictionary word = new WordFromDictionary();
+                word.setOuid(cursor.getString(cursor.getColumnIndex(OUID_COLUMN_NAME)));
+                word.setGuid(cursor.getString(cursor.getColumnIndex(GUID_COLUMN_NAME)));
+                word.setEnglishWord(cursor.getString(cursor.
+                        getColumnIndex(ENGLISH_WORD_COLUMN_NAME)));
+                word.setTranslateWord(cursor.getString(cursor.
+                        getColumnIndex(TRANSLATE_WORD_COLUMN_NAME)));
+
+                allWordsList.add(word);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return allWordsList;
     }
 }

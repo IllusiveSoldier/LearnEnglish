@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import knack.college.learnenglish.DictionaryTrainingActivity;
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.RandomColor;
+import knack.college.learnenglish.model.Task;
+import knack.college.learnenglish.model.TaskGenerator;
 import knack.college.learnenglish.model.toasts.Toast;
 
 
@@ -25,7 +29,10 @@ public class TaskFragment extends Fragment {
 
     Toast toast;
     LearnEnglishAdapter learnEnglishAdapter;
+    TaskGenerator taskGenerator;
+
     private RandomColor color = new RandomColor();
+    ArrayList<Task> tasks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +40,12 @@ public class TaskFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_task, container, false);
 
         toast = new Toast(getActivity());
+        taskGenerator = new TaskGenerator(getActivity());
+        try {
+            tasks = taskGenerator.getActualTask();
+        } catch (Exception ex) {
+            toast.show(ex);
+        }
 
         taskRecyclerView = (RecyclerView) view.findViewById(R.id.taskRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
@@ -78,13 +91,13 @@ public class TaskFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(LearnEnglishHolder holder, int position) {
-            holder.taskName.setText("Прогон по словарю");
+            holder.taskName.setText(tasks.get(position).getTitle());
             holder.taskItemImageView.setBackgroundColor(Color.parseColor(color.getRandomColor()));
         }
 
         @Override
         public int getItemCount() {
-            return 1;
+            return tasks.size();
         }
     }
 }

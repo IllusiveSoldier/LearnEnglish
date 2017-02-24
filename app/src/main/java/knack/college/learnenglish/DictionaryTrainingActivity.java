@@ -1,13 +1,12 @@
 package knack.college.learnenglish;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,16 +21,13 @@ import knack.college.learnenglish.model.toasts.Toast;
 
 public class DictionaryTrainingActivity extends AppCompatActivity {
 
-    // Контролы
     TextView dictionaryTrainingEnglishWordTextView;
     EditText dictionaryTrainingTranslateWordEditText;
-    Button checkAnswerButton;
-    ImageView trueOrFalseIndicator;
-    ImageView helpAnswerButton;
+    ImageButton checkAnswerButton;
+    ImageButton helpAnswerButton;
+    ProgressBar progressBar;
 
-    // Список слов
     List<WordFromDictionary> wordFromDictionaries = new ArrayList<>();
-    // Случайный индекс для поиска слов
     int randomIndex = 0;
 
     int wordsCount;
@@ -40,28 +36,32 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
 
     Random random = new Random();
     Validator validator = new Validator();
-    DictionaryTrainingStatistic statistic;
 
     private Toast toast;
+    DictionaryTrainingStatistic statistic;
+    Dictionary dictionary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_dictionary_training);
 
         toast = new Toast(this);
         statistic = new DictionaryTrainingStatistic(this);
+        dictionary = new Dictionary(getApplicationContext());
 
         dictionaryTrainingEnglishWordTextView = (TextView)
                 findViewById(R.id.dictionaryTrainingEnglishWordTextView);
         dictionaryTrainingTranslateWordEditText = (EditText)
                 findViewById(R.id.dictionaryTrainingTranslateWordEditText);
-        trueOrFalseIndicator = (ImageView) findViewById(R.id.trueOrFalseIndicator);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         try {
             // При загрузке Activity получаем коллекцию слов
             wordFromDictionaries = new Dictionary(getApplicationContext()).getAllWordsList();
             wordsCount = wordFromDictionaries.size();
+            progressBar.setMax(wordsCount);
             // Генерируем псевдослучайный индекс для коллекции слов,
             // по которому получим случайное слово
             if (wordFromDictionaries.size() > 0) {
@@ -78,7 +78,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
             toast.show(ex);
         }
 
-        checkAnswerButton = (Button) findViewById(R.id.checkAnswerButton);
+        checkAnswerButton = (ImageButton) findViewById(R.id.checkAnswerButton);
         checkAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,9 +111,8 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                     .getTranslateWord(), dictionaryTrainingTranslateWordEditText.getText()
                     .toString())) {
                 correctAnswer++;
-                trueOrFalseIndicator.setBackgroundColor(
-                        ContextCompat.getColor(getApplicationContext(), R.color.green)
-                );
+                // отмечаем дату тренировки слова
+                dictionary.setLastTrainingWordDate(wordFromDictionaries.get(randomIndex).getGuid());
                 // Очищаем поле ввода
                 dictionaryTrainingTranslateWordEditText.setText("");
                 // Удаляем слово из коллекции
@@ -136,11 +135,9 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
+                progressBar.setProgress(correctAnswer + wrongAnswer);
             } else {
                 wrongAnswer++;
-                trueOrFalseIndicator.setBackgroundColor(
-                        ContextCompat.getColor(getApplicationContext(), R.color.red)
-                );
                 // Очищаем поле ввода
                 dictionaryTrainingTranslateWordEditText.setText("");
                 // Удаляем слово из коллекции
@@ -163,6 +160,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
+                progressBar.setProgress(correctAnswer + wrongAnswer);
             }
         } else if (wordFromDictionaries.size() == 0) {
             toast.show(getApplication().getResources().getString(R.string.title_notFoundWords),

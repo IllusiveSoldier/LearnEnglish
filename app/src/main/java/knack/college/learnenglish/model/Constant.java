@@ -5,6 +5,11 @@ import static knack.college.learnenglish.model.database.DictionaryContract.Dicti
 public final class Constant {
 
     public final static String ALL_WORDS_FROM_DICTIONARY = "allWordsFromDictionary";
+    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY = "forgottenWordsFromDictionary";
+    public final static String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE =
+            "Прогон по всем словам";
+    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE =
+            "Прогон по нетренированным словам";
 
     public final class DatabaseKeywords {
         public final static String CREATE_TABLE_SQL_KEYWORD = "CREATE TABLE ";
