@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ import knack.college.learnenglish.model.toasts.Toast;
 
 public class TaskFragment extends Fragment {
     RecyclerView taskRecyclerView;
+    SwipeRefreshLayout taskSwipeRefreshLayout;
 
     Toast toast;
     LearnEnglishAdapter learnEnglishAdapter;
@@ -54,6 +56,30 @@ public class TaskFragment extends Fragment {
 
         learnEnglishAdapter = new LearnEnglishAdapter();
         taskRecyclerView.setAdapter(learnEnglishAdapter);
+
+        taskSwipeRefreshLayout = (SwipeRefreshLayout)
+                view.findViewById(R.id.taskSwipeRefreshLayout);
+        taskSwipeRefreshLayout.setColorSchemeColors(Color.parseColor(color.getRandomColor()));
+        taskSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                taskSwipeRefreshLayout.setRefreshing(true);
+
+                try {
+                    tasks = taskGenerator.getActualTask();
+                    if (tasks.size() == learnEnglishAdapter.getItemCount()) {
+                        learnEnglishAdapter.notifyDataSetChanged();
+                    } else {
+                        learnEnglishAdapter = new LearnEnglishAdapter();
+                        taskRecyclerView.setAdapter(learnEnglishAdapter);
+                    }
+                } catch (Exception ex) {
+                    toast.show(ex);
+                }
+
+                taskSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         return view;
     }

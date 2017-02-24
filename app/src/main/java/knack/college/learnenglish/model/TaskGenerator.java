@@ -37,10 +37,7 @@ public class TaskGenerator {
             allWordsTrainingTask.setTitle(ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE);
             tasks.add(allWordsTrainingTask);
 
-            ArrayList<WordFromDictionary> forgottenWords = (ArrayList<WordFromDictionary>)
-                    dictionary.getForgottenWords();
-
-            if (forgottenWords.size() > 0) {
+            if (dictionary.getForgottenWords().size() > 0) {
                 Task forgottenWordsTrainingTask = new Task();
                 forgottenWordsTrainingTask.setName(FORGOTTEN_WORDS_FROM_DICTIONARY);
                 forgottenWordsTrainingTask.setTitle(FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE);
