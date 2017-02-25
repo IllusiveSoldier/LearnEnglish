@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import knack.college.learnenglish.DictionaryTrainingActivity;
 import knack.college.learnenglish.R;
+import knack.college.learnenglish.TaskActivity;
 import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.Task;
 import knack.college.learnenglish.model.TaskGenerator;
 import knack.college.learnenglish.model.toasts.Toast;
+
+import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
 
 
 public class TaskFragment extends Fragment {
@@ -84,8 +86,7 @@ public class TaskFragment extends Fragment {
         return view;
     }
 
-    private class LearnEnglishHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+    private class LearnEnglishHolder extends RecyclerView.ViewHolder {
         CardView taskCardView;
         ImageView taskItemImageView;
         TextView taskName;
@@ -93,17 +94,9 @@ public class TaskFragment extends Fragment {
         LearnEnglishHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(this);
             taskCardView = (CardView) itemView.findViewById(R.id.taskCardView);
             taskItemImageView = (ImageView) itemView.findViewById(R.id.taskItemImageView);
             taskName = (TextView) itemView.findViewById(R.id.taskName);
-        }
-
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity().getApplicationContext(),
-                        DictionaryTrainingActivity.class);
-                startActivity(intent);
         }
     }
 
@@ -119,6 +112,18 @@ public class TaskFragment extends Fragment {
         public void onBindViewHolder(LearnEnglishHolder holder, int position) {
             holder.taskName.setText(tasks.get(position).getTitle());
             holder.taskItemImageView.setBackgroundColor(Color.parseColor(color.getRandomColor()));
+
+            final int id = position;
+
+            holder.taskCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(),
+                            TaskActivity.class);
+                    intent.putExtra(FRAGMENT_CODE, tasks.get(id).getName());
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override

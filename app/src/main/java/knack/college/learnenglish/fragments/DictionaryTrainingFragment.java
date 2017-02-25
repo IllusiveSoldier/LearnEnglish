@@ -1,9 +1,11 @@
-package knack.college.learnenglish;
+package knack.college.learnenglish.fragments;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -13,13 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.Validator;
 import knack.college.learnenglish.model.WordFromDictionary;
 import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.Toast;
 
-public class DictionaryTrainingActivity extends AppCompatActivity {
+import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
+import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
+import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
+
+public class DictionaryTrainingFragment extends Fragment {
 
     TextView dictionaryTrainingEnglishWordTextView;
     EditText dictionaryTrainingTranslateWordEditText;
@@ -41,25 +48,40 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
     DictionaryTrainingStatistic statistic;
     Dictionary dictionary;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_dictionary_training);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_dictionary_training, container, false);
+        toast = new Toast(getActivity());
+        dictionary = new Dictionary(getActivity().getApplicationContext());
 
-        toast = new Toast(this);
-        statistic = new DictionaryTrainingStatistic(this);
-        dictionary = new Dictionary(getApplicationContext());
+        if (getArguments() != null && getArguments().containsKey(FRAGMENT_CODE)) {
+            String fragmentCode = (String) getArguments().get(FRAGMENT_CODE);
+            try {
+                if (ALL_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
+                    wordFromDictionaries = (ArrayList<WordFromDictionary>)
+                            dictionary.getAllWordsList();
+                } else if (FORGOTTEN_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
+                    wordFromDictionaries = (ArrayList<WordFromDictionary>)
+                            dictionary.getForgottenWords();
+                }
+            } catch (Exception ex) {
+                toast.show(ex);
+            }
+        }
+
+        toast = new Toast(getActivity());
+        statistic = new DictionaryTrainingStatistic(getActivity());
+        dictionary = new Dictionary(getActivity().getApplicationContext());
 
         dictionaryTrainingEnglishWordTextView = (TextView)
-                findViewById(R.id.dictionaryTrainingEnglishWordTextView);
+                view.findViewById(R.id.dictionaryTrainingEnglishWordTextView);
         dictionaryTrainingTranslateWordEditText = (EditText)
-                findViewById(R.id.dictionaryTrainingTranslateWordEditText);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+                view.findViewById(R.id.dictionaryTrainingTranslateWordEditText);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         try {
-            // При загрузке Activity получаем коллекцию слов
-            wordFromDictionaries = new Dictionary(getApplicationContext()).getAllWordsList();
             wordsCount = wordFromDictionaries.size();
             progressBar.setMax(wordsCount);
             // Генерируем псевдослучайный индекс для коллекции слов,
@@ -71,14 +93,15 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                         wordFromDictionaries.get(randomIndex).getEnglishWord()
                 );
             } else if (wordFromDictionaries.size() == 0) {
-                toast.show(getApplication().getResources().getString(R.string.title_notFoundWords),
+                toast.show(getActivity().getApplication().getResources()
+                        .getString(R.string.title_notFoundWords),
                         R.mipmap.ic_sentiment_very_satisfied_black_24dp);
             }
         } catch (Exception ex) {
             toast.show(ex);
         }
 
-        checkAnswerButton = (ImageButton) findViewById(R.id.checkAnswerButton);
+        checkAnswerButton = (ImageButton) view.findViewById(R.id.checkAnswerButton);
         checkAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +113,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
             }
         });
 
-        helpAnswerButton = (ImageButton) findViewById(R.id.helpAnswerButton);
+        helpAnswerButton = (ImageButton) view.findViewById(R.id.helpAnswerButton);
         helpAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,11 +121,14 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                     toast.show(wordFromDictionaries.get(randomIndex).getTranslateWord(),
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp, android.widget.Toast.LENGTH_SHORT);
                 } else if (wordFromDictionaries.size() == 0) {
-                    toast.show(getApplication().getResources().getString(R.string.title_notFoundWords),
+                    toast.show(getActivity().getApplication().getResources()
+                            .getString(R.string.title_notFoundWords),
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                 }
             }
         });
+
+        return view;
     }
 
     private void checkAnswer() throws Exception {
@@ -163,7 +189,7 @@ public class DictionaryTrainingActivity extends AppCompatActivity {
                 progressBar.setProgress(correctAnswer + wrongAnswer);
             }
         } else if (wordFromDictionaries.size() == 0) {
-            toast.show(getApplication().getResources().getString(R.string.title_notFoundWords),
+            toast.show(getResources().getString(R.string.title_notFoundWords),
                     R.mipmap.ic_sentiment_very_satisfied_black_24dp);
         }
     }

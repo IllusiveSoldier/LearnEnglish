@@ -204,7 +204,8 @@ public class Dictionary {
         return database.rawQuery("SELECT " + OUID_COLUMN_NAME + ", " + GUID_COLUMN_NAME + ", " +
                 ENGLISH_WORD_COLUMN_NAME + ", " + TRANSLATE_WORD_COLUMN_NAME + ", " +
                 LAST_TRAINING_DATE + " FROM DICTIONARY AS dictionary WHERE julianday('" + currentDate +
-                "') - julianday(dictionary.LAST_TRAINING_DATE) >= 1" , null);
+                "') - julianday(dictionary.LAST_TRAINING_DATE) >= 1 OR " +
+                "dictionary.LAST_TRAINING_DATE IS NULL" , null);
     }
 
     /** Метод, который возвращает коллекцию слов, в которых не проставлена

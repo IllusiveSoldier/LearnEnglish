@@ -10,6 +10,7 @@ public final class Constant {
             "Прогон по всем словам";
     public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE =
             "Прогон по нетренированным словам";
+    public final static String FRAGMENT_CODE = "fragmentCode";
 
     public final class DatabaseKeywords {
         public final static String CREATE_TABLE_SQL_KEYWORD = "CREATE TABLE ";
