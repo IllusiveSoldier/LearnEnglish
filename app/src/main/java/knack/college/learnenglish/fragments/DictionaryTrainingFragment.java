@@ -1,8 +1,11 @@
 package knack.college.learnenglish.fragments;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import java.util.Random;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
+import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.Validator;
 import knack.college.learnenglish.model.WordFromDictionary;
 import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
@@ -161,6 +165,9 @@ public class DictionaryTrainingFragment extends Fragment {
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
+                dictionaryTrainingTranslateWordEditText.getBackground().setColorFilter(
+                        Color.parseColor(RandomColor.Colors.GREEN),
+                        PorterDuff.Mode.SRC_ATOP);
                 progressBar.setProgress(correctAnswer + wrongAnswer);
             } else {
                 wrongAnswer++;
@@ -186,6 +193,10 @@ public class DictionaryTrainingFragment extends Fragment {
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
+                dictionaryTrainingTranslateWordEditText.getBackground().setColorFilter(
+                        ContextCompat.getColor(getActivity().getApplicationContext(),
+                                R.color.colorAccent),
+                        PorterDuff.Mode.SRC_ATOP);
                 progressBar.setProgress(correctAnswer + wrongAnswer);
             }
         } else if (wordFromDictionaries.size() == 0) {
