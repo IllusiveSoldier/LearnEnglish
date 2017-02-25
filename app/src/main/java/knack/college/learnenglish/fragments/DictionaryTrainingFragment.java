@@ -24,8 +24,11 @@ import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.Toast;
 
 import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
+import static knack.college.learnenglish.model.Constant.CORRECT_ANSWER;
 import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
 import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
+import static knack.college.learnenglish.model.Constant.NUMBER_WORDS;
+import static knack.college.learnenglish.model.Constant.WRONG_ANSWER;
 
 public class DictionaryTrainingFragment extends Fragment {
 
@@ -162,6 +165,18 @@ public class DictionaryTrainingFragment extends Fragment {
                     dictionaryTrainingEnglishWordTextView.setText(
                             wordFromDictionaries.get(randomIndex).getEnglishWord());
                 } else if (wordFromDictionaries.size() == 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
+                    bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
+                    bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
+
+                    Fragment showDictionaryTrainingResult =
+                            new ShowDictionaryTrainingResultFragment();
+                    showDictionaryTrainingResult.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.activity_task, showDictionaryTrainingResult)
+                            .commit();
+
                     statistic.setWordsCount(wordsCount);
                     statistic.setCorrectAnswer(correctAnswer);
                     statistic.setWrongAnswer(wrongAnswer);
@@ -169,8 +184,8 @@ public class DictionaryTrainingFragment extends Fragment {
 
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
-                    toast.show(getResources().getString(R.string.title_wordsIsEmpty),
-                            R.mipmap.ic_sentiment_very_satisfied_black_24dp);
+//                    toast.show(getResources().getString(R.string.title_wordsIsEmpty),
+//                            R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
                 progressBar.setProgress(correctAnswer + wrongAnswer);
@@ -187,6 +202,18 @@ public class DictionaryTrainingFragment extends Fragment {
                     dictionaryTrainingEnglishWordTextView.setText(
                             wordFromDictionaries.get(randomIndex).getEnglishWord());
                 } else if (wordFromDictionaries.size() == 0) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
+                    bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
+                    bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
+
+                    Fragment showDictionaryTrainingResult =
+                            new ShowDictionaryTrainingResultFragment();
+                    showDictionaryTrainingResult.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.activity_task, showDictionaryTrainingResult)
+                            .commit();
+
                     statistic.setWordsCount(wordsCount);
                     statistic.setCorrectAnswer(correctAnswer);
                     statistic.setWrongAnswer(wrongAnswer);
@@ -194,8 +221,8 @@ public class DictionaryTrainingFragment extends Fragment {
 
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
-                    toast.show(getResources().getString(R.string.title_wordsIsEmpty),
-                            R.mipmap.ic_sentiment_very_satisfied_black_24dp);
+//                    toast.show(getResources().getString(R.string.title_wordsIsEmpty),
+//                            R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
                 progressBar.setProgress(correctAnswer + wrongAnswer);

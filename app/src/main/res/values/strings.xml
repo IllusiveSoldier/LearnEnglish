@@ -22,8 +22,16 @@
     <string name="title.whatToDo">Что сделать?</string>
     <string name="title.question.clear_dictionary">Очистить словарь?</string>
     <string name="title.last_dictionary_training_date">Последняя тренировка по словарю</string>
+    <string name="title.you_end_event">Ты завершил испытание!</string>
+    <string name="title.your_results">Твои результаты:</string>
+    <string name="title.wordsNumber">Всего слов</string>
+    <string name="title.correct">Правильно</string>
+    <string name="title.wrong">Неправильно</string>
 
     <string name="hint.english_word">Слово на английском</string>
     <string name="hint.russian_word">Слово на русском</string>
     <string name="hint.translate_word">Перевести слово</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

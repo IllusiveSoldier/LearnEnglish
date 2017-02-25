@@ -11,6 +11,9 @@ public final class Constant {
     public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE =
             "Прогон по нетренированным словам";
     public final static String FRAGMENT_CODE = "fragmentCode";
+    public final static String NUMBER_WORDS = "numberWords";
+    public final static String CORRECT_ANSWER = "correctAnswer";
+    public final static String WRONG_ANSWER = "wrongAnswer";
 
     public final class DatabaseKeywords {
         public final static String CREATE_TABLE_SQL_KEYWORD = "CREATE TABLE ";
