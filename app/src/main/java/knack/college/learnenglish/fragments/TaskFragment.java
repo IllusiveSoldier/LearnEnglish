@@ -3,6 +3,7 @@ package knack.college.learnenglish.fragments;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -97,6 +98,8 @@ public class TaskFragment extends Fragment {
             taskCardView = (CardView) itemView.findViewById(R.id.taskCardView);
             taskItemImageView = (ImageView) itemView.findViewById(R.id.taskItemImageView);
             taskName = (TextView) itemView.findViewById(R.id.taskName);
+            taskName.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Roboto/Roboto-Light.ttf"));
         }
     }
 

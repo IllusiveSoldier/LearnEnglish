@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:id="@+id/activity_dictionary_training"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,44 +7,65 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="knack.college.learnenglish.LearnEnglishActivity">
-    <ProgressBar
-        android:id="@+id/progressBar"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@color/white"
-        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Переведи слово"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="27sp"
         />
     <TextView
         android:id="@+id/dictionaryTrainingEnglishWordTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:textSize="30sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/title"
+        android:text="Hello"
         android:textAlignment="center"
+        android:textSize="30sp"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:id="@+id/linearLayout"
+        android:layout_above="@+id/progressBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <EditText
             android:id="@+id/dictionaryTrainingTranslateWordEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="textAutoComplete|textAutoCorrect|textShortMessage"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:hint="Перевод сюда"
             android:layout_weight="1"
             />
         <ImageButton
             android:id="@+id/checkAnswerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/ic_check_circle_black_48dp"
-            />
-        <ImageButton
-            android:id="@+id/helpAnswerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ic_help_black_48dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@mipmap/ic_done_black_48dp"
             />
     </LinearLayout>
-</LinearLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

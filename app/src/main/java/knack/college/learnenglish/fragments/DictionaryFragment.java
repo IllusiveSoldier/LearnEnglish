@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -143,10 +144,17 @@ public class DictionaryFragment extends Fragment {
 
             itemView.setOnLongClickListener(this);
             dictionaryCardView = (CardView) itemView.findViewById(R.id.dictionaryCardView);
+
             dictionaryEnglishWordTextView = (TextView) itemView
                     .findViewById(R.id.dictionaryEnglishWordTextView);
+            dictionaryEnglishWordTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Roboto/Roboto-Light.ttf"));
+
             dictionaryTranslateWordTextView = (TextView) itemView
                     .findViewById(R.id.dictionaryTranslateWordTextView);
+            dictionaryTranslateWordTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Roboto/Roboto-Light.ttf"));
+
             learnEnglishWordItemImageView = (ImageView) itemView
                     .findViewById(R.id.learnEnglishWordItemImageView);
         }

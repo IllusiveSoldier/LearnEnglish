@@ -3,6 +3,7 @@ package knack.college.learnenglish.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,7 +50,13 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.add_word_to_dictonary_dialog_window, null);
 
         englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
+        englishWordEditText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+
         translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);
+        translateWordEditText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+
         translateButton = (ImageView) view.findViewById(R.id.translateButton);
 
         dictionary = new Dictionary(getActivity().getApplicationContext());

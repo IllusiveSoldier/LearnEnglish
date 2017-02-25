@@ -1,11 +1,9 @@
 package knack.college.learnenglish.fragments;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import java.util.Random;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
-import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.Validator;
 import knack.college.learnenglish.model.WordFromDictionary;
 import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
@@ -32,10 +29,10 @@ import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
 
 public class DictionaryTrainingFragment extends Fragment {
 
+    TextView title;
     TextView dictionaryTrainingEnglishWordTextView;
     EditText dictionaryTrainingTranslateWordEditText;
     ImageButton checkAnswerButton;
-    ImageButton helpAnswerButton;
     ProgressBar progressBar;
 
     List<WordFromDictionary> wordFromDictionaries = new ArrayList<>();
@@ -64,11 +61,9 @@ public class DictionaryTrainingFragment extends Fragment {
             String fragmentCode = (String) getArguments().get(FRAGMENT_CODE);
             try {
                 if (ALL_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
-                    wordFromDictionaries = (ArrayList<WordFromDictionary>)
-                            dictionary.getAllWordsList();
+                    wordFromDictionaries = dictionary.getAllWordsList();
                 } else if (FORGOTTEN_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
-                    wordFromDictionaries = (ArrayList<WordFromDictionary>)
-                            dictionary.getForgottenWords();
+                    wordFromDictionaries = dictionary.getForgottenWords();
                 }
             } catch (Exception ex) {
                 toast.show(ex);
@@ -79,10 +74,20 @@ public class DictionaryTrainingFragment extends Fragment {
         statistic = new DictionaryTrainingStatistic(getActivity());
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
+        title = (TextView) view.findViewById(R.id.title);
+        title.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+
         dictionaryTrainingEnglishWordTextView = (TextView)
                 view.findViewById(R.id.dictionaryTrainingEnglishWordTextView);
+        dictionaryTrainingEnglishWordTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+
         dictionaryTrainingTranslateWordEditText = (EditText)
                 view.findViewById(R.id.dictionaryTrainingTranslateWordEditText);
+        dictionaryTrainingTranslateWordEditText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
         try {
@@ -105,6 +110,7 @@ public class DictionaryTrainingFragment extends Fragment {
             toast.show(ex);
         }
 
+        // При нажатии проверяется ответ
         checkAnswerButton = (ImageButton) view.findViewById(R.id.checkAnswerButton);
         checkAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,18 +123,20 @@ public class DictionaryTrainingFragment extends Fragment {
             }
         });
 
-        helpAnswerButton = (ImageButton) view.findViewById(R.id.helpAnswerButton);
-        helpAnswerButton.setOnClickListener(new View.OnClickListener() {
+        // При долгом нажатии подсказка
+        checkAnswerButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 if (wordFromDictionaries.size() > 0) {
                     toast.show(wordFromDictionaries.get(randomIndex).getTranslateWord(),
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp, android.widget.Toast.LENGTH_SHORT);
                 } else if (wordFromDictionaries.size() == 0) {
                     toast.show(getActivity().getApplication().getResources()
-                            .getString(R.string.title_notFoundWords),
+                                    .getString(R.string.title_notFoundWords),
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                 }
+
+                return true;
             }
         });
 
@@ -165,9 +173,6 @@ public class DictionaryTrainingFragment extends Fragment {
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
-                dictionaryTrainingTranslateWordEditText.getBackground().setColorFilter(
-                        Color.parseColor(RandomColor.Colors.GREEN),
-                        PorterDuff.Mode.SRC_ATOP);
                 progressBar.setProgress(correctAnswer + wrongAnswer);
             } else {
                 wrongAnswer++;
@@ -193,10 +198,6 @@ public class DictionaryTrainingFragment extends Fragment {
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
-                dictionaryTrainingTranslateWordEditText.getBackground().setColorFilter(
-                        ContextCompat.getColor(getActivity().getApplicationContext(),
-                                R.color.colorAccent),
-                        PorterDuff.Mode.SRC_ATOP);
                 progressBar.setProgress(correctAnswer + wrongAnswer);
             }
         } else if (wordFromDictionaries.size() == 0) {

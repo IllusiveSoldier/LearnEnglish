@@ -3,6 +3,7 @@ package knack.college.learnenglish.fragments;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -24,6 +25,7 @@ import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ASSIG
 public class ProfileFragment extends Fragment {
 
     FloatingActionButton deleteDictionaryButton;
+    TextView numberOfWordsTitle;
     TextView numberOfWordsValue;
 
     private Toast toast;
@@ -56,7 +58,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        numberOfWordsTitle = (TextView) view.findViewById(R.id.numberOfWordsTitle);
+        numberOfWordsTitle.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+
         numberOfWordsValue = (TextView) view.findViewById(R.id.numberOfWordsValue);
+        numberOfWordsValue.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
         try {
             numberOfWordsValue.setText(String.valueOf(dictionary.getNumberOfWords()));
         } catch (Exception ex) {
