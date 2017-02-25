@@ -25,6 +25,30 @@
         android:textSize="35sp"
         android:textAlignment="center"
         />
+    <TextView
+        android:id="@+id/lastDictionaryTrainingDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:text="@string/title.last_dictionary_training_date"
+        android:layout_below="@+id/numberOfWordsValue"
+        android:layout_alignLeft="@+id/numberOfWordsTitle"
+        android:layout_alignStart="@+id/numberOfWordsTitle"
+        />
+    <TextView
+        android:id="@+id/lastDictionaryTrainingDateValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lastDictionaryTrainingDate"
+        android:textSize="35sp"
+        android:textAlignment="center"
+        />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/deleteDictionaryButton"
         android:layout_width="wrap_content"
@@ -38,6 +62,5 @@
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         android:src="@mipmap/ic_assignment_black_48dp"
-
         />
 </RelativeLayout>

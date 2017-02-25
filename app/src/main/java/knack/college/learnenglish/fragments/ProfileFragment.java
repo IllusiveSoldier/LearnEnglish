@@ -17,6 +17,7 @@ import knack.college.learnenglish.R;
 import knack.college.learnenglish.dialogs.AssignmentDialog;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.RandomColor;
+import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.Toast;
 
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ASSIGNMENT_DIALOG;
@@ -27,10 +28,13 @@ public class ProfileFragment extends Fragment {
     FloatingActionButton deleteDictionaryButton;
     TextView numberOfWordsTitle;
     TextView numberOfWordsValue;
+    TextView lastDictionaryTrainingDate;
+    TextView lastDictionaryTrainingDateValue;
 
     private Toast toast;
     RandomColor color;
     Dictionary dictionary;
+    DictionaryTrainingStatistic dictionaryTrainingStatistic;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +75,21 @@ public class ProfileFragment extends Fragment {
             toast.show(ex);
         }
 
+        lastDictionaryTrainingDate = (TextView) view.findViewById(R.id.lastDictionaryTrainingDate);
+        lastDictionaryTrainingDate.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+
+        lastDictionaryTrainingDateValue = (TextView)
+                view.findViewById(R.id.lastDictionaryTrainingDateValue);
+        lastDictionaryTrainingDateValue.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
+        try {
+            dictionaryTrainingStatistic = new DictionaryTrainingStatistic(getActivity());
+            lastDictionaryTrainingDateValue.setText(dictionaryTrainingStatistic
+                    .getLastDictionaryTrainingDate());
+        } catch (Exception ex) {
+            toast.show(ex);
+        }
 
         return view;
     }
