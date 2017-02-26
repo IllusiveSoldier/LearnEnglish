@@ -5,11 +5,19 @@ import static knack.college.learnenglish.model.database.DictionaryContract.Dicti
 public final class Constant {
 
     public final static String ALL_WORDS_FROM_DICTIONARY = "allWordsFromDictionary";
+    public final static String ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION =
+            "allWordsFromDictionarySecondEdition";
     public final static String FORGOTTEN_WORDS_FROM_DICTIONARY = "forgottenWordsFromDictionary";
+    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION =
+            "forgottenWordsFromDictionarySecondEdition";
     public final static String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE =
             "Прогон по всем словам";
+    public final static String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION =
+            "Прогон по всем словам (без ввода слов)";
     public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE =
             "Прогон по нетренированным словам";
+    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION =
+            "Прогон по нетренированным словам (без ввода слов)";
     public final static String FRAGMENT_CODE = "fragmentCode";
     public final static String NUMBER_WORDS = "numberWords";
     public final static String CORRECT_ANSWER = "correctAnswer";
