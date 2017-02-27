@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -63,17 +64,7 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         toast = new Toast(getActivity());
 
         builder.setView(view)
-                .setPositiveButton(R.string.title_add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        try {
-                            dictionary.addWordWithTranslate(englishWordEditText.getText()
-                                    .toString(), translateWordEditText.getText().toString());
-                        } catch (Exception ex) {
-                            toast.show(ex);
-                        }
-                    }
-                })
+                .setPositiveButton(R.string.title_add, null)
                 .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         AddWordToDictionaryDialog.this.getDialog().cancel();
@@ -119,6 +110,30 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         });
 
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        final AlertDialog dialog = (AlertDialog) getDialog();
+        if (dialog != null) {
+            dialog.setCanceledOnTouchOutside(false);
+            Button negativeButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            // Вешаем listener на кнопку "Добавить", теперь диалог не закрывается
+            negativeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        dictionary.addWordWithTranslate(englishWordEditText.getText()
+                                .toString(), translateWordEditText.getText().toString());
+                        dialog.cancel();
+                    } catch (Exception ex) {
+                        toast.show(ex);
+                    }
+                }
+            });
+        }
     }
 
     private class GetTranslateWord extends AsyncTask<String, Void, String> {
