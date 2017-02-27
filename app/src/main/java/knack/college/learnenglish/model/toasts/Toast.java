@@ -1,6 +1,7 @@
 package knack.college.learnenglish.model.toasts;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,6 +122,8 @@ public class Toast {
 
         imageView = (ImageView) view.findViewById(R.id.image);
         textView = (TextView) view.findViewById(R.id.message);
+        textView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf"));
         toast = new android.widget.Toast(activity.getApplicationContext());
     }
 
