@@ -5,9 +5,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -34,11 +37,15 @@ public class AddWordToDictionaryDialog extends DialogFragment {
     private EditText englishWordEditText;
     private EditText translateWordEditText;
     private ImageView translateButton;
+    private Snackbar snackbar;
 
     private Toast toast;
     private Dictionary dictionary;
     private Exception exception;
     private Validator validator = new Validator();
+
+    private String bufferEnglishWord;
+    private String bufferTranslateWord;
 
     @NonNull
     @Override
@@ -103,9 +110,35 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         translateButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                bufferEnglishWord = englishWordEditText.getText().toString();
+                bufferTranslateWord = translateWordEditText.getText().toString();
+
                 englishWordEditText.setText("");
                 translateWordEditText.setText("");
-                return false;
+
+                snackbar = Snackbar
+                        .make(v,
+                              getResources().getString(R.string.hint_values_is_removed),
+                              Snackbar.LENGTH_LONG)
+                        .setAction(getResources().getString(R.string.hint_undo),
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        englishWordEditText.setText(bufferEnglishWord);
+                                        translateWordEditText.setText(bufferTranslateWord);
+                                    }
+                                });
+                if (Build.VERSION.SDK_INT >= 23) {
+                    snackbar.setActionTextColor(ContextCompat.getColor(getActivity()
+                            .getApplicationContext(),
+                            R.color.bright_green)
+                    );
+                } else {
+                    snackbar.setActionTextColor(getResources().getColor(R.color.bright_green));
+                }
+                snackbar.show();
+
+                return true;
             }
         });
 
