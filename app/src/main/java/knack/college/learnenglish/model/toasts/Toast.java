@@ -45,7 +45,6 @@ public class Toast {
 
     /** Метод, который показывает Toast */
     public void show() {
-        imageView.setImageResource(image);
         textView.setText(message);
 
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
@@ -88,11 +87,30 @@ public class Toast {
 
     /** Метод, который показывает Toast */
     public void show(Throwable ex) {
+        textView.setText(ex.getMessage());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(android.widget.Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+    }
+
+    public void show(Throwable ex, int image) {
         imageView.setImageResource(R.mipmap.ic_sentiment_very_dissatisfied_black_24dp);
         textView.setText(ex.getMessage());
 
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(android.widget.Toast.LENGTH_LONG);
+        toast.setView(view);
+        toast.show();
+    }
+
+    public void show(Throwable ex, int image, int duration) {
+        imageView.setImageResource(image);
+        textView.setText(ex.getMessage());
+
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(duration);
         toast.setView(view);
         toast.show();
     }
