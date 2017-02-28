@@ -29,27 +29,33 @@ public class DeleteWordFromDictionaryDialog extends DialogFragment {
         toast = new Toast(getActivity());
 
         builder.setView(view)
-               .setPositiveButton(R.string.title_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent();
-                        intent.putExtra(TAG_SELECTED, 1);
-                        getTargetFragment().onActivityResult(
-                                getTargetRequestCode(),
-                                Activity.RESULT_OK, intent
-                        );
-                    }
-                })
-               .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent();
-                        intent.putExtra(TAG_SELECTED, 0);
-                        getTargetFragment().onActivityResult(
-                                getTargetRequestCode(),
-                                Activity.RESULT_CANCELED, intent
-                        );
-                    }
-               });
+               .setPositiveButton(
+                       R.string.title_delete,
+                       new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialog, int id) {
+                               Intent intent = new Intent();
+                               intent.putExtra(TAG_SELECTED, 1);
+                               getTargetFragment().onActivityResult(
+                                       getTargetRequestCode(),
+                                       Activity.RESULT_OK, intent
+                               );
+                           }
+                       }
+               )
+               .setNegativeButton(
+                       R.string.title_cancel,
+                       new DialogInterface.OnClickListener() {
+                           public void onClick(DialogInterface dialog, int id) {
+                               Intent intent = new Intent();
+                               intent.putExtra(TAG_SELECTED, 0);
+                               getTargetFragment().onActivityResult(
+                                       getTargetRequestCode(),
+                                       Activity.RESULT_CANCELED, intent
+                               );
+                           }
+                       }
+               );
 
         return builder.create();
     }

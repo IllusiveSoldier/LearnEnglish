@@ -84,7 +84,6 @@ public class DictionaryTrainingSecondFragment extends Fragment {
         );
 
         no = (ImageButton) view.findViewById(R.id.no);
-
         yes = (ImageButton) view.findViewById(R.id.yes);
 
         if (getArguments() != null && getArguments().containsKey(FRAGMENT_CODE)) {
@@ -119,9 +118,10 @@ public class DictionaryTrainingSecondFragment extends Fragment {
                 no.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!validator.isTranslation(wordFromDictionaries.get(randomIndexEnglish)
-                                .getEnglishWord(),
-                                wordFromDictionaries.get(randomIndexTranslate).getEnglishWord())) {
+                        if (!validator.isTranslation(
+                                wordFromDictionaries.get(randomIndexEnglish).getEnglishWord(),
+                                wordFromDictionaries.get(randomIndexTranslate).getEnglishWord()
+                        )) {
                             correctAnswer++;
                             wordFromDictionaries.remove(randomIndexEnglish);
                             if (wordFromDictionaries.size() > 0) {
@@ -182,9 +182,10 @@ public class DictionaryTrainingSecondFragment extends Fragment {
                 yes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (validator.isTranslation(wordFromDictionaries.get(randomIndexEnglish)
-                                .getEnglishWord(),
-                                wordFromDictionaries.get(randomIndexTranslate).getEnglishWord())) {
+                        if (validator.isTranslation(
+                                wordFromDictionaries.get(randomIndexEnglish).getEnglishWord(),
+                                wordFromDictionaries.get(randomIndexTranslate).getEnglishWord()
+                        )) {
                             correctAnswer++;
                             wordFromDictionaries.remove(randomIndexEnglish);
                             if (wordFromDictionaries.size() > 0) {

@@ -55,7 +55,7 @@ public class DictionaryTrainingFragment extends Fragment {
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         if (getArguments() != null && getArguments().containsKey(FRAGMENT_CODE)) {
-            String fragmentCode = (String) getArguments().get(FRAGMENT_CODE);
+            final String fragmentCode = (String) getArguments().get(FRAGMENT_CODE);
             try {
                 if (ALL_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
                     wordFromDictionaries = dictionary.getAllWordsList();
@@ -72,18 +72,20 @@ public class DictionaryTrainingFragment extends Fragment {
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         title = (TextView) view.findViewById(R.id.title);
-        title.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        title.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
-        dictionaryTrainingEnglishWordTextView = (TextView)
-                view.findViewById(R.id.dictionaryTrainingEnglishWordTextView);
+        dictionaryTrainingEnglishWordTextView =
+                (TextView) view.findViewById(R.id.dictionaryTrainingEnglishWordTextView);
         dictionaryTrainingEnglishWordTextView.setTypeface(
                 Typeface.createFromAsset(getActivity().getAssets(),
                 "fonts/Roboto/Roboto-Light.ttf")
         );
 
-        dictionaryTrainingTranslateWordEditText = (EditText)
-                view.findViewById(R.id.dictionaryTrainingTranslateWordEditText);
+        dictionaryTrainingTranslateWordEditText =
+                (EditText) view.findViewById(R.id.dictionaryTrainingTranslateWordEditText);
         dictionaryTrainingTranslateWordEditText.setTypeface(
                 Typeface.createFromAsset(getActivity().getAssets(),
                 "fonts/Roboto/Roboto-Light.ttf")
@@ -190,8 +192,7 @@ public class DictionaryTrainingFragment extends Fragment {
                     statistic.addRecord();
 
                     checkAnswerButton.setEnabled(false);
-                    dictionaryTrainingEnglishWordTextView.setText("");
-                    dictionaryTrainingTranslateWordEditText.setText("");
+                    clearEditTextControls();
                 }
                 progressBar.setProgress(correctAnswer + wrongAnswer);
             } else {
@@ -226,14 +227,24 @@ public class DictionaryTrainingFragment extends Fragment {
                     statistic.addRecord();
 
                     checkAnswerButton.setEnabled(false);
-                    dictionaryTrainingEnglishWordTextView.setText("");
-                    dictionaryTrainingTranslateWordEditText.setText("");
+                    clearEditTextControls();
                 }
                 progressBar.setProgress(correctAnswer + wrongAnswer);
             }
         } else if (wordFromDictionaries.size() == 0) {
-            toast.show(getResources().getString(R.string.title_notFoundWords),
-                    R.mipmap.ic_sentiment_very_satisfied_black_24dp);
+            toast.show(
+                    getResources().getString(R.string.title_notFoundWords),
+                    R.mipmap.ic_sentiment_very_satisfied_black_24dp
+            );
+        }
+    }
+
+    /** Метод, который очищает текст с EditText'ов */
+    private void clearEditTextControls() {
+        if (dictionaryTrainingEnglishWordTextView != null
+                && dictionaryTrainingTranslateWordEditText != null) {
+            dictionaryTrainingEnglishWordTextView.setText("");
+            dictionaryTrainingTranslateWordEditText.setText("");
         }
     }
 }

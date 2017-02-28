@@ -28,22 +28,27 @@ public class ClearDictionaryDialog extends DialogFragment {
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         builder.setView(view)
-               .setPositiveButton(R.string.title_clearDictionary,
+               .setPositiveButton(
+                       R.string.title_clearDictionary,
                        new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialog, int id) {
-                       try {
-                           dictionary.clear();
-                       } catch (Exception ex) {
-                           toast.show(ex);
+                           @Override
+                           public void onClick(DialogInterface dialog, int id) {
+                               try {
+                                   dictionary.clear();
+                               } catch (Exception ex) {
+                                   toast.show(ex);
+                               }
+                           }
                        }
-                   }
-               })
-               .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+               )
+               .setNegativeButton(
+                       R.string.title_cancel,
+                       new DialogInterface.OnClickListener() {
+                           public void onClick(DialogInterface dialog, int id) {
 
-                    }
-                });
+                           }
+                       }
+               );
 
         return builder.create();
     }

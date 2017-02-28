@@ -16,9 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.Validator;
@@ -26,13 +24,12 @@ import knack.college.learnenglish.model.toasts.Toast;
 import knack.college.learnenglish.model.translate.TranslateDAO;
 import knack.college.learnenglish.model.translate.Translator;
 
-import static knack.college.learnenglish.model.Constant.ExceptionMessage.ENTER_WORDS_FOR_TRANSLATE_MESSAGE;
-import static knack.college.learnenglish.model.Constant.ExceptionMessage.TRANSLATION_ERROR_MESSAGE;
 import static knack.college.learnenglish.model.Constant.Translator.EN_RU;
 import static knack.college.learnenglish.model.Constant.Translator.RU_EN;
 
 
 public class AddWordToDictionaryDialog extends DialogFragment {
+    private final static String TRANSLATION_ERROR_MESSAGE = "Не удалось перевести";
 
     private EditText englishWordEditText;
     private EditText translateWordEditText;
@@ -55,12 +52,16 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.add_word_to_dictonary_dialog_window, null);
 
         englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
-        englishWordEditText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        englishWordEditText.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);
-        translateWordEditText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        translateWordEditText.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         translateButton = (ImageView) view.findViewById(R.id.translateButton);
 
@@ -69,34 +70,26 @@ public class AddWordToDictionaryDialog extends DialogFragment {
 
         builder.setView(view)
                .setPositiveButton(R.string.title_add, null)
-               .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        AddWordToDictionaryDialog.this.getDialog().cancel();
-                    }
-                });
+               .setNegativeButton(
+                       R.string.title_cancel,
+                       new DialogInterface.OnClickListener() {
+                           public void onClick(DialogInterface dialog, int id) {
+
+                           }
+                       }
+               );
 
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    if (englishWordEditText.getText().toString().isEmpty()) {
-                        if (!translateWordEditText.getText().toString().isEmpty()) {
-                            String russianWord = translateWordEditText.getText().toString();
-                            if (!russianWord.isEmpty()) {
-                                new GetTranslateWord().execute(russianWord, EN_RU);
-                            }
-                        } else {
-                            toast.show(ENTER_WORDS_FOR_TRANSLATE_MESSAGE);
-                        }
-                    } else if (translateWordEditText.getText().toString().isEmpty()) {
-                        if (!englishWordEditText.getText().toString().isEmpty()) {
-                            String englishWord = englishWordEditText.getText().toString();
-                            if (!englishWord.isEmpty()) {
-                                new GetTranslateWord().execute(englishWord, RU_EN);
-                            }
-                        } else {
-                            toast.show(ENTER_WORDS_FOR_TRANSLATE_MESSAGE);
-                        }
+                    final String englishWord = englishWordEditText.getText().toString();
+                    final String translationWord = translateWordEditText.getText().toString();
+
+                    if (englishWord.isEmpty() && !translationWord.isEmpty()) {
+                        new GetTranslateWord().execute(translationWord, EN_RU);
+                    } else if (translationWord.isEmpty() && !englishWord.isEmpty()) {
+                        new GetTranslateWord().execute(englishWord, RU_EN);
                     }
                 } catch (Exception ex) {
                     toast.show(ex);
@@ -110,23 +103,27 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                 bufferEnglishWord = englishWordEditText.getText().toString();
                 bufferTranslateWord = translateWordEditText.getText().toString();
 
-                englishWordEditText.setText("");
-                translateWordEditText.setText("");
+                clearEditTextControls();
 
                 snackbar = Snackbar
-                        .make(v, getResources().getString(R.string.hint_values_is_removed),
-                                Snackbar.LENGTH_LONG)
-                        .setAction(getResources().getString(R.string.hint_undo),
+                        .make(
+                            v,
+                            getResources().getString(R.string.hint_values_is_removed),
+                            Snackbar.LENGTH_LONG
+                        )
+                        .setAction(
+                                getResources().getString(R.string.hint_undo),
                                 new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         englishWordEditText.setText(bufferEnglishWord);
                                         translateWordEditText.setText(bufferTranslateWord);
                                     }
-                                });
+                                }
+                        );
                 if (Build.VERSION.SDK_INT >= 23) {
-                    snackbar.setActionTextColor(ContextCompat.getColor(getActivity()
-                            .getApplicationContext(),
+                    snackbar.setActionTextColor(
+                            ContextCompat.getColor(getActivity().getApplicationContext(),
                             R.color.bright_green)
                     );
                 } else {
@@ -149,19 +146,22 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         if (dialog != null) {
             dialog.setCanceledOnTouchOutside(false);
             Button negativeButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-            // Вешаем listener на кнопку "Добавить", теперь диалог не закрывается
-            negativeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        dictionary.addWordWithTranslate(englishWordEditText.getText().toString(),
-                                translateWordEditText.getText().toString());
-                        dialog.cancel();
-                    } catch (Exception ex) {
-                        toast.show(ex);
+            if (negativeButton != null) {
+                negativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            dictionary.addWordWithTranslate(
+                                    englishWordEditText.getText().toString(),
+                                    translateWordEditText.getText().toString()
+                            );
+                            dialog.cancel();
+                        } catch (Exception ex) {
+                            toast.show(ex);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -169,7 +169,6 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             translateButton.setEnabled(false);
         }
 
@@ -178,14 +177,10 @@ public class AddWordToDictionaryDialog extends DialogFragment {
             String response = null;
             try {
                 Translator translator = new Translator();
-                if (params[1].equals(EN_RU)) {
-                    if (params[0] != null && !params[0].isEmpty()) {
-                        response = translator.translateRus(params[0]);
-                    }
-                } else if (params[1].equals(RU_EN)) {
-                    if (params[0] != null && !params[0].isEmpty()) {
-                        response = translator.translateEng(params[0]);
-                    }
+                if (params[1].equals(EN_RU) && params[0] != null && !params[0].isEmpty()) {
+                    response = translator.translateRus(params[0]);
+                } else if (params[1].equals(RU_EN) && params[0] != null && !params[0].isEmpty()) {
+                    response = translator.translateEng(params[0]);
                 }
             } catch (Exception ex) {
                 exception = ex;
@@ -209,19 +204,32 @@ public class AddWordToDictionaryDialog extends DialogFragment {
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 TranslateDAO translateDAO = mapper.readValue(result, TranslateDAO.class);
-                String readyTranslationsString = translateDAO.getText().get(0);
-                if (readyTranslationsString != null) {
-                    if (validator.isRussianCharactersInWord(readyTranslationsString)) {
-                        translateWordEditText.setText(readyTranslationsString);
-                    } else if (validator.isEnglishCharactersInWord(readyTranslationsString)) {
-                        englishWordEditText.setText(readyTranslationsString);
-                    }
+                final String readyTranslationsString = translateDAO.getText().get(0);
+
+                if (readyTranslationsString != null
+                        && validator.isRussianCharactersInWord(readyTranslationsString)) {
+                    translateWordEditText.setText(readyTranslationsString);
+                } else if (readyTranslationsString != null
+                        && validator.isEnglishCharactersInWord(readyTranslationsString)) {
+                    englishWordEditText.setText(readyTranslationsString);
                 }
             } catch (Exception ex) {
                 toast.show(TRANSLATION_ERROR_MESSAGE);
             }
 
             translateButton.setEnabled(true);
+        }
+    }
+
+    /** Метод, который очищает текст с EditText'ов */
+    private void clearEditTextControls() {
+        try {
+            if (englishWordEditText != null && translateWordEditText != null) {
+                englishWordEditText.setText("");
+                translateWordEditText.setText("");
+            }
+        } catch (Exception ex) {
+            toast.show("Не удалось очистить поля");
         }
     }
 }

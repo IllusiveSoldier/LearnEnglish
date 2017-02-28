@@ -6,16 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.Toast;
 
-import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_CLEAR_DICTIONARY_DIALOG;
-
 
 public class AssignmentDialog extends DialogFragment {
+    private final static String UNIQUE_NAME_CLEAR_DICTIONARY_DIALOG = "ClearDictionaryDialog";
 
     Dictionary dictionary;
     private Toast toast;

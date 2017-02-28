@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import knack.college.learnenglish.exceptions.EmptyData;
 import knack.college.learnenglish.exceptions.MoreMaxSymbols;
 import knack.college.learnenglish.exceptions.NoEnglishWord;
@@ -18,12 +17,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static knack.college.learnenglish.model.Constant.ExceptionMessage.*;
-import static knack.college.learnenglish.model.Constant.KeysForDebug.ERROR_KEY_FOR_DEBUG;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.*;
 
 /** Класс, описывающий словарь */
 public class Dictionary {
+
+    private static final String WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE =
+            "Слово, которое вы ввели больше 255 символов.";
+    private static final String NO_ENGLISH_WORD_EXCEPTION_MESSAGE =
+            "Первое слово для словаря должно содержать в себе только латинские символы";
+    private static final String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
+            "Слово для перевода должно содержать в себе только русские символы";
+    private static final String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
 
     private Context context;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -53,10 +58,18 @@ public class Dictionary {
                             values.put(TRANSLATE_WORD_COLUMN_NAME, translate);
 
                             database.insert(DICTIONARY_TABLE_NAME, null, values);
-                        } else throw new NoRussianWord(NO_RUSSIAN_WORD_EXCEPTION_MESSAGE);
-                    } else throw new NoEnglishWord(NO_ENGLISH_WORD_EXCEPTION_MESSAGE);
-                } else throw new MoreMaxSymbols(WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE);
-            } else throw new EmptyData(NO_DATA_EXCEPTION_MESSAGE);
+                        } else {
+                            throw new NoRussianWord(NO_RUSSIAN_WORD_EXCEPTION_MESSAGE);
+                        }
+                    } else {
+                        throw new NoEnglishWord(NO_ENGLISH_WORD_EXCEPTION_MESSAGE);
+                    }
+                } else {
+                    throw new MoreMaxSymbols(WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE);
+                }
+            } else {
+                throw new EmptyData(NO_DATA_EXCEPTION_MESSAGE);
+            }
         }
     }
 
@@ -122,8 +135,6 @@ public class Dictionary {
 
                 allWordsList.add(word);
             }
-        } catch (Exception ex) {
-            Log.d(ERROR_KEY_FOR_DEBUG, ex.getMessage());
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -149,38 +160,38 @@ public class Dictionary {
 
     /** Метод, который удаляет слово из словаря */
     public void deleteWord(String wordGuid) throws Exception {
-        if (wordGuid != null) {
-            if (!wordGuid.isEmpty()) {
-                LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-                SQLiteDatabase database = helper.getWritableDatabase();
-                database.delete(
-                        DICTIONARY_TABLE_NAME,
-                        GUID_COLUMN_NAME + " = " + "'" + wordGuid + "'",
-                        null
-                );
-            }
+        if (wordGuid != null && !wordGuid.isEmpty()) {
+            LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
+            SQLiteDatabase database = helper.getWritableDatabase();
+            database.delete(
+                    DICTIONARY_TABLE_NAME,
+                    GUID_COLUMN_NAME + " = " + "'" + wordGuid + "'",
+                    null
+            );
         }
     }
 
     /** Метод, который слову сетает последнюю дату тренировки */
     public void setLastTrainingWordDate(String wordGuid) throws Exception {
-        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-        SQLiteDatabase db = helper.getReadableDatabase();
+        if (wordGuid != null && !wordGuid.isEmpty()) {
+            LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
+            SQLiteDatabase db = helper.getReadableDatabase();
 
-        // Current date
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String strDate = sdf.format(new Date());
+            // Current date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String strDate = sdf.format(new Date());
 
-        // New value
-        ContentValues values = new ContentValues();
-        values.put(LAST_TRAINING_DATE, strDate);
+            // New value
+            ContentValues values = new ContentValues();
+            values.put(LAST_TRAINING_DATE, strDate);
 
-        db.update(
-            DICTIONARY_TABLE_NAME,
-            values,
-            GUID_COLUMN_NAME + " = " + "'" + wordGuid + "'",
-            null
-        );
+            db.update(
+                    DICTIONARY_TABLE_NAME,
+                    values,
+                    GUID_COLUMN_NAME + " = " + "'" + wordGuid + "'",
+                    null
+            );
+        }
     }
 
     /** Метод, который возвращает курсор с словами, в которых не проставлена
@@ -190,12 +201,12 @@ public class Dictionary {
         LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
         SQLiteDatabase database = helper.getReadableDatabase();
 
-        return database.rawQuery("SELECT " + OUID_COLUMN_NAME + ", " + GUID_COLUMN_NAME + ", " +
-                ENGLISH_WORD_COLUMN_NAME + ", " + TRANSLATE_WORD_COLUMN_NAME + ", " +
-                LAST_TRAINING_DATE + " FROM DICTIONARY AS dictionary WHERE julianday('" +
-                currentDate +
-                "') - julianday(dictionary.LAST_TRAINING_DATE) >= 1 OR " +
-                "dictionary.LAST_TRAINING_DATE IS NULL" , null);
+        return database.rawQuery("SELECT " + OUID_COLUMN_NAME + ", " + GUID_COLUMN_NAME + ", "
+                + ENGLISH_WORD_COLUMN_NAME + ", " + TRANSLATE_WORD_COLUMN_NAME + ", "
+                + LAST_TRAINING_DATE + " FROM DICTIONARY AS dictionary WHERE julianday('"
+                + currentDate
+                + "') - julianday(dictionary.LAST_TRAINING_DATE) >= 1 OR "
+                + "dictionary.LAST_TRAINING_DATE IS NULL" , null);
     }
 
     /** Метод, который возвращает коллекцию слов, в которых не проставлена

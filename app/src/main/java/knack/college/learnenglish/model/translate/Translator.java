@@ -1,23 +1,25 @@
 package knack.college.learnenglish.model.translate;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static knack.college.learnenglish.model.Constant.Translator.BASE_TRANSLATE_URL;
-import static knack.college.learnenglish.model.Constant.Translator.EN_RU;
-import static knack.college.learnenglish.model.Constant.Translator.LANG;
-import static knack.college.learnenglish.model.Constant.Translator.RU_EN;
-import static knack.college.learnenglish.model.Constant.Translator.TEXT;
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import static knack.college.learnenglish.model.Constant.Translator.*;
 import static knack.college.learnenglish.model.translate.ApiKey.API_KEY;
 
 /** Класс, который реализует перевод слов с помозью сервиса Яндекс Переводчик */
 public class Translator {
+    private final static String BASE_TRANSLATE_URL =
+            "https://translate.yandex.net/api/v1.5/tr.json/translate?key=";
+    private final static String LANG = "&lang=";
+    private final static String TEXT = "&text=";
+
     private OkHttpClient client = new OkHttpClient();
 
+    /** Перевод английского слова */
     public String translateEng(String englishWord) throws Exception {
         String response = null;
         if (englishWord != null && !englishWord.isEmpty()) {
@@ -33,6 +35,7 @@ public class Translator {
         return response;
     }
 
+    /** Перевод русского слова */
     public String translateRus(String russianWord) throws Exception {
         String response = null;
         if (russianWord != null && !russianWord.isEmpty()) {
@@ -48,6 +51,7 @@ public class Translator {
         return response;
     }
 
+    /** Запрос к серву */
     private String run(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)

@@ -32,19 +32,20 @@ import knack.college.learnenglish.model.toasts.Toast;
 
 import java.util.ArrayList;
 
-import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG;
-import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG;
-
 
 public class DictionaryFragment extends Fragment {
+    private final static int REQUEST_SELECTED = 1;
+    private final static String UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG =
+            "addToDictionaryDialog";
+    private final static String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG =
+            "deleteFromDictionaryDialog";
+
     FloatingActionButton addToDatabaseButton;
     RecyclerView dictionaryRecyclerView;
     SwipeRefreshLayout dictionarySwipeRefreshLayout;
     View view;
 
     Snackbar snackbar;
-
-    private static final int REQUEST_SELECTED = 1;
 
     private Toast toast;
     private RandomColor color = new RandomColor();
@@ -91,33 +92,33 @@ public class DictionaryFragment extends Fragment {
             toast.show(ex);
         }
 
-        dictionarySwipeRefreshLayout = (SwipeRefreshLayout) view
-                .findViewById(R.id.dictionarySwipeRefreshLayout);
-        dictionarySwipeRefreshLayout.setColorSchemeColors(
-                Color.parseColor(color.getRandomColor())
-        );
-        dictionarySwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                dictionarySwipeRefreshLayout.setRefreshing(true);
+        dictionarySwipeRefreshLayout =
+                (SwipeRefreshLayout) view.findViewById(R.id.dictionarySwipeRefreshLayout);
+        dictionarySwipeRefreshLayout
+                .setColorSchemeColors(Color.parseColor(color.getRandomColor()));
+        dictionarySwipeRefreshLayout
+                .setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        dictionarySwipeRefreshLayout.setRefreshing(true);
+                        try {
+                            wordFromDictionaries = (ArrayList<WordFromDictionary>)
+                                    dictionary.getAllWordsList();
+                            if (wordFromDictionaries.size() == learnEnglishAdapter
+                                    .getItemCount()) {
+                                learnEnglishAdapter.notifyDataSetChanged();
+                            } else {
+                                learnEnglishAdapter = new LearnEnglishAdapter();
+                                dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
+                            }
+                        } catch (Exception ex) {
+                            toast.show(ex);
+                        }
 
-                try {
-                    wordFromDictionaries = (ArrayList<WordFromDictionary>)
-                            dictionary.getAllWordsList();
-                    if (wordFromDictionaries.size() == learnEnglishAdapter.getItemCount()) {
-                        learnEnglishAdapter.notifyDataSetChanged();
-                    } else {
-                        learnEnglishAdapter = new LearnEnglishAdapter();
-                        dictionaryRecyclerView.setAdapter(learnEnglishAdapter);
+                        dictionarySwipeRefreshLayout.setRefreshing(false);
                     }
-                } catch (Exception ex) {
-                    toast.show(ex);
                 }
-
-                dictionarySwipeRefreshLayout.setRefreshing(false);
-            }
-        });
+        );
 
         return view;
     }
@@ -128,9 +129,8 @@ public class DictionaryFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_SELECTED:
-                    int selected = data.getIntExtra(
-                            DeleteWordFromDictionaryDialog.TAG_SELECTED, -1
-                    );
+                    int selected =
+                            data.getIntExtra(DeleteWordFromDictionaryDialog.TAG_SELECTED, -1);
                     if (selected == 1) {
                         try {
                             final WordFromDictionary wordFromDictionary =
@@ -139,10 +139,13 @@ public class DictionaryFragment extends Fragment {
                             dictionary.deleteWord(wordFromDictionaries.get(itemId).getGuid());
 
                             snackbar = Snackbar
-                                    .make(view, getResources()
-                                            .getString(R.string.hint_word_is_remove),
-                                            Snackbar.LENGTH_LONG)
-                                    .setAction(getResources().getString(R.string.hint_undo),
+                                    .make(
+                                            view,
+                                            getResources().getString(R.string.hint_word_is_remove),
+                                            Snackbar.LENGTH_LONG
+                                    )
+                                    .setAction(
+                                            getResources().getString(R.string.hint_undo),
                                             new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
@@ -152,7 +155,8 @@ public class DictionaryFragment extends Fragment {
                                                         toast.show(ex);
                                                     }
                                                 }
-                                            });
+                                            }
+                                    );
                             if (Build.VERSION.SDK_INT >= 23) {
                                 snackbar.setActionTextColor(ContextCompat.getColor(getActivity()
                                         .getApplicationContext(), R.color.bright_green)
@@ -172,8 +176,7 @@ public class DictionaryFragment extends Fragment {
         }
     }
 
-    private class LearnEnglishHolder
-            extends RecyclerView.ViewHolder
+    private class LearnEnglishHolder extends RecyclerView.ViewHolder
             implements View.OnLongClickListener {
         CardView dictionaryCardView;
         TextView dictionaryEnglishWordTextView;
@@ -186,23 +189,22 @@ public class DictionaryFragment extends Fragment {
             itemView.setOnLongClickListener(this);
             dictionaryCardView = (CardView) itemView.findViewById(R.id.dictionaryCardView);
 
-            dictionaryEnglishWordTextView = (TextView) itemView
-                    .findViewById(R.id.dictionaryEnglishWordTextView);
-            dictionaryEnglishWordTextView.setTypeface(Typeface.createFromAsset(
-                    getActivity().getAssets(),
+            dictionaryEnglishWordTextView =
+                    (TextView) itemView.findViewById(R.id.dictionaryEnglishWordTextView);
+            dictionaryEnglishWordTextView.setTypeface(
+                    Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Roboto/Roboto-Light.ttf")
             );
 
-            dictionaryTranslateWordTextView = (TextView) itemView
-                    .findViewById(R.id.dictionaryTranslateWordTextView);
+            dictionaryTranslateWordTextView =
+                    (TextView) itemView.findViewById(R.id.dictionaryTranslateWordTextView);
             dictionaryTranslateWordTextView.setTypeface(
                     Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Roboto/Roboto-Light.ttf")
             );
 
-            learnEnglishWordItemImageView = (ImageView) itemView.findViewById(
-                    R.id.learnEnglishWordItemImageView
-            );
+            learnEnglishWordItemImageView =
+                    (ImageView) itemView.findViewById(R.id.learnEnglishWordItemImageView);
         }
 
         @Override

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.dialogs.AssignmentDialog;
 import knack.college.learnenglish.model.Dictionary;
@@ -20,10 +19,9 @@ import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.Toast;
 
-import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ASSIGNMENT_DIALOG;
-
 
 public class ProfileFragment extends Fragment {
+    private final static String UNIQUE_NAME_ASSIGNMENT_DIALOG = "assignment";
 
     FloatingActionButton deleteDictionaryButton;
     TextView numberOfWordsTitle;
