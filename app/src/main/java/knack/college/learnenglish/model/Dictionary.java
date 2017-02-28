@@ -5,13 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
 import knack.college.learnenglish.exceptions.EmptyData;
 import knack.college.learnenglish.exceptions.MoreMaxSymbols;
 import knack.college.learnenglish.exceptions.NoEnglishWord;
@@ -19,20 +12,15 @@ import knack.college.learnenglish.exceptions.NoRussianWord;
 import knack.college.learnenglish.model.database.DictionaryContract;
 import knack.college.learnenglish.model.database.LearnEnglishDatabaseHelper;
 
-import static knack.college.learnenglish.model.Constant.ExceptionMessage.NO_DATA_EXCEPTION_MESSAGE;
-import static knack.college.learnenglish.model.Constant.ExceptionMessage.NO_ENGLISH_WORD_EXCEPTION_MESSAGE;
-import static knack.college.learnenglish.model.Constant.ExceptionMessage.NO_RUSSIAN_WORD_EXCEPTION_MESSAGE;
-import static knack.college.learnenglish.model.Constant.ExceptionMessage.WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import static knack.college.learnenglish.model.Constant.ExceptionMessage.*;
 import static knack.college.learnenglish.model.Constant.KeysForDebug.ERROR_KEY_FOR_DEBUG;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.ENGLISH_WORD_COLUMN_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.GUID_COLUMN_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.LAST_TRAINING_DATE;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.OUID_COLUMN_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.TRANSLATE_WORD_COLUMN_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getCountRowsInTableQuery;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDeleteAllRowsInTableQuery;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDropDictionaryTableQuery;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.*;
 
 /** Класс, описывающий словарь */
 public class Dictionary {
@@ -60,8 +48,7 @@ public class Dictionary {
                             SQLiteDatabase database = helper.getWritableDatabase();
 
                             ContentValues values = new ContentValues();
-                            values.put(GUID_COLUMN_NAME,
-                                    UUID.randomUUID().toString());
+                            values.put(GUID_COLUMN_NAME, UUID.randomUUID().toString());
                             values.put(ENGLISH_WORD_COLUMN_NAME, englishWord);
                             values.put(TRANSLATE_WORD_COLUMN_NAME, translate);
 
@@ -236,5 +223,22 @@ public class Dictionary {
         }
 
         return allWordsList;
+    }
+
+    /** Метод, который восстанавливает слово в словаре */
+    public void restoreWord(WordFromDictionary wordFromDictionary) throws Exception {
+        if (wordFromDictionary != null) {
+            LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
+
+            SQLiteDatabase database = helper.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(OUID_COLUMN_NAME, wordFromDictionary.getOuid());
+            values.put(GUID_COLUMN_NAME, wordFromDictionary.getGuid());
+            values.put(ENGLISH_WORD_COLUMN_NAME, wordFromDictionary.getEnglishWord());
+            values.put(TRANSLATE_WORD_COLUMN_NAME, wordFromDictionary.getTranslateWord());
+
+            database.insert(DICTIONARY_TABLE_NAME, null, values);
+        }
     }
 }

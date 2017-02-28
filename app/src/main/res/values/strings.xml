@@ -33,6 +33,7 @@
     <string name="hint.translate_word">Перевести слово</string>
     <string name="hint.values_is_removed">Значения удалены</string>
     <string name="hint.undo">Отмена</string>
+    <string name="hint.word_is_remove">Слово удалено</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

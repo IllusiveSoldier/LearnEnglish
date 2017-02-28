@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,9 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.dialogs.AddWordToDictionaryDialog;
 import knack.college.learnenglish.dialogs.DeleteWordFromDictionaryDialog;
@@ -29,6 +29,8 @@ import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.WordFromDictionary;
 import knack.college.learnenglish.model.toasts.Toast;
+
+import java.util.ArrayList;
 
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG;
 import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG;
@@ -39,6 +41,9 @@ public class DictionaryFragment extends Fragment {
     FloatingActionButton addToDatabaseButton;
     RecyclerView dictionaryRecyclerView;
     SwipeRefreshLayout dictionarySwipeRefreshLayout;
+    View view;
+
+    Snackbar snackbar;
 
     private static final int REQUEST_SELECTED = 1;
 
@@ -54,7 +59,7 @@ public class DictionaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
+        view = inflater.inflate(R.layout.fragment_dictionary, container, false);
 
         toast = new Toast(getActivity());
         dictionary = new Dictionary(getActivity().getApplicationContext());
@@ -122,7 +127,33 @@ public class DictionaryFragment extends Fragment {
                     int selected = data.getIntExtra(DeleteWordFromDictionaryDialog.TAG_SELECTED, -1);
                     if (selected == 1) {
                         try {
+                            final WordFromDictionary wordFromDictionary = wordFromDictionaries.get(itemId);
+
                             dictionary.deleteWord(wordFromDictionaries.get(itemId).getGuid());
+
+                            snackbar = Snackbar
+                                    .make(view, getResources().getString(R.string.hint_word_is_remove),
+                                            Snackbar.LENGTH_LONG)
+                                    .setAction(getResources().getString(R.string.hint_undo),
+                                            new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    try {
+                                                        dictionary.restoreWord(wordFromDictionary);
+                                                    } catch (Exception ex) {
+                                                        toast.show(ex);
+                                                    }
+                                                }
+                                            });
+                            if (Build.VERSION.SDK_INT >= 23) {
+                                snackbar.setActionTextColor(ContextCompat.getColor(getActivity()
+                                        .getApplicationContext(),
+                                        R.color.bright_green)
+                                );
+                            } else {
+                                snackbar.setActionTextColor(getResources().getColor(R.color.bright_green));
+                            }
+                            snackbar.show();
                         } catch (Exception ex) {
                             toast.show(ex);
                         }
