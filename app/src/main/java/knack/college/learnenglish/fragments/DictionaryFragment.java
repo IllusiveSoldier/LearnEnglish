@@ -37,7 +37,6 @@ import static knack.college.learnenglish.model.Constant.Dialog.UNIQUE_NAME_DELET
 
 
 public class DictionaryFragment extends Fragment {
-
     FloatingActionButton addToDatabaseButton;
     RecyclerView dictionaryRecyclerView;
     SwipeRefreshLayout dictionarySwipeRefreshLayout;
@@ -65,8 +64,7 @@ public class DictionaryFragment extends Fragment {
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
-        addToDatabaseButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(color
-                .getRandomColor())));
+        addToDatabaseButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(color.getRandomColor())));
         addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,8 +77,7 @@ public class DictionaryFragment extends Fragment {
         dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionaryRecyclerView);
 
         try {
-            dictionaryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
-                    .getApplicationContext()));
+            dictionaryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
             dictionaryRecyclerView.setHasFixedSize(true);
 
             wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary.getAllWordsList();
@@ -147,8 +144,7 @@ public class DictionaryFragment extends Fragment {
                                             });
                             if (Build.VERSION.SDK_INT >= 23) {
                                 snackbar.setActionTextColor(ContextCompat.getColor(getActivity()
-                                        .getApplicationContext(),
-                                        R.color.bright_green)
+                                        .getApplicationContext(), R.color.bright_green)
                                 );
                             } else {
                                 snackbar.setActionTextColor(getResources().getColor(R.color.bright_green));
@@ -163,8 +159,7 @@ public class DictionaryFragment extends Fragment {
         }
     }
 
-    private class LearnEnglishHolder extends RecyclerView.ViewHolder
-            implements View.OnLongClickListener {
+    private class LearnEnglishHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         CardView dictionaryCardView;
         TextView dictionaryEnglishWordTextView;
         TextView dictionaryTranslateWordTextView;
@@ -186,8 +181,7 @@ public class DictionaryFragment extends Fragment {
             dictionaryTranslateWordTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
                     "fonts/Roboto/Roboto-Light.ttf"));
 
-            learnEnglishWordItemImageView = (ImageView) itemView
-                    .findViewById(R.id.learnEnglishWordItemImageView);
+            learnEnglishWordItemImageView = (ImageView) itemView.findViewById(R.id.learnEnglishWordItemImageView);
         }
 
         @Override
@@ -213,12 +207,9 @@ public class DictionaryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(LearnEnglishHolder holder, int position) {
-            holder.dictionaryEnglishWordTextView
-                    .setText(wordFromDictionaries.get(position).getEnglishWord());
-            holder.dictionaryTranslateWordTextView
-                    .setText(wordFromDictionaries.get(position).getTranslateWord());
-            holder.learnEnglishWordItemImageView.setBackgroundColor(Color
-                    .parseColor(color.getRandomColor()));
+            holder.dictionaryEnglishWordTextView.setText(wordFromDictionaries.get(position).getEnglishWord());
+            holder.dictionaryTranslateWordTextView.setText(wordFromDictionaries.get(position).getTranslateWord());
+            holder.learnEnglishWordItemImageView.setBackgroundColor(Color.parseColor(color.getRandomColor()));
         }
 
         @Override

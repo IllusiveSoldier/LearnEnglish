@@ -45,17 +45,14 @@ public class ProfileFragment extends Fragment {
         color = new RandomColor();
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
-        deleteDictionaryButton = (FloatingActionButton) view
-                .findViewById(R.id.deleteDictionaryButton);
-        deleteDictionaryButton.setBackgroundTintList(ColorStateList.valueOf(Color
-                .parseColor(color.getRandomColor())));
+        deleteDictionaryButton = (FloatingActionButton) view.findViewById(R.id.deleteDictionaryButton);
+        deleteDictionaryButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(color.getRandomColor())));
         deleteDictionaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     DialogFragment dialogFragment = new AssignmentDialog();
-                    dialogFragment.show(getActivity().getSupportFragmentManager(),
-                            UNIQUE_NAME_ASSIGNMENT_DIALOG);
+                    dialogFragment.show(getActivity().getSupportFragmentManager(), UNIQUE_NAME_ASSIGNMENT_DIALOG);
                 } catch (Exception ex) {
                     toast.show(ex);
                 }
@@ -85,8 +82,7 @@ public class ProfileFragment extends Fragment {
                 "fonts/Roboto/Roboto-Light.ttf"));
         try {
             dictionaryTrainingStatistic = new DictionaryTrainingStatistic(getActivity());
-            lastDictionaryTrainingDateValue.setText(dictionaryTrainingStatistic
-                    .getLastDictionaryTrainingDate());
+            lastDictionaryTrainingDateValue.setText(dictionaryTrainingStatistic.getLastDictionaryTrainingDate());
         } catch (Exception ex) {
             toast.show(ex);
         }

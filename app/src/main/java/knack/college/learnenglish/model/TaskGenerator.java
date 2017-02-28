@@ -1,19 +1,11 @@
 package knack.college.learnenglish.model;
 
 import android.app.Activity;
+import knack.college.learnenglish.model.toasts.Toast;
 
 import java.util.ArrayList;
 
-import knack.college.learnenglish.model.toasts.Toast;
-
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE;
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION;
+import static knack.college.learnenglish.model.Constant.*;
 
 /** Класс, генерирующий задания */
 public class TaskGenerator {
@@ -40,12 +32,10 @@ public class TaskGenerator {
             allWordsTrainingTask.setName(ALL_WORDS_FROM_DICTIONARY);
             allWordsTrainingTask.setTitle(ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE);
             tasks.add(allWordsTrainingTask);
-            // TODO добавить задание, где спрашивается правильно ли ответил на вопрос
 
             Task allWordsTrainingTaskSecondEdition = new Task();
             allWordsTrainingTaskSecondEdition.setName(ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION);
-            allWordsTrainingTaskSecondEdition
-                    .setTitle(ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION);
+            allWordsTrainingTaskSecondEdition.setTitle(ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION);
             tasks.add(allWordsTrainingTaskSecondEdition);
 
             if (dictionary.getForgottenWords().size() > 0) {
@@ -55,10 +45,8 @@ public class TaskGenerator {
                 tasks.add(forgottenWordsTrainingTask);
 
                 Task forgottenWordsTrainingTaskSecondEdition = new Task();
-                forgottenWordsTrainingTaskSecondEdition
-                        .setName(FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION);
-                forgottenWordsTrainingTaskSecondEdition
-                        .setTitle(FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION);
+                forgottenWordsTrainingTaskSecondEdition.setName(FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION);
+                forgottenWordsTrainingTaskSecondEdition.setTitle(FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION);
                 tasks.add(forgottenWordsTrainingTaskSecondEdition);
             }
         }

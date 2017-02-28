@@ -53,8 +53,7 @@ public class TaskActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString(FRAGMENT_CODE, ALL_WORDS_FROM_DICTIONARY);
 
-                    Fragment dictionaryTrainingFragmentSecond = new
-                            DictionaryTrainingSecondFragment();
+                    Fragment dictionaryTrainingFragmentSecond = new DictionaryTrainingSecondFragment();
                     dictionaryTrainingFragmentSecond.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.activity_task, dictionaryTrainingFragmentSecond)
@@ -63,8 +62,7 @@ public class TaskActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString(FRAGMENT_CODE, FORGOTTEN_WORDS_FROM_DICTIONARY);
 
-                    Fragment dictionaryTrainingFragmentSecond = new
-                            DictionaryTrainingSecondFragment();
+                    Fragment dictionaryTrainingFragmentSecond = new DictionaryTrainingSecondFragment();
                     dictionaryTrainingFragmentSecond.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.activity_task, dictionaryTrainingFragmentSecond)

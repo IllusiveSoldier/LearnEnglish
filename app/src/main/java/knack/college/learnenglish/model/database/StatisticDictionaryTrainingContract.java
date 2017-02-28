@@ -62,7 +62,6 @@ public class StatisticDictionaryTrainingContract {
                     .append(NEW_LINE)
                     .append(RIGHT_BRACE).append(SEMICOLON);
 
-
             return createTableQuery;
         }
 
@@ -70,9 +69,8 @@ public class StatisticDictionaryTrainingContract {
         public static StringBuilder getDropStatisticDictionaryTrainingTableQuery() {
             StringBuilder dropTableQuery = new StringBuilder();
 
-            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD)
-                    .append(EXISTS_TABLE_SQL_KEYWORD).append(STATISTIC_DICTIONARY_TRAINING);
-
+            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD).append(EXISTS_TABLE_SQL_KEYWORD)
+                    .append(STATISTIC_DICTIONARY_TRAINING);
 
             return dropTableQuery;
         }
@@ -82,10 +80,8 @@ public class StatisticDictionaryTrainingContract {
             StringBuilder getDeleteAllRowsInTableQuery = new StringBuilder();
 
             getDeleteAllRowsInTableQuery.append(DELETE_SQL_KEYWORD).append(FROM_SQL_KEYWORD)
-                    .append(STATISTIC_DICTIONARY_TRAINING).append(SEMICOLON)
-                    .append(NEW_LINE)
+                    .append(STATISTIC_DICTIONARY_TRAINING).append(SEMICOLON).append(NEW_LINE)
                     .append(VACUUM_SQL_KEYWORD).append(SEMICOLON);
-
 
             return getDeleteAllRowsInTableQuery;
         }

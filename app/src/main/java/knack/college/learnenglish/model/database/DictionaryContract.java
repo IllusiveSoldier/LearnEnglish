@@ -71,8 +71,8 @@ public class DictionaryContract {
         public static StringBuilder getDropDictionaryTableQuery() {
             StringBuilder dropTableQuery = new StringBuilder();
 
-            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD)
-                                .append(EXISTS_TABLE_SQL_KEYWORD).append(DICTIONARY_TABLE_NAME);
+            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD).append(EXISTS_TABLE_SQL_KEYWORD)
+                    .append(DICTIONARY_TABLE_NAME);
 
 
             return dropTableQuery;
@@ -83,10 +83,8 @@ public class DictionaryContract {
             StringBuilder getDeleteAllRowsInTableQuery = new StringBuilder();
 
             getDeleteAllRowsInTableQuery.append(DELETE_SQL_KEYWORD).append(FROM_SQL_KEYWORD)
-                    .append(DICTIONARY_TABLE_NAME).append(SEMICOLON)
-                    .append(NEW_LINE)
+                    .append(DICTIONARY_TABLE_NAME).append(SEMICOLON).append(NEW_LINE)
                     .append(VACUUM_SQL_KEYWORD).append(SEMICOLON);
-
 
             return getDeleteAllRowsInTableQuery;
         }
@@ -100,7 +98,6 @@ public class DictionaryContract {
                     .append(RIGHT_BRACE_WITHOUT_SPACE)
                     .append(NEW_LINE)
                     .append(FROM_SQL_KEYWORD).append(DICTIONARY_TABLE_NAME);
-
 
             return getCountRowsInTableQuery;
         }

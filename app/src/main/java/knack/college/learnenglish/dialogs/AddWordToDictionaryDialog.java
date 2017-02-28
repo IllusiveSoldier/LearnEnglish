@@ -50,11 +50,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         View view = inflater.inflate(R.layout.add_word_to_dictonary_dialog_window, null);
 
         englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
@@ -71,8 +68,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         toast = new Toast(getActivity());
 
         builder.setView(view)
-                .setPositiveButton(R.string.title_add, null)
-                .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
+               .setPositiveButton(R.string.title_add, null)
+               .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         AddWordToDictionaryDialog.this.getDialog().cancel();
                     }
@@ -117,9 +114,7 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                 translateWordEditText.setText("");
 
                 snackbar = Snackbar
-                        .make(v,
-                              getResources().getString(R.string.hint_values_is_removed),
-                              Snackbar.LENGTH_LONG)
+                        .make(v, getResources().getString(R.string.hint_values_is_removed), Snackbar.LENGTH_LONG)
                         .setAction(getResources().getString(R.string.hint_undo),
                                 new View.OnClickListener() {
                                     @Override
@@ -129,8 +124,7 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                                     }
                                 });
                 if (Build.VERSION.SDK_INT >= 23) {
-                    snackbar.setActionTextColor(ContextCompat.getColor(getActivity()
-                            .getApplicationContext(),
+                    snackbar.setActionTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),
                             R.color.bright_green)
                     );
                 } else {
@@ -158,8 +152,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                 @Override
                 public void onClick(View v) {
                     try {
-                        dictionary.addWordWithTranslate(englishWordEditText.getText()
-                                .toString(), translateWordEditText.getText().toString());
+                        dictionary.addWordWithTranslate(englishWordEditText.getText().toString(),
+                                translateWordEditText.getText().toString());
                         dialog.cancel();
                     } catch (Exception ex) {
                         toast.show(ex);

@@ -15,15 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.TaskActivity;
 import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.Task;
 import knack.college.learnenglish.model.TaskGenerator;
 import knack.college.learnenglish.model.toasts.Toast;
+
+import java.util.ArrayList;
 
 import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
 
@@ -53,8 +52,7 @@ public class TaskFragment extends Fragment {
         }
 
         taskRecyclerView = (RecyclerView) view.findViewById(R.id.taskRecyclerView);
-        taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()
-                .getApplicationContext()));
+        taskRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         taskRecyclerView.setHasFixedSize(true);
 
         learnEnglishAdapter = new LearnEnglishAdapter();
@@ -121,8 +119,7 @@ public class TaskFragment extends Fragment {
             holder.taskCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity().getApplicationContext(),
-                            TaskActivity.class);
+                    Intent intent = new Intent(getActivity().getApplicationContext(), TaskActivity.class);
                     intent.putExtra(FRAGMENT_CODE, tasks.get(id).getName());
                     startActivity(intent);
                 }

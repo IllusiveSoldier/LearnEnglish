@@ -22,34 +22,28 @@ public class DeleteWordFromDictionaryDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
-
         View view = inflater.inflate(R.layout.delete_word_from_dictionary_dialog_window, null);
 
         toast = new Toast(getActivity());
 
         builder.setView(view)
-                .setPositiveButton(R.string.title_delete, new DialogInterface.OnClickListener() {
+               .setPositiveButton(R.string.title_delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent();
                         intent.putExtra(TAG_SELECTED, 1);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(),
-                                Activity.RESULT_OK, intent);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                     }
                 })
-                .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
+               .setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent();
                         intent.putExtra(TAG_SELECTED, 0);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(),
-                                Activity.RESULT_CANCELED, intent);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, intent);
                     }
-                });
-
+               });
 
         return builder.create();
     }

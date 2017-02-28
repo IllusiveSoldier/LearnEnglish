@@ -30,16 +30,16 @@ public class AssignmentDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.title_whatToDo)
-                .setItems(R.array.assignmentSelect, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 1:
-                                try {
-                                    statistic.clear(getActivity().getApplicationContext());
-                                } catch (Exception ex) {
-                                    toast.show(ex);
-                                }
-                                break;
+               .setItems(R.array.assignmentSelect, new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int which) {
+                       switch (which) {
+                           case 1:
+                               try {
+                                   statistic.clear(getActivity().getApplicationContext());
+                               } catch (Exception ex) {
+                                   toast.show(ex);
+                               }
+                               break;
                             case 3:
                                 try {
                                     DialogFragment dialogFragment = new ClearDictionaryDialog();
@@ -50,7 +50,6 @@ public class AssignmentDialog extends DialogFragment {
                                 }
                                 break;
                             case 4:
-
                                 break;
                         }
                     }

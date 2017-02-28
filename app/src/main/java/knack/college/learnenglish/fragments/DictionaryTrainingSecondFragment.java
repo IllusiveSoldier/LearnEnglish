@@ -9,22 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Random;
-
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.Validator;
 import knack.college.learnenglish.model.WordFromDictionary;
 import knack.college.learnenglish.model.toasts.Toast;
 
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.CORRECT_ANSWER;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
-import static knack.college.learnenglish.model.Constant.NUMBER_WORDS;
-import static knack.college.learnenglish.model.Constant.WRONG_ANSWER;
+import java.util.ArrayList;
+import java.util.Random;
+
+import static knack.college.learnenglish.model.Constant.*;
 
 
 public class DictionaryTrainingSecondFragment extends Fragment {
@@ -87,48 +81,40 @@ public class DictionaryTrainingSecondFragment extends Fragment {
                 random = new Random();
 
                 if (ALL_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
-                    wordFromDictionaries = (ArrayList<WordFromDictionary>)
-                            dictionary.getAllWordsList();
+                    wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary.getAllWordsList();
                 } else if (FORGOTTEN_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
-                    wordFromDictionaries = (ArrayList<WordFromDictionary>)
-                            dictionary.getForgottenWords();
+                    wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary.getForgottenWords();
                 }
 
                 wordsCount = wordFromDictionaries.size();
 
                 if (wordFromDictionaries != null) {
                     randomIndexEnglish = random.nextInt(wordFromDictionaries.size());
-                    englishWord.setText(wordFromDictionaries.get(randomIndexEnglish)
-                            .getEnglishWord());
+                    englishWord.setText(wordFromDictionaries.get(randomIndexEnglish).getEnglishWord());
 
                     randomIndexTranslate = random.nextInt(wordFromDictionaries.size());
-                    translate.setText(wordFromDictionaries.get(randomIndexTranslate)
-                            .getTranslateWord());
+                    translate.setText(wordFromDictionaries.get(randomIndexTranslate).getTranslateWord());
                 }
 
                 no.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!validator.isTranslation(wordFromDictionaries.get(randomIndexEnglish)
-                                .getEnglishWord(), wordFromDictionaries.get(randomIndexTranslate)
-                                .getEnglishWord())) {
+                        if (!validator.isTranslation(wordFromDictionaries.get(randomIndexEnglish).getEnglishWord(),
+                                wordFromDictionaries.get(randomIndexTranslate).getEnglishWord())) {
                             correctAnswer++;
                             wordFromDictionaries.remove(randomIndexEnglish);
                             if (wordFromDictionaries.size() > 0) {
                                 randomIndexEnglish = random.nextInt(wordFromDictionaries.size());
-                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish)
-                                        .getEnglishWord());
+                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish).getEnglishWord());
                                 randomIndexTranslate = random.nextInt(wordFromDictionaries.size());
-                                translate.setText(wordFromDictionaries.get(randomIndexTranslate)
-                                        .getTranslateWord());
+                                translate.setText(wordFromDictionaries.get(randomIndexTranslate).getTranslateWord());
                             } else if (wordFromDictionaries.size() == 0) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
                                 bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                                 bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                                Fragment showDictionaryTrainingResult =
-                                        new ShowDictionaryTrainingResultFragment();
+                                Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
                                 showDictionaryTrainingResult.setArguments(bundle);
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.activity_task, showDictionaryTrainingResult)
@@ -139,19 +125,16 @@ public class DictionaryTrainingSecondFragment extends Fragment {
                             wordFromDictionaries.remove(randomIndexEnglish);
                             if (wordFromDictionaries.size() > 0) {
                                 randomIndexEnglish = random.nextInt(wordFromDictionaries.size());
-                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish)
-                                        .getEnglishWord());
+                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish).getEnglishWord());
                                 randomIndexTranslate = random.nextInt(wordFromDictionaries.size());
-                                translate.setText(wordFromDictionaries.get(randomIndexTranslate)
-                                        .getTranslateWord());
+                                translate.setText(wordFromDictionaries.get(randomIndexTranslate).getTranslateWord());
                             } else if (wordFromDictionaries.size() == 0) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
                                 bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                                 bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                                Fragment showDictionaryTrainingResult =
-                                        new ShowDictionaryTrainingResultFragment();
+                                Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
                                 showDictionaryTrainingResult.setArguments(bundle);
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.activity_task, showDictionaryTrainingResult)
@@ -164,26 +147,22 @@ public class DictionaryTrainingSecondFragment extends Fragment {
                 yes.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (validator.isTranslation(wordFromDictionaries.get(randomIndexEnglish)
-                                .getEnglishWord(), wordFromDictionaries.get(randomIndexTranslate)
-                                .getEnglishWord())) {
+                        if (validator.isTranslation(wordFromDictionaries.get(randomIndexEnglish).getEnglishWord(),
+                                wordFromDictionaries.get(randomIndexTranslate).getEnglishWord())) {
                             correctAnswer++;
                             wordFromDictionaries.remove(randomIndexEnglish);
                             if (wordFromDictionaries.size() > 0) {
                                 randomIndexEnglish = random.nextInt(wordFromDictionaries.size());
-                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish)
-                                        .getEnglishWord());
+                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish).getEnglishWord());
                                 randomIndexTranslate = random.nextInt(wordFromDictionaries.size());
-                                translate.setText(wordFromDictionaries.get(randomIndexTranslate)
-                                        .getTranslateWord());
+                                translate.setText(wordFromDictionaries.get(randomIndexTranslate).getTranslateWord());
                             } else if (wordFromDictionaries.size() == 0) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
                                 bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                                 bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                                Fragment showDictionaryTrainingResult =
-                                        new ShowDictionaryTrainingResultFragment();
+                                Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
                                 showDictionaryTrainingResult.setArguments(bundle);
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.activity_task, showDictionaryTrainingResult)
@@ -194,19 +173,16 @@ public class DictionaryTrainingSecondFragment extends Fragment {
                             wordFromDictionaries.remove(randomIndexEnglish);
                             if (wordFromDictionaries.size() > 0) {
                                 randomIndexEnglish = random.nextInt(wordFromDictionaries.size());
-                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish)
-                                        .getEnglishWord());
+                                englishWord.setText(wordFromDictionaries.get(randomIndexEnglish).getEnglishWord());
                                 randomIndexTranslate = random.nextInt(wordFromDictionaries.size());
-                                translate.setText(wordFromDictionaries.get(randomIndexTranslate)
-                                        .getTranslateWord());
+                                translate.setText(wordFromDictionaries.get(randomIndexTranslate).getTranslateWord());
                             } else if (wordFromDictionaries.size() == 0) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
                                 bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                                 bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                                Fragment showDictionaryTrainingResult =
-                                        new ShowDictionaryTrainingResultFragment();
+                                Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
                                 showDictionaryTrainingResult.setArguments(bundle);
                                 getActivity().getSupportFragmentManager().beginTransaction()
                                         .replace(R.id.activity_task, showDictionaryTrainingResult)
@@ -215,7 +191,6 @@ public class DictionaryTrainingSecondFragment extends Fragment {
                         }
                     }
                 });
-
             } catch (Exception ex) {
                 toast.show(ex);
             }
@@ -223,5 +198,4 @@ public class DictionaryTrainingSecondFragment extends Fragment {
 
         return view;
     }
-
 }

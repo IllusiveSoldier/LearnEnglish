@@ -4,19 +4,14 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import knack.college.learnenglish.model.database.LearnEnglishDatabaseHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import knack.college.learnenglish.model.database.LearnEnglishDatabaseHelper;
-
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.GUID_COLUMN_NAME;
-import static knack.college.learnenglish.model.database.StatisticDictionaryTrainingContract.StatisticDictionaryTraining.BEGIN_TRAINING;
-import static knack.college.learnenglish.model.database.StatisticDictionaryTrainingContract.StatisticDictionaryTraining.CORRECT_ANSWER;
-import static knack.college.learnenglish.model.database.StatisticDictionaryTrainingContract.StatisticDictionaryTraining.COUNT_OF_WORDS_IN_DICTIONARY;
-import static knack.college.learnenglish.model.database.StatisticDictionaryTrainingContract.StatisticDictionaryTraining.STATISTIC_DICTIONARY_TRAINING;
-import static knack.college.learnenglish.model.database.StatisticDictionaryTrainingContract.StatisticDictionaryTraining.WRONG_ANSWER;
+import static knack.college.learnenglish.model.database.StatisticDictionaryTrainingContract.StatisticDictionaryTraining.*;
 
 public class DictionaryTrainingStatistic extends LEStatistic {
     private int wordsCount;
@@ -75,8 +70,7 @@ public class DictionaryTrainingStatistic extends LEStatistic {
     }
 
     private Cursor getLastDictionaryTrainingDateCursor() {
-        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(activity
-                .getApplicationContext());
+        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(activity.getApplicationContext());
         SQLiteDatabase database = helper.getWritableDatabase();
 
         return database.rawQuery("SELECT MAX(date(BEGIN_TRAINING)) AS BEGIN_TRAINING " +

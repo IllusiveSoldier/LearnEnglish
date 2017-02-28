@@ -39,15 +39,13 @@ public class Dictionary {
 
         if (englishWord != null && translate != null) {
             if (!englishWord.isEmpty() && !translate.isEmpty()) {
-                if (!validator.isWordMoreMaxSymbols(englishWord)
-                        && !validator.isWordMoreMaxSymbols(translate)) {
+                if (!validator.isWordMoreMaxSymbols(englishWord) && !validator.isWordMoreMaxSymbols(translate)) {
                     if (validator.isEnglishCharactersInWord(englishWord)) {
                         if (validator.isRussianCharactersInWord(translate)) {
                             LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-
                             SQLiteDatabase database = helper.getWritableDatabase();
-
                             ContentValues values = new ContentValues();
+
                             values.put(GUID_COLUMN_NAME, UUID.randomUUID().toString());
                             values.put(ENGLISH_WORD_COLUMN_NAME, englishWord);
                             values.put(TRANSLATE_WORD_COLUMN_NAME, translate);
@@ -113,10 +111,8 @@ public class Dictionary {
                 WordFromDictionary word = new WordFromDictionary();
                 word.setOuid(cursor.getString(cursor.getColumnIndex(OUID_COLUMN_NAME)));
                 word.setGuid(cursor.getString(cursor.getColumnIndex(GUID_COLUMN_NAME)));
-                word.setEnglishWord(cursor.getString(cursor.
-                        getColumnIndex(ENGLISH_WORD_COLUMN_NAME)));
-                word.setTranslateWord(cursor.getString(cursor.
-                        getColumnIndex(TRANSLATE_WORD_COLUMN_NAME)));
+                word.setEnglishWord(cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_COLUMN_NAME)));
+                word.setTranslateWord(cursor.getString(cursor.getColumnIndex(TRANSLATE_WORD_COLUMN_NAME)));
 
                 allWordsList.add(word);
             }
@@ -209,10 +205,8 @@ public class Dictionary {
                 WordFromDictionary word = new WordFromDictionary();
                 word.setOuid(cursor.getString(cursor.getColumnIndex(OUID_COLUMN_NAME)));
                 word.setGuid(cursor.getString(cursor.getColumnIndex(GUID_COLUMN_NAME)));
-                word.setEnglishWord(cursor.getString(cursor.
-                        getColumnIndex(ENGLISH_WORD_COLUMN_NAME)));
-                word.setTranslateWord(cursor.getString(cursor.
-                        getColumnIndex(TRANSLATE_WORD_COLUMN_NAME)));
+                word.setEnglishWord(cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_COLUMN_NAME)));
+                word.setTranslateWord(cursor.getString(cursor.getColumnIndex(TRANSLATE_WORD_COLUMN_NAME)));
 
                 allWordsList.add(word);
             }

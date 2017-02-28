@@ -11,11 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.Validator;
@@ -23,12 +18,11 @@ import knack.college.learnenglish.model.WordFromDictionary;
 import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.Toast;
 
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.CORRECT_ANSWER;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
-import static knack.college.learnenglish.model.Constant.NUMBER_WORDS;
-import static knack.college.learnenglish.model.Constant.WRONG_ANSWER;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import static knack.college.learnenglish.model.Constant.*;
 
 public class DictionaryTrainingFragment extends Fragment {
 
@@ -105,8 +99,7 @@ public class DictionaryTrainingFragment extends Fragment {
                         wordFromDictionaries.get(randomIndex).getEnglishWord()
                 );
             } else if (wordFromDictionaries.size() == 0) {
-                toast.show(getActivity().getApplication().getResources()
-                        .getString(R.string.title_notFoundWords),
+                toast.show(getActivity().getApplication().getResources().getString(R.string.title_notFoundWords),
                         R.mipmap.ic_sentiment_very_satisfied_black_24dp);
             }
         } catch (Exception ex) {
@@ -131,12 +124,16 @@ public class DictionaryTrainingFragment extends Fragment {
             @Override
             public boolean onLongClick(View v) {
                 if (wordFromDictionaries.size() > 0) {
-                    toast.show(wordFromDictionaries.get(randomIndex).getTranslateWord(),
-                            R.mipmap.ic_sentiment_very_satisfied_black_24dp, android.widget.Toast.LENGTH_SHORT);
+                    toast.show(
+                            wordFromDictionaries.get(randomIndex).getTranslateWord(),
+                            R.mipmap.ic_sentiment_very_satisfied_black_24dp,
+                            android.widget.Toast.LENGTH_SHORT
+                    );
                 } else if (wordFromDictionaries.size() == 0) {
-                    toast.show(getActivity().getApplication().getResources()
-                                    .getString(R.string.title_notFoundWords),
-                            R.mipmap.ic_sentiment_very_satisfied_black_24dp);
+                    toast.show(
+                            getActivity().getApplication().getResources().getString(R.string.title_notFoundWords),
+                            R.mipmap.ic_sentiment_very_satisfied_black_24dp
+                    );
                 }
 
                 return true;
@@ -148,9 +145,8 @@ public class DictionaryTrainingFragment extends Fragment {
 
     private void checkAnswer() throws Exception {
         if (wordFromDictionaries.size() > 0) {
-            if (validator.isTranslation(wordFromDictionaries.get(randomIndex)
-                    .getTranslateWord(), dictionaryTrainingTranslateWordEditText.getText()
-                    .toString())) {
+            if (validator.isTranslation(wordFromDictionaries.get(randomIndex).getTranslateWord(),
+                    dictionaryTrainingTranslateWordEditText.getText().toString())) {
                 correctAnswer++;
                 // отмечаем дату тренировки слова
                 dictionary.setLastTrainingWordDate(wordFromDictionaries.get(randomIndex).getGuid());
@@ -163,15 +159,15 @@ public class DictionaryTrainingFragment extends Fragment {
                     randomIndex = random.nextInt(wordFromDictionaries.size());
                     // Выводим на контрол слово
                     dictionaryTrainingEnglishWordTextView.setText(
-                            wordFromDictionaries.get(randomIndex).getEnglishWord());
+                            wordFromDictionaries.get(randomIndex).getEnglishWord()
+                    );
                 } else if (wordFromDictionaries.size() == 0) {
                     Bundle bundle = new Bundle();
                     bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
                     bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                     bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                    Fragment showDictionaryTrainingResult =
-                            new ShowDictionaryTrainingResultFragment();
+                    Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
                     showDictionaryTrainingResult.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.activity_task, showDictionaryTrainingResult)
@@ -184,8 +180,6 @@ public class DictionaryTrainingFragment extends Fragment {
 
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
-//                    toast.show(getResources().getString(R.string.title_wordsIsEmpty),
-//                            R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
                 progressBar.setProgress(correctAnswer + wrongAnswer);
@@ -200,15 +194,15 @@ public class DictionaryTrainingFragment extends Fragment {
                     randomIndex = random.nextInt(wordFromDictionaries.size());
                     // Выводим на контрол слово
                     dictionaryTrainingEnglishWordTextView.setText(
-                            wordFromDictionaries.get(randomIndex).getEnglishWord());
+                            wordFromDictionaries.get(randomIndex).getEnglishWord()
+                    );
                 } else if (wordFromDictionaries.size() == 0) {
                     Bundle bundle = new Bundle();
                     bundle.putString(NUMBER_WORDS, String.valueOf(wordsCount));
                     bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                     bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                    Fragment showDictionaryTrainingResult =
-                            new ShowDictionaryTrainingResultFragment();
+                    Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
                     showDictionaryTrainingResult.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.activity_task, showDictionaryTrainingResult)
@@ -221,8 +215,6 @@ public class DictionaryTrainingFragment extends Fragment {
 
                     checkAnswerButton.setEnabled(false);
                     dictionaryTrainingEnglishWordTextView.setText("");
-//                    toast.show(getResources().getString(R.string.title_wordsIsEmpty),
-//                            R.mipmap.ic_sentiment_very_satisfied_black_24dp);
                     dictionaryTrainingTranslateWordEditText.setText("");
                 }
                 progressBar.setProgress(correctAnswer + wrongAnswer);
