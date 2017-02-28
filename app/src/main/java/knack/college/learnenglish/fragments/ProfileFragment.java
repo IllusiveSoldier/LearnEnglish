@@ -45,14 +45,21 @@ public class ProfileFragment extends Fragment {
         color = new RandomColor();
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
-        deleteDictionaryButton = (FloatingActionButton) view.findViewById(R.id.deleteDictionaryButton);
-        deleteDictionaryButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(color.getRandomColor())));
+        deleteDictionaryButton =
+                (FloatingActionButton) view.findViewById(R.id.deleteDictionaryButton);
+        deleteDictionaryButton.setBackgroundTintList(
+                ColorStateList.valueOf(Color.parseColor(color.getRandomColor()))
+        );
+
         deleteDictionaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     DialogFragment dialogFragment = new AssignmentDialog();
-                    dialogFragment.show(getActivity().getSupportFragmentManager(), UNIQUE_NAME_ASSIGNMENT_DIALOG);
+                    dialogFragment.show(
+                            getActivity().getSupportFragmentManager(),
+                            UNIQUE_NAME_ASSIGNMENT_DIALOG
+                    );
                 } catch (Exception ex) {
                     toast.show(ex);
                 }
@@ -60,12 +67,17 @@ public class ProfileFragment extends Fragment {
         });
 
         numberOfWordsTitle = (TextView) view.findViewById(R.id.numberOfWordsTitle);
-        numberOfWordsTitle.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        numberOfWordsTitle.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         numberOfWordsValue = (TextView) view.findViewById(R.id.numberOfWordsValue);
-        numberOfWordsValue.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        numberOfWordsValue.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
+
         try {
             numberOfWordsValue.setText(String.valueOf(dictionary.getNumberOfWords()));
         } catch (Exception ex) {
@@ -73,16 +85,22 @@ public class ProfileFragment extends Fragment {
         }
 
         lastDictionaryTrainingDate = (TextView) view.findViewById(R.id.lastDictionaryTrainingDate);
-        lastDictionaryTrainingDate.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        lastDictionaryTrainingDate.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
-        lastDictionaryTrainingDateValue = (TextView)
-                view.findViewById(R.id.lastDictionaryTrainingDateValue);
-        lastDictionaryTrainingDateValue.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        lastDictionaryTrainingDateValue =
+                (TextView) view.findViewById(R.id.lastDictionaryTrainingDateValue);
+        lastDictionaryTrainingDateValue.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
         try {
             dictionaryTrainingStatistic = new DictionaryTrainingStatistic(getActivity());
-            lastDictionaryTrainingDateValue.setText(dictionaryTrainingStatistic.getLastDictionaryTrainingDate());
+            lastDictionaryTrainingDateValue.setText(
+                    dictionaryTrainingStatistic.getLastDictionaryTrainingDate()
+            );
         } catch (Exception ex) {
             toast.show(ex);
         }

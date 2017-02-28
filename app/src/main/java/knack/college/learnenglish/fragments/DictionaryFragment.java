@@ -64,7 +64,9 @@ public class DictionaryFragment extends Fragment {
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
-        addToDatabaseButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(color.getRandomColor())));
+        addToDatabaseButton.setBackgroundTintList(
+                ColorStateList.valueOf(Color.parseColor(color.getRandomColor()))
+        );
         addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +79,9 @@ public class DictionaryFragment extends Fragment {
         dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionaryRecyclerView);
 
         try {
-            dictionaryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+            dictionaryRecyclerView.setLayoutManager(
+                    new LinearLayoutManager(getActivity().getApplicationContext())
+            );
             dictionaryRecyclerView.setHasFixedSize(true);
 
             wordFromDictionaries = (ArrayList<WordFromDictionary>) dictionary.getAllWordsList();
@@ -89,8 +93,11 @@ public class DictionaryFragment extends Fragment {
 
         dictionarySwipeRefreshLayout = (SwipeRefreshLayout) view
                 .findViewById(R.id.dictionarySwipeRefreshLayout);
-        dictionarySwipeRefreshLayout.setColorSchemeColors(Color.parseColor(color.getRandomColor()));
-        dictionarySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        dictionarySwipeRefreshLayout.setColorSchemeColors(
+                Color.parseColor(color.getRandomColor())
+        );
+        dictionarySwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 dictionarySwipeRefreshLayout.setRefreshing(true);
@@ -121,15 +128,19 @@ public class DictionaryFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_SELECTED:
-                    int selected = data.getIntExtra(DeleteWordFromDictionaryDialog.TAG_SELECTED, -1);
+                    int selected = data.getIntExtra(
+                            DeleteWordFromDictionaryDialog.TAG_SELECTED, -1
+                    );
                     if (selected == 1) {
                         try {
-                            final WordFromDictionary wordFromDictionary = wordFromDictionaries.get(itemId);
+                            final WordFromDictionary wordFromDictionary =
+                                    wordFromDictionaries.get(itemId);
 
                             dictionary.deleteWord(wordFromDictionaries.get(itemId).getGuid());
 
                             snackbar = Snackbar
-                                    .make(view, getResources().getString(R.string.hint_word_is_remove),
+                                    .make(view, getResources()
+                                            .getString(R.string.hint_word_is_remove),
                                             Snackbar.LENGTH_LONG)
                                     .setAction(getResources().getString(R.string.hint_undo),
                                             new View.OnClickListener() {
@@ -147,7 +158,9 @@ public class DictionaryFragment extends Fragment {
                                         .getApplicationContext(), R.color.bright_green)
                                 );
                             } else {
-                                snackbar.setActionTextColor(getResources().getColor(R.color.bright_green));
+                                snackbar.setActionTextColor(getResources().getColor(
+                                        R.color.bright_green)
+                                );
                             }
                             snackbar.show();
                         } catch (Exception ex) {
@@ -159,7 +172,9 @@ public class DictionaryFragment extends Fragment {
         }
     }
 
-    private class LearnEnglishHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    private class LearnEnglishHolder
+            extends RecyclerView.ViewHolder
+            implements View.OnLongClickListener {
         CardView dictionaryCardView;
         TextView dictionaryEnglishWordTextView;
         TextView dictionaryTranslateWordTextView;
@@ -173,15 +188,21 @@ public class DictionaryFragment extends Fragment {
 
             dictionaryEnglishWordTextView = (TextView) itemView
                     .findViewById(R.id.dictionaryEnglishWordTextView);
-            dictionaryEnglishWordTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                    "fonts/Roboto/Roboto-Light.ttf"));
+            dictionaryEnglishWordTextView.setTypeface(Typeface.createFromAsset(
+                    getActivity().getAssets(),
+                    "fonts/Roboto/Roboto-Light.ttf")
+            );
 
             dictionaryTranslateWordTextView = (TextView) itemView
                     .findViewById(R.id.dictionaryTranslateWordTextView);
-            dictionaryTranslateWordTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                    "fonts/Roboto/Roboto-Light.ttf"));
+            dictionaryTranslateWordTextView.setTypeface(
+                    Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Roboto/Roboto-Light.ttf")
+            );
 
-            learnEnglishWordItemImageView = (ImageView) itemView.findViewById(R.id.learnEnglishWordItemImageView);
+            learnEnglishWordItemImageView = (ImageView) itemView.findViewById(
+                    R.id.learnEnglishWordItemImageView
+            );
         }
 
         @Override
@@ -207,9 +228,15 @@ public class DictionaryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(LearnEnglishHolder holder, int position) {
-            holder.dictionaryEnglishWordTextView.setText(wordFromDictionaries.get(position).getEnglishWord());
-            holder.dictionaryTranslateWordTextView.setText(wordFromDictionaries.get(position).getTranslateWord());
-            holder.learnEnglishWordItemImageView.setBackgroundColor(Color.parseColor(color.getRandomColor()));
+            holder.dictionaryEnglishWordTextView.setText(
+                    wordFromDictionaries.get(position).getEnglishWord()
+            );
+            holder.dictionaryTranslateWordTextView.setText(
+                    wordFromDictionaries.get(position).getTranslateWord()
+            );
+            holder.learnEnglishWordItemImageView.setBackgroundColor(
+                    Color.parseColor(color.getRandomColor())
+            );
         }
 
         @Override

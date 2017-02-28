@@ -114,7 +114,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                 translateWordEditText.setText("");
 
                 snackbar = Snackbar
-                        .make(v, getResources().getString(R.string.hint_values_is_removed), Snackbar.LENGTH_LONG)
+                        .make(v, getResources().getString(R.string.hint_values_is_removed),
+                                Snackbar.LENGTH_LONG)
                         .setAction(getResources().getString(R.string.hint_undo),
                                 new View.OnClickListener() {
                                     @Override
@@ -124,7 +125,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                                     }
                                 });
                 if (Build.VERSION.SDK_INT >= 23) {
-                    snackbar.setActionTextColor(ContextCompat.getColor(getActivity().getApplicationContext(),
+                    snackbar.setActionTextColor(ContextCompat.getColor(getActivity()
+                            .getApplicationContext(),
                             R.color.bright_green)
                     );
                 } else {

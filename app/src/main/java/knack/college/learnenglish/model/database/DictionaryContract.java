@@ -71,7 +71,8 @@ public class DictionaryContract {
         public static StringBuilder getDropDictionaryTableQuery() {
             StringBuilder dropTableQuery = new StringBuilder();
 
-            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD).append(EXISTS_TABLE_SQL_KEYWORD)
+            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD)
+                    .append(EXISTS_TABLE_SQL_KEYWORD)
                     .append(DICTIONARY_TABLE_NAME);
 
 

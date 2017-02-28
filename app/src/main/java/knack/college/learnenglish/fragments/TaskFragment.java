@@ -96,8 +96,10 @@ public class TaskFragment extends Fragment {
             taskCardView = (CardView) itemView.findViewById(R.id.taskCardView);
             taskItemImageView = (ImageView) itemView.findViewById(R.id.taskItemImageView);
             taskName = (TextView) itemView.findViewById(R.id.taskName);
-            taskName.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                    "fonts/Roboto/Roboto-Light.ttf"));
+            taskName.setTypeface(
+                    Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Roboto/Roboto-Light.ttf")
+            );
         }
     }
 
@@ -119,7 +121,8 @@ public class TaskFragment extends Fragment {
             holder.taskCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity().getApplicationContext(), TaskActivity.class);
+                    Intent intent =
+                            new Intent(getActivity().getApplicationContext(), TaskActivity.class);
                     intent.putExtra(FRAGMENT_CODE, tasks.get(id).getName());
                     startActivity(intent);
                 }

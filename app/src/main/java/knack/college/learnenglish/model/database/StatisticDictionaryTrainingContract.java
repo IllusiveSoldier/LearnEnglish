@@ -43,7 +43,8 @@ public class StatisticDictionaryTrainingContract {
         public static StringBuilder getCreateStatisticDictionaryTrainingTableQuery() {
             StringBuilder createTableQuery = new StringBuilder();
 
-            createTableQuery.append(CREATE_TABLE_SQL_KEYWORD).append(STATISTIC_DICTIONARY_TRAINING).append(NEW_LINE)
+            createTableQuery.append(CREATE_TABLE_SQL_KEYWORD).append(STATISTIC_DICTIONARY_TRAINING)
+                    .append(NEW_LINE)
                     .append(LEFT_BRACE).append(NEW_LINE)
                     .append(TAB).append(OUID_COLUMN_NAME).append(SPACE)
                     .append(INTEGER_SQL_KEYWORD).append(PRIMARY_KEY_SQL_KEYWORD)
@@ -69,7 +70,8 @@ public class StatisticDictionaryTrainingContract {
         public static StringBuilder getDropStatisticDictionaryTrainingTableQuery() {
             StringBuilder dropTableQuery = new StringBuilder();
 
-            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD).append(EXISTS_TABLE_SQL_KEYWORD)
+            dropTableQuery.append(DROP_TABLE_SQL_KEYWORD).append(IF_SQL_KEYWORD)
+                    .append(EXISTS_TABLE_SQL_KEYWORD)
                     .append(STATISTIC_DICTIONARY_TRAINING);
 
             return dropTableQuery;

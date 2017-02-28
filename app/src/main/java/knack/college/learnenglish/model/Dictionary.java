@@ -39,10 +39,12 @@ public class Dictionary {
 
         if (englishWord != null && translate != null) {
             if (!englishWord.isEmpty() && !translate.isEmpty()) {
-                if (!validator.isWordMoreMaxSymbols(englishWord) && !validator.isWordMoreMaxSymbols(translate)) {
+                if (!validator.isWordMoreMaxSymbols(englishWord)
+                        && !validator.isWordMoreMaxSymbols(translate)) {
                     if (validator.isEnglishCharactersInWord(englishWord)) {
                         if (validator.isRussianCharactersInWord(translate)) {
-                            LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
+                            LearnEnglishDatabaseHelper helper =
+                                    new LearnEnglishDatabaseHelper(context);
                             SQLiteDatabase database = helper.getWritableDatabase();
                             ContentValues values = new ContentValues();
 
@@ -111,8 +113,12 @@ public class Dictionary {
                 WordFromDictionary word = new WordFromDictionary();
                 word.setOuid(cursor.getString(cursor.getColumnIndex(OUID_COLUMN_NAME)));
                 word.setGuid(cursor.getString(cursor.getColumnIndex(GUID_COLUMN_NAME)));
-                word.setEnglishWord(cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_COLUMN_NAME)));
-                word.setTranslateWord(cursor.getString(cursor.getColumnIndex(TRANSLATE_WORD_COLUMN_NAME)));
+                word.setEnglishWord(
+                        cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_COLUMN_NAME))
+                );
+                word.setTranslateWord(
+                        cursor.getString(cursor.getColumnIndex(TRANSLATE_WORD_COLUMN_NAME))
+                );
 
                 allWordsList.add(word);
             }
@@ -186,7 +192,8 @@ public class Dictionary {
 
         return database.rawQuery("SELECT " + OUID_COLUMN_NAME + ", " + GUID_COLUMN_NAME + ", " +
                 ENGLISH_WORD_COLUMN_NAME + ", " + TRANSLATE_WORD_COLUMN_NAME + ", " +
-                LAST_TRAINING_DATE + " FROM DICTIONARY AS dictionary WHERE julianday('" + currentDate +
+                LAST_TRAINING_DATE + " FROM DICTIONARY AS dictionary WHERE julianday('" +
+                currentDate +
                 "') - julianday(dictionary.LAST_TRAINING_DATE) >= 1 OR " +
                 "dictionary.LAST_TRAINING_DATE IS NULL" , null);
     }
@@ -205,8 +212,12 @@ public class Dictionary {
                 WordFromDictionary word = new WordFromDictionary();
                 word.setOuid(cursor.getString(cursor.getColumnIndex(OUID_COLUMN_NAME)));
                 word.setGuid(cursor.getString(cursor.getColumnIndex(GUID_COLUMN_NAME)));
-                word.setEnglishWord(cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_COLUMN_NAME)));
-                word.setTranslateWord(cursor.getString(cursor.getColumnIndex(TRANSLATE_WORD_COLUMN_NAME)));
+                word.setEnglishWord(
+                        cursor.getString(cursor.getColumnIndex(ENGLISH_WORD_COLUMN_NAME))
+                );
+                word.setTranslateWord(
+                        cursor.getString(cursor.getColumnIndex(TRANSLATE_WORD_COLUMN_NAME))
+                );
 
                 allWordsList.add(word);
             }

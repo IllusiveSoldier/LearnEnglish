@@ -77,13 +77,17 @@ public class DictionaryTrainingFragment extends Fragment {
 
         dictionaryTrainingEnglishWordTextView = (TextView)
                 view.findViewById(R.id.dictionaryTrainingEnglishWordTextView);
-        dictionaryTrainingEnglishWordTextView.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        dictionaryTrainingEnglishWordTextView.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         dictionaryTrainingTranslateWordEditText = (EditText)
                 view.findViewById(R.id.dictionaryTrainingTranslateWordEditText);
-        dictionaryTrainingTranslateWordEditText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        dictionaryTrainingTranslateWordEditText.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
@@ -99,8 +103,11 @@ public class DictionaryTrainingFragment extends Fragment {
                         wordFromDictionaries.get(randomIndex).getEnglishWord()
                 );
             } else if (wordFromDictionaries.size() == 0) {
-                toast.show(getActivity().getApplication().getResources().getString(R.string.title_notFoundWords),
-                        R.mipmap.ic_sentiment_very_satisfied_black_24dp);
+                toast.show(
+                        getActivity().getApplication().getResources()
+                                .getString(R.string.title_notFoundWords),
+                        R.mipmap.ic_sentiment_very_satisfied_black_24dp
+                );
             }
         } catch (Exception ex) {
             toast.show(ex);
@@ -131,7 +138,8 @@ public class DictionaryTrainingFragment extends Fragment {
                     );
                 } else if (wordFromDictionaries.size() == 0) {
                     toast.show(
-                            getActivity().getApplication().getResources().getString(R.string.title_notFoundWords),
+                            getActivity().getApplication().getResources()
+                                    .getString(R.string.title_notFoundWords),
                             R.mipmap.ic_sentiment_very_satisfied_black_24dp
                     );
                 }
@@ -149,7 +157,9 @@ public class DictionaryTrainingFragment extends Fragment {
                     dictionaryTrainingTranslateWordEditText.getText().toString())) {
                 correctAnswer++;
                 // отмечаем дату тренировки слова
-                dictionary.setLastTrainingWordDate(wordFromDictionaries.get(randomIndex).getGuid());
+                dictionary.setLastTrainingWordDate(
+                        wordFromDictionaries.get(randomIndex).getGuid()
+                );
                 // Очищаем поле ввода
                 dictionaryTrainingTranslateWordEditText.setText("");
                 // Удаляем слово из коллекции
@@ -167,7 +177,8 @@ public class DictionaryTrainingFragment extends Fragment {
                     bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                     bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                    Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
+                    Fragment showDictionaryTrainingResult =
+                            new ShowDictionaryTrainingResultFragment();
                     showDictionaryTrainingResult.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.activity_task, showDictionaryTrainingResult)
@@ -202,7 +213,8 @@ public class DictionaryTrainingFragment extends Fragment {
                     bundle.putString(CORRECT_ANSWER, String.valueOf(correctAnswer));
                     bundle.putString(WRONG_ANSWER, String.valueOf(wrongAnswer));
 
-                    Fragment showDictionaryTrainingResult = new ShowDictionaryTrainingResultFragment();
+                    Fragment showDictionaryTrainingResult =
+                            new ShowDictionaryTrainingResultFragment();
                     showDictionaryTrainingResult.setArguments(bundle);
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.activity_task, showDictionaryTrainingResult)

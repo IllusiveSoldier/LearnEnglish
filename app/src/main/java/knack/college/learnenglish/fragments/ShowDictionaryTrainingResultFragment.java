@@ -29,47 +29,70 @@ public class ShowDictionaryTrainingResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_show_dictionary_training_result, container, false);
+        View view = inflater.inflate(
+                R.layout.fragment_show_dictionary_training_result,
+                container,
+                false
+        );
 
         complete = (TextView) view.findViewById(R.id.complete);
-        complete.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        complete.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         results = (TextView) view.findViewById(R.id.results);
-        results.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        results.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         numberWords = (TextView) view.findViewById(R.id.numberWords);
-        numberWords.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        numberWords.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         numberWordsValue = (TextView) view.findViewById(R.id.numberWordsValue);
-        numberWordsValue.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        numberWordsValue.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
+
         if (getArguments() != null && getArguments().containsKey(NUMBER_WORDS)) {
             String numberWords = (String) getArguments().get(NUMBER_WORDS);
             numberWordsValue.setText(numberWords);
         }
 
         correctAnswer = (TextView) view.findViewById(R.id.correctAnswer);
-        correctAnswer.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        correctAnswer.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         correctAnswerValue = (TextView) view.findViewById(R.id.correctAnswerValue);
-        correctAnswerValue.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        correctAnswerValue.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
+
         if (getArguments() != null && getArguments().containsKey(CORRECT_ANSWER)) {
             String numberWords = (String) getArguments().get(CORRECT_ANSWER);
             correctAnswerValue.setText(numberWords);
         }
 
         wrongAnswer = (TextView) view.findViewById(R.id.wrongAnswer);
-        wrongAnswer.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        wrongAnswer.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
 
         wrongAnswerValue = (TextView) view.findViewById(R.id.wrongAnswerValue);
-        wrongAnswerValue.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf"));
+        wrongAnswerValue.setTypeface(
+                Typeface.createFromAsset(getActivity().getAssets(),
+                "fonts/Roboto/Roboto-Light.ttf")
+        );
+
         if (getArguments() != null && getArguments().containsKey(WRONG_ANSWER)) {
             String numberWords = (String) getArguments().get(WRONG_ANSWER);
             wrongAnswerValue.setText(numberWords);

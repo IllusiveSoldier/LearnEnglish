@@ -35,7 +35,9 @@ public class TaskGenerator {
 
             Task allWordsTrainingTaskSecondEdition = new Task();
             allWordsTrainingTaskSecondEdition.setName(ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION);
-            allWordsTrainingTaskSecondEdition.setTitle(ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION);
+            allWordsTrainingTaskSecondEdition.setTitle(
+                    ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION
+            );
             tasks.add(allWordsTrainingTaskSecondEdition);
 
             if (dictionary.getForgottenWords().size() > 0) {
@@ -45,8 +47,12 @@ public class TaskGenerator {
                 tasks.add(forgottenWordsTrainingTask);
 
                 Task forgottenWordsTrainingTaskSecondEdition = new Task();
-                forgottenWordsTrainingTaskSecondEdition.setName(FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION);
-                forgottenWordsTrainingTaskSecondEdition.setTitle(FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION);
+                forgottenWordsTrainingTaskSecondEdition.setName(
+                        FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION
+                );
+                forgottenWordsTrainingTaskSecondEdition.setTitle(
+                        FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION
+                );
                 tasks.add(forgottenWordsTrainingTaskSecondEdition);
             }
         }
