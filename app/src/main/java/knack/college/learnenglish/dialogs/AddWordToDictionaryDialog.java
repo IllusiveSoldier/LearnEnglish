@@ -29,7 +29,8 @@ import static knack.college.learnenglish.model.Constant.Translator.RU_EN;
 
 
 public class AddWordToDictionaryDialog extends DialogFragment {
-    private final static String TRANSLATION_ERROR_MESSAGE = "Не удалось перевести";
+    private static final String TRANSLATION_ERROR_MESSAGE = "Не удалось перевести";
+    private static final String INCORRECT_DATA_INPUT = "Некорректные данные дял перевода";
 
     private EditText englishWordEditText;
     private EditText translateWordEditText;
@@ -90,6 +91,8 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                         new GetTranslateWord().execute(translationWord, EN_RU);
                     } else if (translationWord.isEmpty() && !englishWord.isEmpty()) {
                         new GetTranslateWord().execute(englishWord, RU_EN);
+                    } else {
+                        toast.show(INCORRECT_DATA_INPUT);
                     }
                 } catch (Exception ex) {
                     toast.show(ex);
