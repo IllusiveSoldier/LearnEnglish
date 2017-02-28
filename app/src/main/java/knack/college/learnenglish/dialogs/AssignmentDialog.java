@@ -49,6 +49,9 @@ public class AssignmentDialog extends DialogFragment {
                                     toast.show(ex);
                                 }
                                 break;
+                            case 4:
+
+                                break;
                         }
                     }
                 });

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="assignmentSelect">
-        <item>Показать статистику</item>
+        <item>Показать статистику (не реализовано)</item>
         <item>Очистить статистику</item>
-        <item>Восстановить словарь по умолчанию</item>
+        <item>Восстановить словарь по умолчанию (не реализовано)</item>
         <item>Очистить словарь</item>
+        <item>Создать резервную копию базы данных</item>
     </string-array>
 </resources>
