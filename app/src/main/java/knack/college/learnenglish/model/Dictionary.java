@@ -245,7 +245,6 @@ public class Dictionary {
     public void restoreWord(WordFromDictionary wordFromDictionary) throws Exception {
         if (wordFromDictionary != null) {
             LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-
             SQLiteDatabase database = helper.getWritableDatabase();
 
             ContentValues values = new ContentValues();

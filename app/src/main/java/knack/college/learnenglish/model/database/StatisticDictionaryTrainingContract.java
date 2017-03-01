@@ -25,19 +25,19 @@ import static knack.college.learnenglish.model.Constant.SpecialCharacters.TAB;
 public class StatisticDictionaryTrainingContract {
     public static abstract class StatisticDictionaryTraining implements BaseColumns {
         /** Название таблицы для статистики */
-        public final static String STATISTIC_DICTIONARY_TRAINING = "STATISTIC_DICTIONARY_TRAINING";
+        public static final String STATISTIC_DICTIONARY_TRAINING = "STATISTIC_DICTIONARY_TRAINING";
         /** Первичный ключ */
-        public final static String OUID_COLUMN_NAME = "OUID";
+        public static final String OUID_COLUMN_NAME = "OUID";
         /** Глоабльный уникальный идентификатор */
-        public final static String GUID_COLUMN_NAME = "GUID";
+        public static final String GUID_COLUMN_NAME = "GUID";
         /** Всего слов в словаре на момент прохождения треннинга */
-        public final static String COUNT_OF_WORDS_IN_DICTIONARY = "COUNT_OF_WORDS_IN_DICTIONARY";
+        public static final String COUNT_OF_WORDS_IN_DICTIONARY = "COUNT_OF_WORDS_IN_DICTIONARY";
         /** Правильных ответов */
-        public final static String CORRECT_ANSWER = "CORRECT_ANSWER";
+        public static final String CORRECT_ANSWER = "CORRECT_ANSWER";
         /** Неправильных ответов */
-        public final static String WRONG_ANSWER = "WRONG_ANSWER";
+        public static final String WRONG_ANSWER = "WRONG_ANSWER";
         /** Время начала треннинга */
-        public final static String BEGIN_TRAINING = "BEGIN_TRAINING";
+        public static final String BEGIN_TRAINING = "BEGIN_TRAINING";
 
         /** * Метод, который возвращает текст запрсоа на создание таблицы */
         public static StringBuilder getCreateStatisticDictionaryTrainingTableQuery() {

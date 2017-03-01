@@ -21,7 +21,7 @@ import knack.college.learnenglish.model.toasts.Toast;
 
 
 public class ProfileFragment extends Fragment {
-    private final static String UNIQUE_NAME_ASSIGNMENT_DIALOG = "assignment";
+    private static final String UNIQUE_NAME_ASSIGNMENT_DIALOG = "assignment";
 
     FloatingActionButton deleteDictionaryButton;
     TextView numberOfWordsTitle;

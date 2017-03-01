@@ -34,10 +34,10 @@ import java.util.ArrayList;
 
 
 public class DictionaryFragment extends Fragment {
-    private final static int REQUEST_SELECTED = 1;
-    private final static String UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG =
+    private static final int REQUEST_SELECTED = 1;
+    private static final String UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG =
             "addToDictionaryDialog";
-    private final static String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG =
+    private static final String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG =
             "deleteFromDictionaryDialog";
 
     FloatingActionButton addToDatabaseButton;

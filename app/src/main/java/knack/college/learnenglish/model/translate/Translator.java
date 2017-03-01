@@ -12,10 +12,10 @@ import static knack.college.learnenglish.model.translate.ApiKey.API_KEY;
 
 /** Класс, который реализует перевод слов с помозью сервиса Яндекс Переводчик */
 public class Translator {
-    private final static String BASE_TRANSLATE_URL =
+    private static final String BASE_TRANSLATE_URL =
             "https://translate.yandex.net/api/v1.5/tr.json/translate?key=";
-    private final static String LANG = "&lang=";
-    private final static String TEXT = "&text=";
+    private static final String LANG = "&lang=";
+    private static final String TEXT = "&text=";
 
     private OkHttpClient client = new OkHttpClient();
 
@@ -23,12 +23,12 @@ public class Translator {
     public String translateEng(String englishWord) throws Exception {
         String response = null;
         if (englishWord != null && !englishWord.isEmpty()) {
-            String requestUrl = BASE_TRANSLATE_URL +
-                    API_KEY +
-                    LANG +
-                    EN_RU +
-                    TEXT +
-                    URLEncoder.encode(englishWord, "UTF-8");
+            String requestUrl = BASE_TRANSLATE_URL
+                    + API_KEY
+                    + LANG
+                    + EN_RU
+                    + TEXT
+                    + URLEncoder.encode(englishWord, "UTF-8");
             response = run(requestUrl);
         }
 
@@ -39,12 +39,12 @@ public class Translator {
     public String translateRus(String russianWord) throws Exception {
         String response = null;
         if (russianWord != null && !russianWord.isEmpty()) {
-            String requestUrl = BASE_TRANSLATE_URL +
-                    API_KEY +
-                    LANG +
-                    RU_EN +
-                    TEXT +
-                    URLEncoder.encode(russianWord, "UTF-8");
+            String requestUrl = BASE_TRANSLATE_URL
+                    + API_KEY
+                    + LANG
+                    + RU_EN
+                    + TEXT
+                    + URLEncoder.encode(russianWord, "UTF-8");
             response = run(requestUrl);
         }
 

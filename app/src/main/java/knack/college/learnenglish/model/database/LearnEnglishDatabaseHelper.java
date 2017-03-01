@@ -12,8 +12,8 @@ import static knack.college.learnenglish.model.database.StatisticDictionaryTrain
 
 public class LearnEnglishDatabaseHelper extends SQLiteOpenHelper {
 
-    public final static String DATABASE_NAME = "learn_english.db";
-    public final static int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "learn_english.db";
+    public static final int DATABASE_VERSION = 1;
 
     public LearnEnglishDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

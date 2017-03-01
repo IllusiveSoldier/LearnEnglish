@@ -30,7 +30,8 @@ import static knack.college.learnenglish.model.Constant.Translator.RU_EN;
 
 public class AddWordToDictionaryDialog extends DialogFragment {
     private static final String TRANSLATION_ERROR_MESSAGE = "Не удалось перевести";
-    private static final String INCORRECT_DATA_INPUT = "Некорректные данные дял перевода";
+    private static final String INCORRECT_DATA_INPUT =
+            "Некорректные данные дял перевода, попробуйте удалить данные с текстовых полей";
 
     private EditText englishWordEditText;
     private EditText translateWordEditText;

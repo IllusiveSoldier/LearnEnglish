@@ -42,13 +42,13 @@ public class RandomColor {
 
     /** Класс-storage цветов */
     public final class Colors {
-        public final static String GREEN = "#00e676";
-        public final static String CYAN = "#00B8D4";
-        public final static String BRIGHT_CYAN = "#18FFFF";
-        public final static String BRIGHT_PURPLE = "#D500F9";
-        public final static String BRIGHT_YELLOW = "#FFFF00";
-        public final static String BRIGHT_RED = "#FF1744";
-        public final static String BRIGHT_PINK = "#F50057";
+        public static final String GREEN = "#00e676";
+        public static final String CYAN = "#00B8D4";
+        public static final String BRIGHT_CYAN = "#18FFFF";
+        public static final String BRIGHT_PURPLE = "#D500F9";
+        public static final String BRIGHT_YELLOW = "#FFFF00";
+        public static final String BRIGHT_RED = "#FF1744";
+        public static final String BRIGHT_PINK = "#F50057";
     }
 
     public ArrayList<String> getColors() {

@@ -32,17 +32,17 @@ public class DictionaryContract {
 
     public static abstract class Dictionary implements BaseColumns {
         /** Название таблицы для словаря */
-        public final static String DICTIONARY_TABLE_NAME = "DICTIONARY";
+        public static final String DICTIONARY_TABLE_NAME = "DICTIONARY";
         /** Первичный ключ */
-        public final static String OUID_COLUMN_NAME = "OUID";
+        public static final String OUID_COLUMN_NAME = "OUID";
         /** Глоабльный уникальный идентификатор */
-        public final static String GUID_COLUMN_NAME = "GUID";
+        public static final String GUID_COLUMN_NAME = "GUID";
         /** Слово на английском */
-        public final static String ENGLISH_WORD_COLUMN_NAME = "ENGLISH_WORD";
+        public static final String ENGLISH_WORD_COLUMN_NAME = "ENGLISH_WORD";
         /** Слово-перевод */
-        public final static String TRANSLATE_WORD_COLUMN_NAME = "TRANSLATE_WORD";
+        public static final String TRANSLATE_WORD_COLUMN_NAME = "TRANSLATE_WORD";
         /** Дата последней тренировки слова */
-        public final static String LAST_TRAINING_DATE = "LAST_TRAINING_DATE";
+        public static final String LAST_TRAINING_DATE = "LAST_TRAINING_DATE";
 
         /** Метод, который возвращает текст запрсоа на создание таблицы */
         public static StringBuilder getCreateDictionaryTableQuery() {

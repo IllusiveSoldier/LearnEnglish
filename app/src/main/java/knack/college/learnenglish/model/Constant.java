@@ -5,24 +5,23 @@ import static knack.college.learnenglish.model.database.DictionaryContract.Dicti
 
 public final class Constant {
 
-    public final static String ALL_WORDS_FROM_DICTIONARY = "allWordsFromDictionary";
-    public final static String ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION =
+    public static final String ALL_WORDS_FROM_DICTIONARY = "allWordsFromDictionary";
+    public static final String ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION =
             "allWordsFromDictionarySecondEdition";
-    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY = "forgottenWordsFromDictionary";
-    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION =
+    public static final String FORGOTTEN_WORDS_FROM_DICTIONARY = "forgottenWordsFromDictionary";
+    public static final String FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION =
             "forgottenWordsFromDictionarySecondEdition";
-    public final static String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE =
-            "Прогон по всем словам";
-    public final static String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION =
+    public static final String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE = "Прогон по всем словам";
+    public static final String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION =
             "Прогон по всем словам (без ввода слов)";
-    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE =
+    public static final String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE =
             "Прогон по нетренированным словам";
-    public final static String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION =
+    public static final String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION =
             "Прогон по нетренированным словам (без ввода слов)";
-    public final static String FRAGMENT_CODE = "fragmentCode";
-    public final static String NUMBER_WORDS = "numberWords";
-    public final static String CORRECT_ANSWER = "correctAnswer";
-    public final static String WRONG_ANSWER = "wrongAnswer";
+    public static final String FRAGMENT_CODE = "fragmentCode";
+    public static final String NUMBER_WORDS = "numberWords";
+    public static final String CORRECT_ANSWER = "correctAnswer";
+    public static final String WRONG_ANSWER = "wrongAnswer";
 
     public final class DatabaseKeywords {
         public final static String CREATE_TABLE_SQL_KEYWORD = "CREATE TABLE ";
@@ -47,20 +46,20 @@ public final class Constant {
     }
 
     public final class SpecialCharacters {
-        public final static String NEW_LINE = "\n";
-        public final static String TAB = "\t";
-        public final static String SPACE = " ";
-        public final static String COMMA = ", ";
-        public final static String LEFT_BRACE = "( ";
-        public final static String LEFT_BRACE_WITHOUT_SPACE = "(";
-        public final static String RIGHT_BRACE = ") ";
-        public final static String RIGHT_BRACE_WITHOUT_SPACE = ")";
-        public final static String SEMICOLON = "; ";
+        public static final String NEW_LINE = "\n";
+        public static final String TAB = "\t";
+        public static final String SPACE = " ";
+        public static final String COMMA = ", ";
+        public static final String LEFT_BRACE = "( ";
+        public static final String LEFT_BRACE_WITHOUT_SPACE = "(";
+        public static final String RIGHT_BRACE = ") ";
+        public static final String RIGHT_BRACE_WITHOUT_SPACE = ")";
+        public static final String SEMICOLON = "; ";
     }
 
     public final class DatabaseNumberValues {
-        public final static String VARCHAR_255 = "VARCHAR(255)";
-        public final static String VARCHAR_50 = "VARCHAR(50)";
+        public static final String VARCHAR_255 = "VARCHAR(255)";
+        public static final String VARCHAR_50 = "VARCHAR(50)";
     }
 
     final class Number {
@@ -68,7 +67,7 @@ public final class Constant {
     }
 
     public final class Translator {
-        public final static String EN_RU = "en-ru";
-        public final static String RU_EN = "ru-en";
+        public static final String EN_RU = "en-ru";
+        public static final String RU_EN = "ru-en";
     }
 }
