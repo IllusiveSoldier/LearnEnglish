@@ -5,6 +5,7 @@ import android.content.IntentSender;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -13,14 +14,16 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.common.io.Files;
-import knack.college.learnenglish.model.toasts.Toast;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import javax.annotation.Nullable;
+
+import knack.college.learnenglish.model.toasts.Toast;
 
 public class BackupActivity
         extends AppCompatActivity
@@ -137,7 +140,6 @@ public class BackupActivity
     public void onConnectionSuspended(int cause) {
         toast.show("Подключение успешно!");
     }
-
 
     private File getDatabaseFile() {
         File databaseFile = null;

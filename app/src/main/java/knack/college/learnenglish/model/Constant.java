@@ -11,6 +11,7 @@ public final class Constant {
     public static final String FORGOTTEN_WORDS_FROM_DICTIONARY = "forgottenWordsFromDictionary";
     public static final String FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION =
             "forgottenWordsFromDictionarySecondEdition";
+    public static final String INFINITELY_WORDS = "infinitelyWordsTrainingTask";
     public static final String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE = "Прогон по всем словам";
     public static final String ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION =
             "Прогон по всем словам (без ввода слов)";
@@ -18,6 +19,7 @@ public final class Constant {
             "Прогон по нетренированным словам";
     public static final String FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION =
             "Прогон по нетренированным словам (без ввода слов)";
+    public static final String INFINITELY_WORDS_TRAINING_TASK = "Бесконечный прогон слов";
     public static final String FRAGMENT_CODE = "fragmentCode";
     public static final String NUMBER_WORDS = "numberWords";
     public static final String CORRECT_ANSWER = "correctAnswer";

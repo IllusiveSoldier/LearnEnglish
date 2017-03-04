@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import knack.college.learnenglish.fragments.DictionaryInfinitelyTrainingFragment;
 import knack.college.learnenglish.fragments.DictionaryTrainingFragment;
 import knack.college.learnenglish.fragments.DictionaryTrainingSecondFragment;
 
@@ -13,6 +14,7 @@ import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONAR
 import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
 import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION;
 import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
+import static knack.college.learnenglish.model.Constant.INFINITELY_WORDS;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -73,6 +75,17 @@ public class TaskActivity extends AppCompatActivity {
                         .replace(
                                 R.id.activity_task,
                                 dictionaryTrainingFragmentSecond
+                        ).commit();
+            } else if (INFINITELY_WORDS.equals(fragmentCode)) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FRAGMENT_CODE, INFINITELY_WORDS);
+
+                Fragment infinitelyWordsTraining = new DictionaryInfinitelyTrainingFragment();
+                infinitelyWordsTraining.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(
+                                R.id.activity_task,
+                                infinitelyWordsTraining
                         ).commit();
             }
         }

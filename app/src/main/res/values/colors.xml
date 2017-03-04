@@ -21,4 +21,5 @@
     <color name="orange"            >#FF6D00</color>
     <color name="bright_orange"     >#FF9100</color>
     <color name="blue_gray"         >#37474F</color>
+    <color name="black"             >#000000</color>
 </resources>

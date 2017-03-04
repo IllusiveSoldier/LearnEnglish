@@ -1,11 +1,21 @@
 package knack.college.learnenglish.model;
 
 import android.app.Activity;
-import knack.college.learnenglish.model.toasts.Toast;
 
 import java.util.ArrayList;
 
-import static knack.college.learnenglish.model.Constant.*;
+import knack.college.learnenglish.model.toasts.Toast;
+
+import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
+import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION;
+import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE;
+import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION;
+import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
+import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION;
+import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE;
+import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION;
+import static knack.college.learnenglish.model.Constant.INFINITELY_WORDS;
+import static knack.college.learnenglish.model.Constant.INFINITELY_WORDS_TRAINING_TASK;
 
 /** Класс, генерирующий задания */
 public class TaskGenerator {
@@ -39,6 +49,11 @@ public class TaskGenerator {
                     ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION
             );
             tasks.add(allWordsTrainingTaskSecondEdition);
+
+            Task infinitelyWordsTrainingTask = new Task();
+            infinitelyWordsTrainingTask.setName(INFINITELY_WORDS);
+            infinitelyWordsTrainingTask.setTitle(INFINITELY_WORDS_TRAINING_TASK);
+            tasks.add(infinitelyWordsTrainingTask);
 
             if (dictionary.getForgottenWords().size() > 0) {
                 Task forgottenWordsTrainingTask = new Task();

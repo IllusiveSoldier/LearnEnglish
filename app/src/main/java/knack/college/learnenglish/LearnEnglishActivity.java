@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import java.util.ArrayList;
 
@@ -17,6 +20,8 @@ import knack.college.learnenglish.fragments.TaskFragment;
 import knack.college.learnenglish.model.toasts.Toast;
 
 public class LearnEnglishActivity extends AppCompatActivity {
+
+    private static final String ACTION_BAR_TITLE = "Learn English (Alpha)";
 
     private TabLayout tabLayout;
     private Toast toast;
@@ -32,8 +37,21 @@ public class LearnEnglishActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
+        getSupportActionBar().setElevation(0);
+        Spannable title = new SpannableString(ACTION_BAR_TITLE);
+        title.setSpan(
+                new ForegroundColorSpan(
+                        getResources().getColor(R.color.black)
+                ),
+                0,
+                title.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
+        getSupportActionBar().setTitle(title);
+
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
 
         setupTabIcons();
     }
