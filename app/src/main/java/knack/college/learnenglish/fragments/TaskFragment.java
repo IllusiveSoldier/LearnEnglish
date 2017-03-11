@@ -15,14 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.TaskActivity;
 import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.Task;
 import knack.college.learnenglish.model.TaskGenerator;
-import knack.college.learnenglish.model.toasts.Toast;
-
-import java.util.ArrayList;
+import knack.college.learnenglish.model.toasts.ToastWrapper;
 
 import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
 
@@ -31,7 +32,7 @@ public class TaskFragment extends Fragment {
     RecyclerView taskRecyclerView;
     SwipeRefreshLayout taskSwipeRefreshLayout;
 
-    Toast toast;
+    ToastWrapper toastWrapper;
     LearnEnglishAdapter learnEnglishAdapter;
     TaskGenerator taskGenerator;
 
@@ -43,12 +44,12 @@ public class TaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task, container, false);
 
-        toast = new Toast(getActivity());
+        toastWrapper = new ToastWrapper(getActivity());
         taskGenerator = new TaskGenerator(getActivity());
         try {
             tasks = taskGenerator.getActualTask();
         } catch (Exception ex) {
-            toast.show(ex);
+            toastWrapper.show(ex.toString());
         }
 
         taskRecyclerView = (RecyclerView) view.findViewById(R.id.taskRecyclerView);
@@ -75,7 +76,7 @@ public class TaskFragment extends Fragment {
                         taskRecyclerView.setAdapter(learnEnglishAdapter);
                     }
                 } catch (Exception ex) {
-                    toast.show(ex);
+                    toastWrapper.show(ex.toString());
                 }
 
                 taskSwipeRefreshLayout.setRefreshing(false);

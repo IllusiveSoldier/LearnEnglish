@@ -1,6 +1,5 @@
 package knack.college.learnenglish;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,24 +14,22 @@ import android.text.style.ForegroundColorSpan;
 import java.util.ArrayList;
 
 import knack.college.learnenglish.fragments.DictionaryFragment;
-import knack.college.learnenglish.fragments.ProfileFragment;
 import knack.college.learnenglish.fragments.TaskFragment;
-import knack.college.learnenglish.model.toasts.Toast;
+import knack.college.learnenglish.model.toasts.ToastWrapper;
 
 public class LearnEnglishActivity extends AppCompatActivity {
 
     private static final String ACTION_BAR_TITLE = "Learn English (Alpha)";
 
     private TabLayout tabLayout;
-    private Toast toast;
+    private ToastWrapper toastWrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_learn_english);
 
-        toast = new Toast(this);
+        toastWrapper = new ToastWrapper(this);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -60,9 +57,8 @@ public class LearnEnglishActivity extends AppCompatActivity {
         try {
             tabLayout.getTabAt(0).setIcon(R.mipmap.ic_sort_by_alpha_black_24dp);
             tabLayout.getTabAt(1).setIcon(R.mipmap.ic_event_note_black_24dp);
-            tabLayout.getTabAt(2).setIcon(R.mipmap.ic_settings_black_24dp);
         } catch (Exception ex) {
-            toast.show(ex);
+            toastWrapper.show(ex.toString());
         }
     }
 
@@ -70,8 +66,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         adapter.addFrag(new DictionaryFragment(), getString(R.string.title_dictionary));
-        adapter.addFrag(new TaskFragment(), getString(R.string.title_tasks));
-        adapter.addFrag(new ProfileFragment(), getString(R.string.title_profile));
+        adapter.addFrag(new TaskFragment(), getString(R.string.title_trainings));
 
         viewPager.setAdapter(adapter);
     }

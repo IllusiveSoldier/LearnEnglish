@@ -4,24 +4,12 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 
-import knack.college.learnenglish.model.toasts.Toast;
-
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE;
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.INFINITELY_WORDS;
-import static knack.college.learnenglish.model.Constant.INFINITELY_WORDS_TRAINING_TASK;
+import static knack.college.learnenglish.model.Constant.BRAINSTORM_TASK_TITLE;
 
 /** Класс, генерирующий задания */
 public class TaskGenerator {
     private Activity activity;
     private Dictionary dictionary;
-    private Toast toast;
 
     public TaskGenerator(Activity act) {
         activity = act;
@@ -31,7 +19,6 @@ public class TaskGenerator {
 
     private void initializeData() {
         dictionary = new Dictionary(activity.getApplicationContext());
-        toast = new Toast(activity);
     }
 
     public ArrayList<Task> getActualTask() throws Exception {
@@ -39,37 +26,9 @@ public class TaskGenerator {
 
         if (dictionary != null && dictionary.getNumberOfWords() > 0) {
             Task allWordsTrainingTask = new Task();
-            allWordsTrainingTask.setName(ALL_WORDS_FROM_DICTIONARY);
-            allWordsTrainingTask.setTitle(ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE);
+            allWordsTrainingTask.setName(BRAINSTORM_TASK_TITLE);
+            allWordsTrainingTask.setTitle(BRAINSTORM_TASK_TITLE);
             tasks.add(allWordsTrainingTask);
-
-            Task allWordsTrainingTaskSecondEdition = new Task();
-            allWordsTrainingTaskSecondEdition.setName(ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION);
-            allWordsTrainingTaskSecondEdition.setTitle(
-                    ALL_WORDS_FROM_DICTIONARY_TRAINING_TITLE_SECOND_EDITION
-            );
-            tasks.add(allWordsTrainingTaskSecondEdition);
-
-            Task infinitelyWordsTrainingTask = new Task();
-            infinitelyWordsTrainingTask.setName(INFINITELY_WORDS);
-            infinitelyWordsTrainingTask.setTitle(INFINITELY_WORDS_TRAINING_TASK);
-            tasks.add(infinitelyWordsTrainingTask);
-
-            if (dictionary.getForgottenWords().size() > 0) {
-                Task forgottenWordsTrainingTask = new Task();
-                forgottenWordsTrainingTask.setName(FORGOTTEN_WORDS_FROM_DICTIONARY);
-                forgottenWordsTrainingTask.setTitle(FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE);
-                tasks.add(forgottenWordsTrainingTask);
-
-                Task forgottenWordsTrainingTaskSecondEdition = new Task();
-                forgottenWordsTrainingTaskSecondEdition.setName(
-                        FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION
-                );
-                forgottenWordsTrainingTaskSecondEdition.setTitle(
-                        FORGOTTEN_WORDS_FROM_DICTIONARY_TITLE_SECOND_EDITION
-                );
-                tasks.add(forgottenWordsTrainingTaskSecondEdition);
-            }
         }
 
         return tasks;

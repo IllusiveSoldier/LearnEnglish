@@ -23,7 +23,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_below="@id/englishWord"
-        android:text="Переводится"
+        android:text="@string/hint.translated"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="27sp"
@@ -36,7 +36,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_below="@+id/title"
-        android:text="Как"
+        android:text="@string/hint.how"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="27sp"
@@ -61,7 +61,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_below="@+id/translate"
-        android:text="\?"
+        android:text="@string/hint.question_character"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="27sp"
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:src="@mipmap/ic_thumb_down_black_48dp"
+            android:background="@mipmap/ic_thumb_down_black_48dp"
             android:layout_marginLeft="25dp"
             android:layout_marginStart="25dp"
             android:layout_centerVertical="true"
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:src="@mipmap/ic_thumb_up_black_48dp"
+            android:background="@mipmap/ic_thumb_up_black_48dp"
             android:layout_marginRight="25dp"
             android:layout_marginEnd="25dp"
             android:layout_alignTop="@+id/no"
@@ -99,4 +99,12 @@
             android:layout_alignParentEnd="true"
             />
     </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        style="?android:attr/progressBarStyleHorizontal"
+        />
 </RelativeLayout>

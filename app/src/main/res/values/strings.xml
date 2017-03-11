@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Learn English (Alpha)</string>
 
-
     <string name="title.dictionary">Словарь</string>
     <string name="title.tasks">Задания</string>
     <string name="title.settings">Настройки</string>
@@ -27,14 +26,41 @@
     <string name="title.wordsNumber">Всего слов</string>
     <string name="title.correct">Правильно</string>
     <string name="title.wrong">Неправильно</string>
+    <string name="title.trainings">Тренировки</string>
+    <string name="title.translate_here">Перевод сюда</string>
+    <string name="title.translate_word">Переведи слово</string>
 
     <string name="hint.english_word">Слово на английском</string>
     <string name="hint.russian_word">Слово на русском</string>
-    <string name="hint.translate_word">Перевести слово</string>
+    <string name="hint.translate_word">Переведи слово</string>
     <string name="hint.values_is_removed">Значения удалены</string>
     <string name="hint.undo">Отмена</string>
     <string name="hint.word_is_remove">Слово удалено</string>
+    <string name="hint.translated">Переводится</string>
+    <string name="hint.how">Как</string>
+    <string name="hint.question_character">\?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error.message.failed_initialize_controls">
+        Не удалось проиницилизировать элементы управления
+    </string>
+    <string name="error.message.failed_initialize_toast">
+        Не удалось проиницилизировать toast
+    </string>
+    <string name="error.message.failed_initialize_dictionary">
+        Не удалось проиницилизировать объект словаря
+    </string>
+    <string name="error.message.failed_get_words">Не удалось получить слова со словаря</string>
+    <string name="error.message.failed_initialize_data_to_display">
+        Не удалось проиницилизировать данные для отображения
+    </string>
+    <string name="error.message.failed_initialize_validator">
+        Не удалось проиницилизировать валидатор
+    </string>
+    <string name="error.message.failed_clean_control">
+        Не удалось очистить элемент управления
+    </string>
+    <string name="error.message.failed_check_answer">
+        Не удалось проверить слово
+    </string>
+    <string name="error.message.failed_update_data">Не удалось обновить данные</string>
 </resources>
