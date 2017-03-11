@@ -14,13 +14,13 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:text="Переведи слово"
+        android:text="@string/hint.translate_word"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="27sp"
         />
     <TextView
-        android:id="@+id/dictionaryTrainingEnglishWordTextView"
+        android:id="@+id/englishWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -39,18 +39,22 @@
         android:layout_above="@+id/progressBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-        <EditText
-            android:id="@+id/dictionaryTrainingTranslateWordEditText"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:hint="Перевод сюда"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1">
+            <EditText
+                android:id="@+id/translateWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:hint="@string/title.translate_here"
+                />
+        </android.support.design.widget.TextInputLayout>
         <ImageButton
-            android:id="@+id/checkAnswerButton"
+            android:id="@+id/checkAnswer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
@@ -59,12 +63,11 @@
             />
     </LinearLayout>
     <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        style="?android:attr/progressBarStyleHorizontal"
         />
-
 </RelativeLayout>

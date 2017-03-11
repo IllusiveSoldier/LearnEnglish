@@ -11,10 +11,10 @@ import android.view.View;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
-import knack.college.learnenglish.model.toasts.Toast;
+import knack.college.learnenglish.model.toasts.ToastWrapper;
 
 public class ClearDictionaryDialog extends DialogFragment {
-    Toast toast;
+    ToastWrapper toastWrapper;
     Dictionary dictionary;
 
     @NonNull
@@ -24,7 +24,7 @@ public class ClearDictionaryDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.clear_dictionary_dialog, null);
 
-        toast = new Toast(getActivity());
+        toastWrapper = new ToastWrapper(getActivity());
         dictionary = new Dictionary(getActivity().getApplicationContext());
 
         builder.setView(view)
@@ -36,7 +36,7 @@ public class ClearDictionaryDialog extends DialogFragment {
                                try {
                                    dictionary.clear();
                                } catch (Exception ex) {
-                                   toast.show(ex);
+                                   toastWrapper.show(ex.toString());
                                }
                            }
                        }

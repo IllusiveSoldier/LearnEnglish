@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import knack.college.learnenglish.fragments.DictionaryInfinitelyTrainingFragment;
-import knack.college.learnenglish.fragments.DictionaryTrainingFragment;
-import knack.college.learnenglish.fragments.DictionaryTrainingSecondFragment;
+import java.util.Random;
 
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY;
-import static knack.college.learnenglish.model.Constant.FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION;
+import knack.college.learnenglish.fragments.TrainingFFragment;
+import knack.college.learnenglish.fragments.TrainingSFragment;
+
+import static knack.college.learnenglish.model.Constant.BRAINSTORM_TASK_TITLE;
 import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
-import static knack.college.learnenglish.model.Constant.INFINITELY_WORDS;
 
 public class TaskActivity extends AppCompatActivity {
 
@@ -32,61 +29,25 @@ public class TaskActivity extends AppCompatActivity {
             fragmentCode = intent.getStringExtra(FRAGMENT_CODE);
 
             // Select show fragment
-            if (ALL_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FRAGMENT_CODE, ALL_WORDS_FROM_DICTIONARY);
+            if (fragmentCode.equals(BRAINSTORM_TASK_TITLE)) {
+                Random random = new Random();
+                final int randomItemId = random.nextInt(2);
 
-                Fragment dictionaryTrainingFragment = new DictionaryTrainingFragment();
-                dictionaryTrainingFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(
-                                R.id.activity_task,
-                                dictionaryTrainingFragment
-                        ).commit();
-            } else if (FORGOTTEN_WORDS_FROM_DICTIONARY.equals(fragmentCode)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FRAGMENT_CODE, FORGOTTEN_WORDS_FROM_DICTIONARY);
-
-                Fragment dictionaryTrainingFragment = new DictionaryTrainingFragment();
-                dictionaryTrainingFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(
-                                R.id.activity_task,
-                                dictionaryTrainingFragment
-                        ).commit();
-            } else if (ALL_WORDS_FROM_DICTIONARY_SECOND_EDITION.equals(fragmentCode)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FRAGMENT_CODE, ALL_WORDS_FROM_DICTIONARY);
-
-                Fragment dictionaryTrainingFragmentSecond = new DictionaryTrainingSecondFragment();
-                dictionaryTrainingFragmentSecond.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(
-                                R.id.activity_task,
-                                dictionaryTrainingFragmentSecond
-                        ).commit();
-            } else if (FORGOTTEN_WORDS_FROM_DICTIONARY_SECOND_EDITION.equals(fragmentCode)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FRAGMENT_CODE, FORGOTTEN_WORDS_FROM_DICTIONARY);
-
-                Fragment dictionaryTrainingFragmentSecond = new DictionaryTrainingSecondFragment();
-                dictionaryTrainingFragmentSecond.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(
-                                R.id.activity_task,
-                                dictionaryTrainingFragmentSecond
-                        ).commit();
-            } else if (INFINITELY_WORDS.equals(fragmentCode)) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FRAGMENT_CODE, INFINITELY_WORDS);
-
-                Fragment infinitelyWordsTraining = new DictionaryInfinitelyTrainingFragment();
-                infinitelyWordsTraining.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(
-                                R.id.activity_task,
-                                infinitelyWordsTraining
-                        ).commit();
+                if (randomItemId == 0) {
+                    Fragment trainingFFragment = new TrainingFFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(
+                                    R.id.activity_task,
+                                    trainingFFragment
+                            ).commit();
+                } else if (randomItemId == 1) {
+                    Fragment trainingSFragment = new TrainingSFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(
+                                    R.id.activity_task,
+                                    trainingSFragment
+                            ).commit();
+                }
             }
         }
     }

@@ -4,12 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import knack.college.learnenglish.exceptions.EmptyData;
-import knack.college.learnenglish.exceptions.MoreMaxSymbols;
-import knack.college.learnenglish.exceptions.NoEnglishWord;
-import knack.college.learnenglish.exceptions.NoRussianWord;
-import knack.college.learnenglish.model.database.DictionaryContract;
-import knack.college.learnenglish.model.database.LearnEnglishDatabaseHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +11,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.*;
+import knack.college.learnenglish.exceptions.EmptyData;
+import knack.college.learnenglish.exceptions.MoreMaxSymbols;
+import knack.college.learnenglish.exceptions.NoEnglishWord;
+import knack.college.learnenglish.exceptions.NoRussianWord;
+import knack.college.learnenglish.model.database.DictionaryContract;
+import knack.college.learnenglish.model.database.LearnEnglishDatabaseHelper;
+
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.ENGLISH_WORD_COLUMN_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.GUID_COLUMN_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.LAST_TRAINING_DATE;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.OUID_COLUMN_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.TRANSLATE_WORD_COLUMN_NAME;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getCountRowsInTableQuery;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDeleteAllRowsInTableQuery;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDropDictionaryTableQuery;
 
 /** Класс, описывающий словарь */
 public class Dictionary {
@@ -34,23 +43,32 @@ public class Dictionary {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String currentDate = sdf.format(new Date());
 
+    private Validator validator;
+    private LearnEnglishDatabaseHelper helper;
+    private SQLiteDatabase database;
+
     public Dictionary(Context c) {
         context = c;
+
+        validator = new Validator();
+        helper = new LearnEnglishDatabaseHelper(context);
+        database = helper.getWritableDatabase();
+    }
+
+    public Dictionary() {
+        validator = new Validator();
+        helper = new LearnEnglishDatabaseHelper(context);
+        database = helper.getWritableDatabase();
     }
 
     /** Метод, который добавляет слово на иностранном языке и слово-перевод в словарь */
     public void addWordWithTranslate(String englishWord, String translate) throws Exception {
-        Validator validator = new Validator();
-
         if (englishWord != null && translate != null) {
             if (!englishWord.isEmpty() && !translate.isEmpty()) {
                 if (!validator.isWordMoreMaxSymbols(englishWord)
                         && !validator.isWordMoreMaxSymbols(translate)) {
                     if (validator.isEnglishCharactersInWord(englishWord)) {
                         if (validator.isRussianCharactersInWord(translate)) {
-                            LearnEnglishDatabaseHelper helper =
-                                    new LearnEnglishDatabaseHelper(context);
-                            SQLiteDatabase database = helper.getWritableDatabase();
                             ContentValues values = new ContentValues();
 
                             values.put(GUID_COLUMN_NAME, UUID.randomUUID().toString());
@@ -75,25 +93,16 @@ public class Dictionary {
 
     /** Метод, который удаляет словарь */
     public void delete() throws Exception {
-        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-        SQLiteDatabase database = helper.getWritableDatabase();
-
         database.execSQL(getDropDictionaryTableQuery().toString());
     }
 
     /** Метод, который очищяет словарь*/
     public void clear() throws Exception {
-        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-        SQLiteDatabase database = helper.getWritableDatabase();
-
         database.execSQL(getDeleteAllRowsInTableQuery().toString());
     }
 
     /** Метод, который курсор со всеми строками и столбцами из словаря */
     private Cursor getAllWordsCursor() throws Exception {
-        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
         String[] columnSelectList = {
                 OUID_COLUMN_NAME,
                 GUID_COLUMN_NAME,
@@ -147,9 +156,6 @@ public class Dictionary {
     /** Метод, который возвращает количество слов в словаре */
     public int getNumberOfWords() throws Exception {
         int count;
-        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
         Cursor cursor = database.rawQuery(getCountRowsInTableQuery().toString(), null);
         cursor.moveToFirst();
         count = cursor.getInt(0);
@@ -198,9 +204,6 @@ public class Dictionary {
      * дата последней тренировки
      * или с момента тренировки прошло больше 1 дня */
     public Cursor getForgottenWordsCursor() throws Exception {
-        LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-        SQLiteDatabase database = helper.getReadableDatabase();
-
         return database.rawQuery("SELECT " + OUID_COLUMN_NAME + ", " + GUID_COLUMN_NAME + ", "
                 + ENGLISH_WORD_COLUMN_NAME + ", " + TRANSLATE_WORD_COLUMN_NAME + ", "
                 + LAST_TRAINING_DATE + " FROM DICTIONARY AS dictionary WHERE julianday('"
@@ -244,9 +247,6 @@ public class Dictionary {
     /** Метод, который восстанавливает слово в словаре */
     public void restoreWord(WordFromDictionary wordFromDictionary) throws Exception {
         if (wordFromDictionary != null) {
-            LearnEnglishDatabaseHelper helper = new LearnEnglishDatabaseHelper(context);
-            SQLiteDatabase database = helper.getWritableDatabase();
-
             ContentValues values = new ContentValues();
             values.put(OUID_COLUMN_NAME, wordFromDictionary.getOuid());
             values.put(GUID_COLUMN_NAME, wordFromDictionary.getGuid());

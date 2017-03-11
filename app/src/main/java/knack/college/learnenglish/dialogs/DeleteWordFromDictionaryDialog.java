@@ -12,11 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import knack.college.learnenglish.R;
-import knack.college.learnenglish.model.toasts.Toast;
+import knack.college.learnenglish.model.toasts.ToastWrapper;
 
 public class DeleteWordFromDictionaryDialog extends DialogFragment {
 
-    Toast toast;
+    ToastWrapper toastWrapper;
     public static final String TAG_SELECTED = "selected";
 
     @NonNull
@@ -26,7 +26,7 @@ public class DeleteWordFromDictionaryDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.delete_word_from_dictionary_dialog_window, null);
 
-        toast = new Toast(getActivity());
+        toastWrapper = new ToastWrapper(getActivity());
 
         builder.setView(view)
                .setPositiveButton(

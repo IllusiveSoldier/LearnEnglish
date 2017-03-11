@@ -16,11 +16,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.Validator;
-import knack.college.learnenglish.model.toasts.Toast;
+import knack.college.learnenglish.model.toasts.ToastWrapper;
 import knack.college.learnenglish.model.translate.TranslateDAO;
 import knack.college.learnenglish.model.translate.Translator;
 
@@ -30,15 +33,14 @@ import static knack.college.learnenglish.model.Constant.Translator.RU_EN;
 
 public class AddWordToDictionaryDialog extends DialogFragment {
     private static final String TRANSLATION_ERROR_MESSAGE = "Не удалось перевести";
-    private static final String INCORRECT_DATA_INPUT =
-            "Некорректные данные дял перевода, попробуйте удалить данные с текстовых полей";
 
+    // Controls
     private EditText englishWordEditText;
     private EditText translateWordEditText;
     private ImageView translateButton;
     private Snackbar snackbar;
 
-    private Toast toast;
+    private ToastWrapper toast;
     private Dictionary dictionary;
     private Exception exception;
     private Validator validator = new Validator();
@@ -53,93 +55,126 @@ public class AddWordToDictionaryDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.add_word_to_dictonary_dialog_window, null);
 
-        englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
-        englishWordEditText.setTypeface(
-                Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf")
-        );
-
-        translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);
-        translateWordEditText.setTypeface(
-                Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/Roboto/Roboto-Light.ttf")
-        );
-
-        translateButton = (ImageView) view.findViewById(R.id.translateButton);
-
-        dictionary = new Dictionary(getActivity().getApplicationContext());
-        toast = new Toast(getActivity());
-
-        builder.setView(view)
-               .setPositiveButton(R.string.title_add, null)
-               .setNegativeButton(
-                       R.string.title_cancel,
-                       new DialogInterface.OnClickListener() {
-                           public void onClick(DialogInterface dialog, int id) {
-
-                           }
-                       }
-               );
-
-        translateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    final String englishWord = englishWordEditText.getText().toString();
-                    final String translationWord = translateWordEditText.getText().toString();
-
-                    if (englishWord.isEmpty() && !translationWord.isEmpty()) {
-                        new GetTranslateWord().execute(translationWord, EN_RU);
-                    } else if (translationWord.isEmpty() && !englishWord.isEmpty()) {
-                        new GetTranslateWord().execute(englishWord, RU_EN);
-                    } else {
-                        toast.show(INCORRECT_DATA_INPUT);
-                    }
-                } catch (Exception ex) {
-                    toast.show(ex);
-                }
-            }
-        });
-
-        translateButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                bufferEnglishWord = englishWordEditText.getText().toString();
-                bufferTranslateWord = translateWordEditText.getText().toString();
-
-                clearEditTextControls();
-
-                snackbar = Snackbar
-                        .make(
-                            v,
-                            getResources().getString(R.string.hint_values_is_removed),
-                            Snackbar.LENGTH_LONG
-                        )
-                        .setAction(
-                                getResources().getString(R.string.hint_undo),
-                                new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        englishWordEditText.setText(bufferEnglishWord);
-                                        translateWordEditText.setText(bufferTranslateWord);
-                                    }
-                                }
-                        );
-                if (Build.VERSION.SDK_INT >= 23) {
-                    snackbar.setActionTextColor(
-                            ContextCompat.getColor(getActivity().getApplicationContext(),
-                            R.color.bright_green)
-                    );
-                } else {
-                    snackbar.setActionTextColor(getResources().getColor(R.color.bright_green));
-                }
-                snackbar.show();
-
-                return true;
-            }
-        });
+        initializeToast();
+        initializeDictionary();
+        initializeControls(view, builder);
 
         return builder.create();
+    }
+
+    private void initializeToast() {
+        try {
+            toast = new ToastWrapper(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            Toast.makeText(
+                    getActivity().getApplicationContext(),
+                    getResources().getString(R.string.error_message_failed_initialize_toast),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+    }
+
+    private void initializeDictionary() {
+        try {
+            dictionary = new Dictionary(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            toast.show(
+                    getResources().getString(R.string.error_message_failed_initialize_dictionary)
+            );
+        }
+    }
+
+    private void initializeControls(View view, AlertDialog.Builder builder) {
+        try {
+            englishWordEditText = (EditText) view.findViewById(R.id.englishWordEditText);
+            englishWordEditText.setTypeface(
+                    Typeface.createFromAsset(getActivity().getAssets(),
+                            "fonts/Roboto/Roboto-Light.ttf")
+            );
+
+            translateWordEditText = (EditText) view.findViewById(R.id.translateWordEditText);
+            translateWordEditText.setTypeface(
+                    Typeface.createFromAsset(getActivity().getAssets(),
+                            "fonts/Roboto/Roboto-Light.ttf")
+            );
+
+            translateButton = (ImageView) view.findViewById(R.id.translateButton);
+
+            builder.setView(view)
+                    .setPositiveButton(R.string.title_add, null)
+                    .setNegativeButton(
+                            R.string.title_cancel,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                }
+                            }
+                    );
+
+            translateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        if (englishWordEditText.hasFocus()) {
+                            final String englishWord = englishWordEditText.getText().toString();
+                            new GetTranslateWord().execute(englishWord, RU_EN);
+                        } else if (translateWordEditText.hasFocus()) {
+                            final String translationWord = translateWordEditText.getText().toString();
+                            new GetTranslateWord().execute(translationWord, EN_RU);
+                        }
+                    } catch (Exception ex) {
+                        toast.show(TRANSLATION_ERROR_MESSAGE);
+                    }
+                }
+            });
+
+            translateButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (!englishWordEditText.getText().toString().isEmpty()
+                            && !translateWordEditText.getText().toString().isEmpty()) {
+                        bufferEnglishWord = englishWordEditText.getText().toString();
+                        bufferTranslateWord = translateWordEditText.getText().toString();
+
+                        clearEditTextControls();
+
+                        snackbar = Snackbar
+                                .make(
+                                    v,
+                                    getResources().getString(R.string.hint_values_is_removed),
+                                    Snackbar.LENGTH_LONG
+                                )
+                                .setAction(
+                                    getResources().getString(R.string.hint_undo),
+                                    new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            englishWordEditText.setText(bufferEnglishWord);
+                                            translateWordEditText.setText(bufferTranslateWord);
+                                        }
+                                    }
+                                );
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            snackbar.setActionTextColor(
+                                    ContextCompat.getColor(getActivity().getApplicationContext(),
+                                            R.color.bright_green)
+                            );
+                        } else {
+                            snackbar.setActionTextColor(
+                                    getResources().getColor(R.color.bright_green)
+                            );
+                        }
+                        snackbar.show();
+                    }
+
+                    return true;
+                }
+            });
+        } catch (Exception e) {
+            toast.show(getResources().getString(
+                    R.string.error_message_failed_initialize_controls)
+            );
+        }
     }
 
     @Override
@@ -161,7 +196,7 @@ public class AddWordToDictionaryDialog extends DialogFragment {
                             );
                             dialog.cancel();
                         } catch (Exception ex) {
-                            toast.show(ex);
+                            toast.show(ex.getMessage());
                         }
                     }
                 });
