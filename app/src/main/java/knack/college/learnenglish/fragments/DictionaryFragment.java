@@ -27,6 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import knack.college.learnenglish.R;
+import knack.college.learnenglish.dialogs.ActionsDictionaryDialog;
 import knack.college.learnenglish.dialogs.AddWordToDictionaryDialog;
 import knack.college.learnenglish.dialogs.DeleteWordFromDictionaryDialog;
 import knack.college.learnenglish.model.Dictionary;
@@ -41,6 +42,8 @@ public class DictionaryFragment extends Fragment {
             "addToDictionaryDialog";
     private static final String UNIQUE_NAME_DELETE_WORD_FROM_DICTIONARY_DIALOG =
             "deleteFromDictionaryDialog";
+    private static final String UNIQUE_NAME_ACTIONS_DICTIONARY_DIALOG =
+            "actionsDictionaryDialog";
     private static final String FAILED_OUTPUT_WORDS = "Не получилось вывести слова";
     private static final String FAILED_UNDO_ACTION = "Не получилось отменить действие";
     private static final String FAILED_DELETE_WORD = "Не получилось удалить слово";
@@ -103,6 +106,14 @@ public class DictionaryFragment extends Fragment {
                             UNIQUE_NAME_ADD_WORD_TO_DICTIONARY_DIALOG);
                 }
             });
+            addToDatabaseButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    callActionsDictionaryDialog();
+
+                    return true;
+                }
+            });
 
             dictionaryRecyclerView = (RecyclerView) view.findViewById(R.id.dictionaryRecyclerView);
             dictionaryRecyclerView.setLayoutManager(
@@ -122,12 +133,27 @@ public class DictionaryFragment extends Fragment {
                     .setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                           @Override
                           public void onRefresh() {
+                              dictionarySwipeRefreshLayout.setRefreshing(true);
                               refreshWords();
+                              dictionarySwipeRefreshLayout.setRefreshing(false);
                           }
                       }
                     );
         } catch (Exception e) {
             toast.show(getResources().getString(R.string.error_message_failed_initialize_controls));
+        }
+    }
+
+    private void callActionsDictionaryDialog() {
+        try {
+            DialogFragment dialogFragment = new ActionsDictionaryDialog();
+            dialogFragment.show(getActivity().getSupportFragmentManager(),
+                    UNIQUE_NAME_ACTIONS_DICTIONARY_DIALOG);
+        } catch (Exception e) {
+            toast.show(
+                    getActivity().getResources()
+                            .getString(R.string.error_message_failed_initialize_dialog)
+            );
         }
     }
 
@@ -285,7 +311,7 @@ public class DictionaryFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return words.size();
+            return words != null ? words.size() : 0;
         }
     }
 

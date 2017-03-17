@@ -7,9 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
+import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,38 +18,48 @@ import knack.college.learnenglish.model.toasts.ToastWrapper;
 
 public class LearnEnglishActivity extends AppCompatActivity {
 
-    private static final String ACTION_BAR_TITLE = "Learn English (Alpha)";
-
+    private Toolbar toolbar;
     private TabLayout tabLayout;
-    private ToastWrapper toastWrapper;
+    private ToastWrapper toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_english);
 
-        toastWrapper = new ToastWrapper(this);
+        initializeToast();
+        initializeControls();
+    }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+    private void initializeToast() {
+        try {
+            toast = new ToastWrapper(getApplicationContext());
+        } catch (Exception e) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    getResources().getString(R.string.error_message_failed_initialize_toast),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+    }
 
-        getSupportActionBar().setElevation(0);
-        Spannable title = new SpannableString(ACTION_BAR_TITLE);
-        title.setSpan(
-                new ForegroundColorSpan(
-                        getResources().getColor(R.color.black)
-                ),
-                0,
-                title.length(),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-        );
-        getSupportActionBar().setTitle(title);
+    private void initializeControls() {
+        try {
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar.setTitle(getResources().getString(R.string.app_name));
+            setSupportActionBar(toolbar);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+            ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+            setupViewPager(viewPager);
+
+            tabLayout = (TabLayout) findViewById(R.id.tabs);
+            tabLayout.setupWithViewPager(viewPager);
 
 
-        setupTabIcons();
+            setupTabIcons();
+        } catch (Exception e) {
+            toast.show(getResources().getString(R.string.error_message_failed_initialize_controls));
+        }
     }
 
     private void setupTabIcons() {
@@ -58,7 +67,7 @@ public class LearnEnglishActivity extends AppCompatActivity {
             tabLayout.getTabAt(0).setIcon(R.mipmap.ic_sort_by_alpha_black_24dp);
             tabLayout.getTabAt(1).setIcon(R.mipmap.ic_event_note_black_24dp);
         } catch (Exception ex) {
-            toastWrapper.show(ex.toString());
+            toast.show(ex.toString());
         }
     }
 

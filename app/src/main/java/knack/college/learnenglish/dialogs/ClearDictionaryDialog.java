@@ -8,13 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.toasts.ToastWrapper;
 
 public class ClearDictionaryDialog extends DialogFragment {
-    ToastWrapper toastWrapper;
+    ToastWrapper toast;
     Dictionary dictionary;
 
     @NonNull
@@ -24,8 +25,8 @@ public class ClearDictionaryDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.clear_dictionary_dialog, null);
 
-        toastWrapper = new ToastWrapper(getActivity());
-        dictionary = new Dictionary(getActivity().getApplicationContext());
+        initializeToast();
+        initializeDictionary();
 
         builder.setView(view)
                .setPositiveButton(
@@ -36,7 +37,7 @@ public class ClearDictionaryDialog extends DialogFragment {
                                try {
                                    dictionary.clear();
                                } catch (Exception ex) {
-                                   toastWrapper.show(ex.toString());
+                                   toast.show(ex.toString());
                                }
                            }
                        }
@@ -51,5 +52,27 @@ public class ClearDictionaryDialog extends DialogFragment {
                );
 
         return builder.create();
+    }
+
+    private void initializeToast() {
+        try {
+            toast = new ToastWrapper(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            Toast.makeText(
+                    getActivity().getApplicationContext(),
+                    getResources().getString(R.string.error_message_failed_initialize_toast),
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+    }
+
+    private void initializeDictionary() {
+        try {
+            dictionary = new Dictionary(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            toast.show(
+                    getResources().getString(R.string.error_message_failed_initialize_dictionary)
+            );
+        }
     }
 }

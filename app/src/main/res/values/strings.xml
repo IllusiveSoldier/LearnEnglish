@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Learn English (Alpha)</string>
+    <string name="app_name">English Training</string>
 
     <string name="title.dictionary">Словарь</string>
     <string name="title.tasks">Задания</string>
@@ -63,4 +63,19 @@
         Не удалось проверить слово
     </string>
     <string name="error.message.failed_update_data">Не удалось обновить данные</string>
+    <string name="error.message.failed_clear_dictionary">
+        Не удалось очистить словарь
+    </string>
+    <string name="error.message.failed_remove_dictionary">
+        Не удалось удалить словарь
+    </string>
+    <string name="error.message.failed_initialize_dialog">
+        Не удалось проиницилизировать диалог
+    </string>
+    <string name="error.message.failed_initialize_database_helper">
+        Не удалось иницилизировать Database Helper
+    </string>
+    <string name="error.message.failed_initialize_database">
+        Не удалось проиницилизировать базу данных
+    </string>
 </resources>

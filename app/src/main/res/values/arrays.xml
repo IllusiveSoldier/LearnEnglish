@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="assignmentSelect">
-        <item>Показать статистику (не реализовано)</item>
-        <item>Очистить статистику</item>
-        <item>Восстановить словарь по умолчанию (не реализовано)</item>
+    <string-array name="actions_dictionary_dialog_items">
         <item>Очистить словарь</item>
-        <item>Создать резервную копию базы данных (не реализовано)</item>
+        <item>Удалить словарь</item>
     </string-array>
 </resources>

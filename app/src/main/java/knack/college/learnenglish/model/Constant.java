@@ -44,6 +44,7 @@ public final class Constant {
         public static final String RIGHT_BRACE = ") ";
         public static final String RIGHT_BRACE_WITHOUT_SPACE = ")";
         public static final String SEMICOLON = "; ";
+        public static final String EQUAL_SYMBOL = " = ";
     }
 
     public final class DatabaseNumberValues {
