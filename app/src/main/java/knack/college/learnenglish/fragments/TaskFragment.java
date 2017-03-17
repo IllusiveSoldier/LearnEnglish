@@ -77,6 +77,7 @@ public class TaskFragment extends Fragment {
                     }
                 } catch (Exception ex) {
                     toastWrapper.show(ex.toString());
+                    taskSwipeRefreshLayout.setRefreshing(false);
                 }
 
                 taskSwipeRefreshLayout.setRefreshing(false);
@@ -132,7 +133,7 @@ public class TaskFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return tasks.size();
+            return tasks != null ? tasks.size() : 0;
         }
     }
 }
