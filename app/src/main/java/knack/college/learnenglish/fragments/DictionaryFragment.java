@@ -3,8 +3,6 @@ package knack.college.learnenglish.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +29,6 @@ import knack.college.learnenglish.dialogs.ActionsDictionaryDialog;
 import knack.college.learnenglish.dialogs.AddWordToDictionaryDialog;
 import knack.college.learnenglish.dialogs.DeleteWordFromDictionaryDialog;
 import knack.college.learnenglish.model.Dictionary;
-import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.WordFromDictionary;
 import knack.college.learnenglish.model.toasts.ToastWrapper;
 
@@ -58,7 +55,6 @@ public class DictionaryFragment extends Fragment {
     private ToastWrapper toast;
 
     private Snackbar snackbar;
-    private RandomColor color;
     private LearnEnglishAdapter learnEnglishAdapter;
     private Dictionary dictionary;
     private ArrayList<WordFromDictionary> words;
@@ -92,12 +88,9 @@ public class DictionaryFragment extends Fragment {
 
     private void initializeControls() {
         try {
-            color = new RandomColor();
 
-            addToDatabaseButton = (FloatingActionButton) view.findViewById(R.id.addToDatabaseButton);
-            addToDatabaseButton.setBackgroundTintList(
-                    ColorStateList.valueOf(Color.parseColor(color.getRandomColor()))
-            );
+            addToDatabaseButton = (FloatingActionButton)
+                    view.findViewById(R.id.addToDatabaseButton);
             addToDatabaseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -127,8 +120,6 @@ public class DictionaryFragment extends Fragment {
 
             dictionarySwipeRefreshLayout =
                     (SwipeRefreshLayout) view.findViewById(R.id.dictionarySwipeRefreshLayout);
-            dictionarySwipeRefreshLayout
-                    .setColorSchemeColors(Color.parseColor(color.getRandomColor()));
             dictionarySwipeRefreshLayout
                     .setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                           @Override
@@ -303,9 +294,6 @@ public class DictionaryFragment extends Fragment {
             );
             holder.dictionaryTranslateWordTextView.setText(
                     words.get(position).getTranslateWord()
-            );
-            holder.learnEnglishWordItemImageView.setBackgroundColor(
-                    Color.parseColor(color.getRandomColor())
             );
         }
 

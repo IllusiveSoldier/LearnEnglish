@@ -2,7 +2,6 @@ package knack.college.learnenglish.fragments;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.TaskActivity;
-import knack.college.learnenglish.model.RandomColor;
 import knack.college.learnenglish.model.Task;
 import knack.college.learnenglish.model.TaskGenerator;
 import knack.college.learnenglish.model.toasts.ToastWrapper;
@@ -36,7 +34,6 @@ public class TaskFragment extends Fragment {
     LearnEnglishAdapter learnEnglishAdapter;
     TaskGenerator taskGenerator;
 
-    private RandomColor color = new RandomColor();
     ArrayList<Task> tasks;
 
     @Override
@@ -61,7 +58,6 @@ public class TaskFragment extends Fragment {
 
         taskSwipeRefreshLayout = (SwipeRefreshLayout)
                 view.findViewById(R.id.taskSwipeRefreshLayout);
-        taskSwipeRefreshLayout.setColorSchemeColors(Color.parseColor(color.getRandomColor()));
         taskSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -116,7 +112,6 @@ public class TaskFragment extends Fragment {
         @Override
         public void onBindViewHolder(LearnEnglishHolder holder, int position) {
             holder.taskName.setText(tasks.get(position).getTitle());
-            holder.taskItemImageView.setBackgroundColor(Color.parseColor(color.getRandomColor()));
 
             final int id = position;
 
