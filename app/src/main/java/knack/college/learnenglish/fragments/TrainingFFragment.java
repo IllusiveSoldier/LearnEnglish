@@ -144,7 +144,7 @@ public class TrainingFFragment extends Fragment {
                 random = new Random();
 
                 // set random item index
-                randomItemId = random.nextInt(words.size() - 1);
+                randomItemId = random.nextInt(words.size());
                 // Word from dictionary class-wrapper
                 WordFromDictionary word = words.get(randomItemId);
                 if (word != null) {

@@ -166,8 +166,8 @@ public class TrainingSFragment extends Fragment {
                 progressBar.setMax(wordsNumber);
                 random = new Random();
 
-                randomItemIdEnglish = random.nextInt(words.size() - 1);
-                randomItemIdTranslate = random.nextInt(words.size() - 1);
+                randomItemIdEnglish = random.nextInt(words.size());
+                randomItemIdTranslate = random.nextInt(words.size());
 
                 WordFromDictionary wordOne = words.get(randomItemIdEnglish);
                 WordFromDictionary wordTwo = words.get(randomItemIdTranslate);
