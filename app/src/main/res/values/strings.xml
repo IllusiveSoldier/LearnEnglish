@@ -78,4 +78,26 @@
     <string name="error.message.failed_initialize_database">
         Не удалось проиницилизировать базу данных
     </string>
+    <string name="error.message.failed_create_table">
+        "При формировании запроса на создание таблицы произошла ошибка.
+        Возможно не были определены имя таблицы и параметры."
+    </string>
+    <string name="error.message.database_already_exist">
+        Таблица уже существует
+    </string>
+    <string name="error.message.database_not_exist">
+        Таблица не существует
+    </string>
+    <string name="error.message.word_more_max_symbols">
+        Слово, которое вы ввели больше 255 символов.
+    </string>
+    <string name="error.message.no_english_word">
+        Первое слово для словаря должно содержать в себе только латинские символы
+    </string>
+    <string name="error.message.no_russian_word">
+        Слово для перевода должно содержать в себе только русские символы
+    </string>
+    <string name="error.message.no_date">
+        Не хватает данных для заполнения
+    </string>
 </resources>

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getCreateDictionaryTableQuery;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDropDictionaryTableQuery;
 
 
 public class LearnEnglishDatabaseHelper extends SQLiteOpenHelper {
@@ -25,7 +25,7 @@ public class LearnEnglishDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL(getDropDictionaryTableQuery().toString());
+        sqLiteDatabase.execSQL(BaseQueries.getDropTableQuery(DICTIONARY_TABLE_NAME).toString());
         onCreate(sqLiteDatabase);
     }
 }

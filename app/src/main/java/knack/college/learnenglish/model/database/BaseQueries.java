@@ -4,12 +4,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.exceptions.DatabaseLEException;
 
 /**
  * Базовый класс, который содержит типичные запросы к базе данных.
- * Любой класс, который описывающий таблицу в приложении наследуется от данного класса
+ * Любой класс, который описывающий таблицу в приложении наследуется от данного класса.
  * Содержит запросы на проверку существования таблицы, получения количества строк.
  * */
 public abstract class BaseQueries {
@@ -31,10 +35,12 @@ public abstract class BaseQueries {
     }
 
     /**
-     * Метод, который осуществляет проверку на существование таблицы
-     * @return true - таблица существует, false - нет.
+     * Метод, который осуществляет проверку на существование таблицы.
+     * @return true - Таблица существует, false - нет.
+     * @throws DatabaseLEException
      */
-    protected boolean isExistTable(String columnSelect, String tableName) throws Exception {
+    protected boolean isExistTable(String columnSelect, String tableName)
+            throws DatabaseLEException {
         Cursor cursor = null;
         int numberOfWords = 0;
 
@@ -50,16 +56,16 @@ public abstract class BaseQueries {
             }
         }
 
-        return numberOfWords>= 1;
+        return numberOfWords >= 1;
     }
 
     /**
-     * Метод, который возвращает количество строк в конкретной таблице
-     * @param tableName - Имя таблиы
+     * Метод, который возвращает количество строк в конкретной таблице.
+     * @param tableName - Название таблиы
      * @return - Количество строк в таблице
-     * @throws Exception
+     * @throws DatabaseLEException
      */
-    public int getNumberOfRows(String tableName) throws Exception {
+    protected int getNumberOfRows(String tableName) throws DatabaseLEException {
         Cursor cursor = null;
         int numberOfRows = 0;
 
@@ -82,12 +88,76 @@ public abstract class BaseQueries {
         return numberOfRows;
     }
 
-    private StringBuilder getNumberOfRowsQuery(String tableName) {
-        return new StringBuilder("SELECT COUNT(*) FROM ")
-                .append(tableName != null ? tableName : "");
+    /**
+     * Метод, который производит удаление таблицы.
+     * Перед удалением проверяет, существует ли таблица.
+     * @param tableName - Название таблицы
+     * @throws DatabaseLEException
+     */
+    protected void dropTable(String tableName) throws DatabaseLEException {
+        try {
+            if (isExistTable(null, tableName))
+                database.execSQL(getDropTableQuery(tableName).toString());
+            else throw new DatabaseLEException(context.getResources()
+                    .getString(R.string.error_message_database_not_exist));
+        } catch (Exception e) {
+            throw new DatabaseLEException(e);
+        }
     }
 
-    private void initializeDatabaseHelper() throws Exception {
+    /**
+     * Метод, который производит удаление всех строк из таблицы.
+     * Перед удалением проверяет, существует ли таблица.
+     * @param tableName - Название таблицы
+     * @throws DatabaseLEException
+     */
+    protected void truncateTable(String tableName) throws DatabaseLEException {
+        try {
+            if (isExistTable(null, tableName))
+                database.execSQL(getTruncateTableQuery(tableName).toString());
+        } catch (Exception e) {
+            throw new DatabaseLEException(e);
+        }
+    }
+
+    /**
+     * Осуществляет создание таблицы.
+     * Перед созданием таблицы проверяет, существует ли данная таблица.
+     * @param tableName - Название создаваемой таблицы
+     * @param params - Параметры для создания. В качестве ключа выступает название столбца.
+     *               Каждому ключу соответствует значение, в котором должно содержаться тип данных
+     *               для создаваемого поля и.д.
+     *               Пример:<br>
+     *                  String tableName = "SAMPLE_TABLE_NAME";<br>
+     *                  HashMap<String, String> params = new HashMap<String, String>();<br>
+     *                  params.put("OUID", "INTEGER PRIMARY KEY ASC");<br>
+     *                  params.put("GUID", "VARCHAR(50)");<br>
+     *                  params.put("EXAMPLE_VALUE", "VARCHAR(255)");<br>
+     *
+     *                  try {<br>
+     *                      createTable(tableName, params);<br>
+     *                  } catch {<br>
+     *                      // Exception handling<br>
+     *                  }<br>
+     * @throws DatabaseLEException
+     */
+    protected void createTable(String tableName, HashMap<String, String> params)
+            throws DatabaseLEException {
+        if (!isExistTable(null, tableName)) {
+            if (getCreateTableQuery(tableName, params) != null) {
+                try {
+                    database.execSQL(getCreateTableQuery(tableName, params).toString());
+                } catch (Exception e) {
+                    throw new DatabaseLEException(e);
+                }
+            } else throw new DatabaseLEException(
+                    context.getResources().getString(R.string.error_message_failed_create_table)
+            );
+        } else throw new DatabaseLEException(context.getResources()
+                .getString(R.string.error_message_database_already_exist));
+    }
+
+    private void initializeDatabaseHelper() throws DatabaseLEException {
         try {
             databaseHelper = new LearnEnglishDatabaseHelper(context);
         } catch (Exception e) {
@@ -98,7 +168,7 @@ public abstract class BaseQueries {
         }
     }
 
-    private void initializeDatabase() throws Exception {
+    private void initializeDatabase() throws DatabaseLEException {
         try {
             database = databaseHelper.getWritableDatabase();
         } catch (Exception e) {
@@ -109,9 +179,43 @@ public abstract class BaseQueries {
         }
     }
 
-    private StringBuilder getExistTableQuery(String columnSelect, String tableName) {
+    private  StringBuilder getExistTableQuery(String columnSelect, String tableName) {
         return new StringBuilder("SELECT ").append(columnSelect != null ? columnSelect : "*")
                 .append(" FROM sqlite_master WHERE name = '").append(tableName)
                 .append("' AND type = 'table';");
+    }
+
+    private StringBuilder getNumberOfRowsQuery(String tableName) {
+        return new StringBuilder("SELECT COUNT(*) FROM ")
+                .append(tableName != null ? tableName : "");
+    }
+
+    public static StringBuilder getDropTableQuery(String tableName) {
+        return new StringBuilder("DROP TABLE ").append("IF EXISTS ")
+                .append(tableName != null ? tableName : "");
+    }
+
+    private StringBuilder getTruncateTableQuery(String tableName) {
+        return new StringBuilder("DELETE FROM ").append(tableName != null ? tableName : "")
+                .append("; VACUUM;");
+    }
+
+    public static StringBuilder getCreateTableQuery(String tableName, HashMap<String, String> params) {
+        if (tableName != null && !tableName.isEmpty() && params != null && params.size() > 0
+                && !params.containsKey(null) && !params.containsValue(null)) {
+            StringBuilder createTableQuery = new StringBuilder("CREATE TABLE ").append(tableName)
+                    .append("(");
+            Iterator iterator = params.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry data = (Map.Entry) iterator.next();
+
+                createTableQuery.append(data.getKey()).append(" ").append(data.getValue());
+                if (iterator.hasNext())
+                    createTableQuery.append(",");
+            }
+            createTableQuery.append(")");
+
+            return createTableQuery;
+        } else return null;
     }
 }

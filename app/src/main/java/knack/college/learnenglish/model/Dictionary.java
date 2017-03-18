@@ -23,23 +23,11 @@ import knack.college.learnenglish.model.toasts.ToastWrapper;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.ENGLISH_WORD_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.GUID_COLUMN_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.LAST_TRAINING_DATE;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.OUID_COLUMN_NAME;
 import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.TRANSLATE_WORD_COLUMN_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getCountRowsInTableQuery;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDeleteAllRowsInTableQuery;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getDropDictionaryTableQuery;
 
 /** Класс, описывающий словарь */
 public class Dictionary extends BaseQueries {
-
-    private static final String WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE =
-            "Слово, которое вы ввели больше 255 символов.";
-    private static final String NO_ENGLISH_WORD_EXCEPTION_MESSAGE =
-            "Первое слово для словаря должно содержать в себе только латинские символы";
-    private static final String NO_RUSSIAN_WORD_EXCEPTION_MESSAGE =
-            "Слово для перевода должно содержать в себе только русские символы";
-    private static final String NO_DATA_EXCEPTION_MESSAGE = "Не хватает данных для заполнения";
 
     private Context context;
 
@@ -132,38 +120,41 @@ public class Dictionary extends BaseQueries {
 
                                 database.insert(DICTIONARY_TABLE_NAME, null, values);
                             }
-                        } else throw new NoRussianWord(NO_RUSSIAN_WORD_EXCEPTION_MESSAGE);
-                    } else throw new NoEnglishWord(NO_ENGLISH_WORD_EXCEPTION_MESSAGE);
-                } else throw new MoreMaxSymbols(WORD_MORE_MAX_SYMBOLS_EXCEPTION_MESSAGE);
-            } else throw new EmptyData(NO_DATA_EXCEPTION_MESSAGE);
+                        } else throw new NoRussianWord(context.getResources()
+                                .getString(R.string.error_message_no_russian_word));
+                    } else throw new NoEnglishWord(context.getResources()
+                            .getString(R.string.error_message_no_english_word));
+                } else throw new MoreMaxSymbols(context.getResources()
+                        .getString(R.string.error_message_word_more_max_symbols));
+            } else throw new EmptyData(context.getResources()
+                    .getString(R.string.error_message_no_date));
         }
     }
 
     /** Метод, который удаляет словарь */
     public void delete() throws Exception {
-        if (isExistTable(null, DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME))
-            database.execSQL(getDropDictionaryTableQuery().toString());
+        if (isExistTable(null, DICTIONARY_TABLE_NAME))
+            dropTable(DICTIONARY_TABLE_NAME);
     }
 
     /** Метод, который очищяет словарь*/
     public void clear() throws Exception {
-        if (isExistTable(null, DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME))
-            database.execSQL(getDeleteAllRowsInTableQuery().toString());
+        if (isExistTable(null, DICTIONARY_TABLE_NAME))
+            truncateTable(DICTIONARY_TABLE_NAME);
     }
 
     /** Метод, который курсор со всеми строками и столбцами из словаря */
     private Cursor getAllWordsCursor() throws Exception {
-        if (isExistTable(null, DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME)) {
+        if (isExistTable(null, DICTIONARY_TABLE_NAME)) {
             String[] columnSelectList = {
                     OUID_COLUMN_NAME,
                     GUID_COLUMN_NAME,
                     ENGLISH_WORD_COLUMN_NAME,
-                    TRANSLATE_WORD_COLUMN_NAME,
-                    LAST_TRAINING_DATE
+                    TRANSLATE_WORD_COLUMN_NAME
             };
 
             return database.query(
-                    DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME,
+                    DICTIONARY_TABLE_NAME,
                     columnSelectList,
                     null,
                     null,
@@ -211,18 +202,12 @@ public class Dictionary extends BaseQueries {
     /** Метод, который возвращает количество слов в словаре */
     public int getNumberOfWords() throws Exception {
         int count = 0;
-        Cursor cursor = null;
         try {
             if (isExistTable(null, DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME)) {
-                cursor = database.rawQuery(getCountRowsInTableQuery().toString(), null);
-                cursor.moveToFirst();
-                count = cursor.getInt(0);
+                count = getNumberOfRows(DICTIONARY_TABLE_NAME);
             }
         } catch (Exception e) {
             count = 0;
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
 
         return count;
