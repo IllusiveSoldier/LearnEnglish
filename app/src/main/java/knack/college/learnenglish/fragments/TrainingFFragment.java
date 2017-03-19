@@ -4,6 +4,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ import static knack.college.learnenglish.model.Constant.WRONG_ANSWER;
 public class TrainingFFragment extends Fragment {
 
     // Controls
+    private CardView cardView;
     private TextView title;
     private TextView englishWord;
     private EditText translateWord;
@@ -85,6 +88,8 @@ public class TrainingFFragment extends Fragment {
 
     private void initializeControls(View view) {
         try {
+            cardView = (CardView) view.findViewById(R.id.cardView);
+
             title = (TextView) view.findViewById(R.id.title);
             title.setTypeface(
                     Typeface.createFromAsset(getActivity().getAssets(),
@@ -178,6 +183,10 @@ public class TrainingFFragment extends Fragment {
                 final String translateWord = words.get(randomItemId).getTranslateWord();
                 final String userTranslateWord = this.translateWord.getText().toString();
                 if (validator.isTranslation(translateWord, userTranslateWord)) {
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(
+                            getActivity().getApplicationContext(), R.color.green
+                    ));
+                    setCardViewTextColor(R.color.white);
                     correctWordsNumber++;
                     clearEnglishWordControl();
                     clearTranslateWordControl();
@@ -201,6 +210,10 @@ public class TrainingFFragment extends Fragment {
                     }
                     progressBar.setProgress(correctWordsNumber + wrongWordsNumber);
                 } else {
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(
+                            getActivity().getApplicationContext(), R.color.colorAccent)
+                    );
+                    setCardViewTextColor(R.color.white);
                     wrongWordsNumber++;
                     clearEnglishWordControl();
                     clearTranslateWordControl();
@@ -229,6 +242,19 @@ public class TrainingFFragment extends Fragment {
             }
         } catch (Exception e) {
             toast.show(getResources().getString(R.string.error_message_failed_check_answer));
+        }
+    }
+
+    private void setCardViewTextColor(int color) {
+        try {
+            title.setTextColor(
+                    ContextCompat.getColor(getActivity().getApplicationContext(), color)
+            );
+            englishWord.setTextColor(
+                    ContextCompat.getColor(getActivity().getApplicationContext(), color)
+            );
+        } catch (Exception e) {
+            toast.show(getResources().getString(R.string.error_message_failed_set_color_text));
         }
     }
 

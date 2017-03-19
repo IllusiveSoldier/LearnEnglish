@@ -4,6 +4,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import static knack.college.learnenglish.model.Constant.WRONG_ANSWER;
 public class TrainingSFragment extends Fragment {
 
     // Controls
+    private CardView cardView;
     private TextView englishWord;
     private TextView title;
     private TextView how;
@@ -87,6 +90,8 @@ public class TrainingSFragment extends Fragment {
 
     private void initializeControls(View view) {
         try {
+            cardView = (CardView) view.findViewById(R.id.cardView);
+
             englishWord = (TextView) view.findViewById(R.id.englishWord);
             englishWord.setTypeface(
                     Typeface.createFromAsset(getActivity().getAssets(),
@@ -209,6 +214,10 @@ public class TrainingSFragment extends Fragment {
                         translateWordOne,
                         translateWordTwo
                 )) {
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(
+                            getActivity().getApplicationContext(), R.color.green)
+                    );
+                    setCardViewTextColor(R.color.white);
                     correctWordsNumber++;
                     clearEnglishWordControl();
                     clearTranslateWordControl();
@@ -237,6 +246,10 @@ public class TrainingSFragment extends Fragment {
                     }
                     progressBar.setProgress(correctWordsNumber + wrongWordsNumber);
                 } else {
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(
+                            getActivity().getApplicationContext(), R.color.colorAccent)
+                    );
+                    setCardViewTextColor(R.color.white);
                     wrongWordsNumber++;
                     clearEnglishWordControl();
                     clearTranslateWordControl();
@@ -283,6 +296,10 @@ public class TrainingSFragment extends Fragment {
                         translateWordOne,
                         translateWordTwo
                 )) {
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(
+                            getActivity().getApplicationContext(), R.color.green)
+                    );
+                    setCardViewTextColor(R.color.white);
                     correctWordsNumber++;
                     clearEnglishWordControl();
                     clearTranslateWordControl();
@@ -311,6 +328,11 @@ public class TrainingSFragment extends Fragment {
                     }
                     progressBar.setProgress(correctWordsNumber + wrongWordsNumber);
                 } else {
+                    cardView.setCardBackgroundColor(
+                            ContextCompat.getColor(getActivity().getApplicationContext(),
+                                    R.color.colorAccent)
+                    );
+                    setCardViewTextColor(R.color.white);
                     wrongWordsNumber++;
                     clearEnglishWordControl();
                     clearTranslateWordControl();
@@ -344,6 +366,28 @@ public class TrainingSFragment extends Fragment {
             }
         } catch (Exception e) {
             toast.show(getResources().getString(R.string.error_message_failed_check_answer));
+        }
+    }
+
+    private void setCardViewTextColor(int color) {
+        try {
+            englishWord.setTextColor(
+                    ContextCompat.getColor(getActivity().getApplicationContext(), color)
+            );
+            title.setTextColor(
+                    ContextCompat.getColor(getActivity().getApplicationContext(), color)
+            );
+            how.setTextColor(
+                    ContextCompat.getColor(getActivity().getApplicationContext(), color)
+            );
+            translate.setTextColor(
+                    ContextCompat.getColor(getActivity().getApplicationContext(), color)
+            );
+            question.setTextColor(
+                    ContextCompat.getColor(getActivity().getApplicationContext(), color)
+            );
+        } catch (Exception e) {
+            toast.show(getResources().getString(R.string.error_message_failed_set_color_text));
         }
     }
 

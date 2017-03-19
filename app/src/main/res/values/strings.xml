@@ -100,4 +100,7 @@
     <string name="error.message.no_date">
         Не хватает данных для заполнения
     </string>
+    <string name="error.message.failed_set_color_text">
+        Не удалось установить цвет текста
+    </string>
 </resources>

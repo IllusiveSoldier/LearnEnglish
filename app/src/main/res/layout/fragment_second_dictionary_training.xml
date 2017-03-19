@@ -1,71 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/englishWord"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="27sp"
-        />
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/englishWord"
-        android:text="@string/hint.translated"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="27sp"
-        />
-    <TextView
-        android:id="@+id/how"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/title"
-        android:text="@string/hint.how"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="27sp"
-        />
-    <TextView
-        android:id="@+id/translate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/how"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="27sp"
-        />
-    <TextView
-        android:id="@+id/question"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/translate"
-        android:text="@string/hint.question_character"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textSize="27sp"
-        />
+        style="@style/card_view_fragment_dictionary_training">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/englishWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="27sp"
+                />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/hint.translated"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="27sp"
+                />
+            <TextView
+                android:id="@+id/how"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/hint.how"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="27sp"
+                />
+            <TextView
+                android:id="@+id/translate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="27sp"
+                />
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/hint.question_character"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textSize="27sp"
+                />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,7 +81,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/question">
+        android:layout_below="@+id/cardView">
         <ImageButton
             android:id="@+id/no"
             android:layout_width="wrap_content"
