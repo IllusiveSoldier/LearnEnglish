@@ -11,10 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import knack.college.learnenglish.R;
-import knack.college.learnenglish.exceptions.EmptyData;
-import knack.college.learnenglish.exceptions.MoreMaxSymbols;
-import knack.college.learnenglish.exceptions.NoEnglishWord;
-import knack.college.learnenglish.exceptions.NoRussianWord;
+import knack.college.learnenglish.exceptions.DictionaryLEException;
 import knack.college.learnenglish.model.database.BaseQueries;
 import knack.college.learnenglish.model.database.DictionaryContract;
 import knack.college.learnenglish.model.database.LearnEnglishDatabaseHelper;
@@ -100,15 +97,18 @@ public class Dictionary extends BaseQueries {
                         && !validator.isWordMoreMaxSymbols(translate)) {
                     if (validator.isEnglishCharactersInWord(englishWord)) {
                         if (validator.isRussianCharactersInWord(translate)) {
-                            if (isExistTable(null, DictionaryContract.Dictionary
-                                    .DICTIONARY_TABLE_NAME)) {
-                                ContentValues values = new ContentValues();
+                            if (isExistTable(null, DICTIONARY_TABLE_NAME)) {
+                                if (!isExistValue(DICTIONARY_TABLE_NAME, null,
+                                        ENGLISH_WORD_COLUMN_NAME, englishWord)) {
+                                    ContentValues values = new ContentValues();
 
-                                values.put(GUID_COLUMN_NAME, UUID.randomUUID().toString());
-                                values.put(ENGLISH_WORD_COLUMN_NAME, englishWord);
-                                values.put(TRANSLATE_WORD_COLUMN_NAME, translate);
+                                    values.put(GUID_COLUMN_NAME, UUID.randomUUID().toString());
+                                    values.put(ENGLISH_WORD_COLUMN_NAME, englishWord);
+                                    values.put(TRANSLATE_WORD_COLUMN_NAME, translate);
 
-                                database.insert(DICTIONARY_TABLE_NAME, null, values);
+                                    database.insert(DICTIONARY_TABLE_NAME, null, values);
+                                } else throw new DictionaryLEException(context.getResources()
+                                        .getString(R.string.error_message_word_is_already));
                             } else {
                                 helper.onCreate(database);
 
@@ -120,13 +120,13 @@ public class Dictionary extends BaseQueries {
 
                                 database.insert(DICTIONARY_TABLE_NAME, null, values);
                             }
-                        } else throw new NoRussianWord(context.getResources()
+                        } else throw new DictionaryLEException(context.getResources()
                                 .getString(R.string.error_message_no_russian_word));
-                    } else throw new NoEnglishWord(context.getResources()
+                    } else throw new DictionaryLEException(context.getResources()
                             .getString(R.string.error_message_no_english_word));
-                } else throw new MoreMaxSymbols(context.getResources()
+                } else throw new DictionaryLEException(context.getResources()
                         .getString(R.string.error_message_word_more_max_symbols));
-            } else throw new EmptyData(context.getResources()
+            } else throw new DictionaryLEException(context.getResources()
                     .getString(R.string.error_message_no_date));
         }
     }

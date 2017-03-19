@@ -103,4 +103,7 @@
     <string name="error.message.failed_set_color_text">
         Не удалось установить цвет текста
     </string>
+    <string name="error.message.word_is_already">
+        Такое слово уже существует
+    </string>
 </resources>

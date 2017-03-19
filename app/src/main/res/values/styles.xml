@@ -4,6 +4,7 @@
         <item name="colorPrimary"               >@color/bright_cyan</item>
         <item name="android:navigationBarColor" >@color/cyan</item>
         <item name="colorAccent"                >@color/another_blue</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
     <style name="edit_text_dialog_style">

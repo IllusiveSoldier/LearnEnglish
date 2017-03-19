@@ -157,6 +157,42 @@ public abstract class BaseQueries {
                 .getString(R.string.error_message_database_already_exist));
     }
 
+    /**
+     * Проверяет наличие значения в определённом столбце в конкретной таблице.
+     * Перед поиском проверяет, что таблица, в которой осуществляется поиск существует.
+     * Также перед сравнением значение в искомом столбце и искомое значение приводятся к нижнему
+     * регистру.
+     * @param tableName - Название таблицы
+     * @param selectColumnName - Поле, которое будет идти после "SELECT"
+     * @param columnName - Поле, в котором будет осуществляться поиск.
+     * @param value - Значение, по которому будет вестись поиск.
+     * @return - true - Значение существует, false - значение отсутствует.
+     * @throws DatabaseLEException
+     */
+    protected boolean isExistValue(String tableName, String selectColumnName, String columnName,
+                                   String value)
+            throws DatabaseLEException {
+        Cursor cursor = null;
+        int numberSelectedRows = 0;
+        if (database != null) {
+            try {
+                if (isExistTable(null, tableName)) {
+                    cursor = database.rawQuery(
+                            getExistValueQuery(tableName, selectColumnName, columnName, value)
+                                    .toString(),
+                            null
+                    );
+                    numberSelectedRows = cursor.getCount();
+                }
+            } finally {
+                if (cursor != null)
+                    cursor.close();
+            }
+        }
+
+        return numberSelectedRows >= 1;
+    }
+
     private void initializeDatabaseHelper() throws DatabaseLEException {
         try {
             databaseHelper = new LearnEnglishDatabaseHelper(context);
@@ -200,7 +236,8 @@ public abstract class BaseQueries {
                 .append("; VACUUM;");
     }
 
-    public static StringBuilder getCreateTableQuery(String tableName, HashMap<String, String> params) {
+    public static StringBuilder getCreateTableQuery(String tableName, HashMap<String,
+            String> params) {
         if (tableName != null && !tableName.isEmpty() && params != null && params.size() > 0
                 && !params.containsKey(null) && !params.containsValue(null)) {
             StringBuilder createTableQuery = new StringBuilder("CREATE TABLE ").append(tableName)
@@ -217,5 +254,12 @@ public abstract class BaseQueries {
 
             return createTableQuery;
         } else return null;
+    }
+
+    private StringBuilder getExistValueQuery(String tableName, String selectColumnName,
+                                             String columnName, String value) {
+        return new StringBuilder("SELECT ").append(selectColumnName != null ? selectColumnName : "*")
+                .append(" FROM ").append(tableName)
+                .append(" WHERE LOWER(").append(columnName).append(") = LOWER('").append(value).append("')");
     }
 }
