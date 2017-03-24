@@ -29,6 +29,15 @@
     <string name="title.trainings">Тренировки</string>
     <string name="title.translate_here">Перевод сюда</string>
     <string name="title.translate_word">Переведи слово</string>
+    <string name="title.say_it_in_english">Скажи это по английски</string>
+    <string name="title.value_not_found">Нет значения</string>
+    <string name="title.remove_records_dictionary_training_statistic">
+        Удалить статистику (записи)
+    </string>
+    <string name="title.remove_table_dictionary_training_statistic">
+        Удалить статистику (таблицу)
+    </string>
+    <string name="title.remove_all_data">Удалить все данные</string>
 
     <string name="hint.english_word">Слово на английском</string>
     <string name="hint.russian_word">Слово на русском</string>
@@ -106,4 +115,26 @@
     <string name="error.message.word_is_already">
         Такое слово уже существует
     </string>
+    <string name="error.message_your_device_not_supported_speech_input">
+        Твоё устройство не поддерживает голосовой ввод
+    </string>
+    <string name="error.message.failed_add_statistic_record">
+        Не удалось добавить запись со статистикой
+    </string>
+    <string name="error.message.failed_clear_dictionary_training_statistic">
+        Не удалось очистить статистику с тренировками по словарю
+    </string>
+    <string name="error.message.failed_delete_dictionary_training_statistic">
+        Не удалось удалить статистику с тренировками по словарю
+    </string>
+    <string name="error.message.failed_update_dictionary_training_statistic_records">
+        Не удалось обновить записи со статистикой тренировок по словарю
+    </string>
+    <string name="error.message.failed_initialize_dictionary_training_statistic">
+        Не удалось проиницилизировать класс со статистикой тренировок по словарю
+    </string>
+    <string name="error.message.failed_initialize_statistic_map">
+        Не удалось проиницилизировать коллекцию со статистикой
+    </string>
+    <string name="error.message.failed_remove_all_data">Не удалось удалить все данные</string>
 </resources>

@@ -15,16 +15,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import knack.college.learnenglish.R;
 import knack.college.learnenglish.model.Dictionary;
 import knack.college.learnenglish.model.Validator;
 import knack.college.learnenglish.model.WordFromDictionary;
+import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.ToastWrapper;
 
+import static knack.college.learnenglish.model.Constant.CORRECT;
 import static knack.college.learnenglish.model.Constant.CORRECT_ANSWER;
 import static knack.college.learnenglish.model.Constant.NUMBER_WORDS;
+import static knack.college.learnenglish.model.Constant.WRONG;
 import static knack.college.learnenglish.model.Constant.WRONG_ANSWER;
 
 
@@ -58,6 +63,13 @@ public class TrainingSFragment extends Fragment {
     private int wrongWordsNumber;
     // Validator
     private Validator validator;
+    // Dictionary training statistic
+    private DictionaryTrainingStatistic dictionaryTrainingStatistic;
+
+    // Statistic type
+    private static final String TYPE = "yesNo";
+    // Statistic hash map
+    private HashMap<String, String> statisticMap;
 
     @Nullable
     @Override
@@ -72,6 +84,8 @@ public class TrainingSFragment extends Fragment {
         initializeWordsFromDictionary();
         setData();
         initializeValidator();
+        initializeDictionaryTrainingStatistic();
+        initializeStatisticMap();
 
         return view;
     }
@@ -204,6 +218,29 @@ public class TrainingSFragment extends Fragment {
         }
     }
 
+    private void initializeDictionaryTrainingStatistic() {
+        try {
+            dictionaryTrainingStatistic = new DictionaryTrainingStatistic(getActivity()
+                    .getApplicationContext());
+        } catch (Exception e) {
+            toast.show(
+                    getResources().getString(R.string
+                            .error_message_failed_initialize_dictionary_training_statistic)
+            );
+        }
+    }
+
+    private void initializeStatisticMap() {
+        try {
+            statisticMap = new HashMap<String, String>();
+        } catch (Exception e) {
+            toast.show(
+                    getResources().getString(R.string
+                            .error_message_failed_initialize_statistic_map)
+            );
+        }
+    }
+
     private void checkAnswerYes() {
         try {
             if (wordsNumber > 0) {
@@ -217,6 +254,8 @@ public class TrainingSFragment extends Fragment {
                     cardView.setCardBackgroundColor(ContextCompat.getColor(
                             getActivity().getApplicationContext(), R.color.green)
                     );
+                    statisticMap.put(words.get(randomItemIdEnglish).getGuid(),
+                            String.valueOf(CORRECT));
                     setCardViewTextColor(R.color.white);
                     correctWordsNumber++;
                     clearEnglishWordControl();
@@ -232,6 +271,12 @@ public class TrainingSFragment extends Fragment {
                         this.englishWord.setText(englishWord);
                         translate.setText(translateWord);
                     } else {
+                        dictionaryTrainingStatistic.addRecord(
+                                TYPE,
+                                statisticMap,
+                                new Date().getTime()
+                        );
+
                         Bundle bundle = new Bundle();
                         bundle.putString(NUMBER_WORDS, String.valueOf(wordsNumber));
                         bundle.putString(CORRECT_ANSWER, String.valueOf(correctWordsNumber));
@@ -249,6 +294,8 @@ public class TrainingSFragment extends Fragment {
                     cardView.setCardBackgroundColor(ContextCompat.getColor(
                             getActivity().getApplicationContext(), R.color.colorAccent)
                     );
+                    statisticMap.put(words.get(randomItemIdEnglish).getGuid(),
+                            String.valueOf(WRONG));
                     setCardViewTextColor(R.color.white);
                     wrongWordsNumber++;
                     clearEnglishWordControl();
@@ -264,6 +311,12 @@ public class TrainingSFragment extends Fragment {
                         this.englishWord.setText(englishWord);
                         translate.setText(translateWord);
                     } else {
+                        dictionaryTrainingStatistic.addRecord(
+                                TYPE,
+                                statisticMap,
+                                new Date().getTime()
+                        );
+
                         Bundle bundle = new Bundle();
                         bundle.putString(NUMBER_WORDS, String.valueOf(wordsNumber));
                         bundle.putString(CORRECT_ANSWER, String.valueOf(correctWordsNumber));
@@ -299,6 +352,8 @@ public class TrainingSFragment extends Fragment {
                     cardView.setCardBackgroundColor(ContextCompat.getColor(
                             getActivity().getApplicationContext(), R.color.green)
                     );
+                    statisticMap.put(words.get(randomItemIdEnglish).getGuid(),
+                            String.valueOf(CORRECT));
                     setCardViewTextColor(R.color.white);
                     correctWordsNumber++;
                     clearEnglishWordControl();
@@ -314,6 +369,12 @@ public class TrainingSFragment extends Fragment {
                         this.englishWord.setText(englishWord);
                         translate.setText(translateWord);
                     } else {
+                        dictionaryTrainingStatistic.addRecord(
+                                TYPE,
+                                statisticMap,
+                                new Date().getTime()
+                        );
+
                         Bundle bundle = new Bundle();
                         bundle.putString(NUMBER_WORDS, String.valueOf(wordsNumber));
                         bundle.putString(CORRECT_ANSWER, String.valueOf(correctWordsNumber));
@@ -332,6 +393,8 @@ public class TrainingSFragment extends Fragment {
                             ContextCompat.getColor(getActivity().getApplicationContext(),
                                     R.color.colorAccent)
                     );
+                    statisticMap.put(words.get(randomItemIdEnglish).getGuid(),
+                            String.valueOf(WRONG));
                     setCardViewTextColor(R.color.white);
                     wrongWordsNumber++;
                     clearEnglishWordControl();
@@ -347,6 +410,12 @@ public class TrainingSFragment extends Fragment {
                         this.englishWord.setText(englishWord);
                         translate.setText(translateWord);
                     } else {
+                        dictionaryTrainingStatistic.addRecord(
+                                TYPE,
+                                statisticMap,
+                                new Date().getTime()
+                        );
+
                         Bundle bundle = new Bundle();
                         bundle.putString(NUMBER_WORDS, String.valueOf(wordsNumber));
                         bundle.putString(CORRECT_ANSWER, String.valueOf(correctWordsNumber));

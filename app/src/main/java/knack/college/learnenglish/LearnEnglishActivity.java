@@ -8,12 +8,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import knack.college.learnenglish.fragments.DictionaryFragment;
 import knack.college.learnenglish.fragments.TaskFragment;
+import knack.college.learnenglish.model.Dictionary;
+import knack.college.learnenglish.model.statistic.DictionaryTrainingStatistic;
 import knack.college.learnenglish.model.toasts.ToastWrapper;
 
 public class LearnEnglishActivity extends AppCompatActivity {
@@ -22,6 +26,11 @@ public class LearnEnglishActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ToastWrapper toast;
 
+    // Dictionary wrapper
+    private Dictionary dictionary;
+    // Dictionary training statistic
+    private DictionaryTrainingStatistic dictionaryTrainingStatistic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +38,32 @@ public class LearnEnglishActivity extends AppCompatActivity {
 
         initializeToast();
         initializeControls();
+        initializeDictionary();
+        initializeDictionaryTrainingStatistic();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.removeAllData:
+                try {
+                    dictionary.delete();
+                    dictionaryTrainingStatistic.delete();
+                } catch (Exception e) {
+                    toast.show(
+                            getResources().getString(R.string.error_message_failed_remove_all_data)
+                    );
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void initializeToast() {
@@ -51,14 +86,36 @@ public class LearnEnglishActivity extends AppCompatActivity {
 
             ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
             setupViewPager(viewPager);
-
             tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(viewPager);
 
 
             setupTabIcons();
         } catch (Exception e) {
-            toast.show(getResources().getString(R.string.error_message_failed_initialize_controls));
+            toast.show(
+                    getResources().getString(R.string.error_message_failed_initialize_controls)
+            );
+        }
+    }
+
+    private void initializeDictionary() {
+        try {
+            dictionary = new Dictionary(getApplicationContext());
+        } catch (Exception e) {
+            toast.show(
+                    getResources().getString(R.string.error_message_failed_initialize_dictionary)
+            );
+        }
+    }
+
+    private void initializeDictionaryTrainingStatistic() {
+        try {
+            dictionaryTrainingStatistic = new DictionaryTrainingStatistic(getApplicationContext());
+        } catch (Exception e) {
+            toast.show(
+                    getResources().getString(R.string
+                            .error_message_failed_initialize_dictionary_training_statistic)
+            );
         }
     }
 

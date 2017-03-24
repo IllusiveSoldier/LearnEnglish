@@ -1,7 +1,5 @@
 package knack.college.learnenglish.model;
 
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary
-        .OUID_COLUMN_NAME;
 
 public final class Constant {
 
@@ -9,6 +7,9 @@ public final class Constant {
     public static final String NUMBER_WORDS = "numberWords";
     public static final String CORRECT_ANSWER = "correctAnswer";
     public static final String WRONG_ANSWER = "wrongAnswer";
+
+    public static final int CORRECT = 1;
+    public static final int WRONG = 0;
 
     public static final String BRAINSTORM_TASK_TITLE = "Brainstorm";
 
@@ -26,8 +27,6 @@ public final class Constant {
         public final static String DELETE_SQL_KEYWORD = "DELETE ";
         public final static String FROM_SQL_KEYWORD = "FROM ";
         public final static String VACUUM_SQL_KEYWORD = "VACUUM ";
-        public final static String DESC_OUID_SQL_KEYWORD = OUID_COLUMN_NAME + " DESC";
-        public final static String ASC_OUID_SQL_KEYWORD = OUID_COLUMN_NAME + " ASC";
         public final static String SELECT_SQL_KEYWORD = "SELECT ";
         public final static String COUNT_SQL_KEYWORD = "count";
         public final static String STAR_SQL_KEYWORD = "*";

@@ -4,8 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.DICTIONARY_TABLE_NAME;
-import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.getCreateDictionaryTableQuery;
+import static knack.college.learnenglish.model.database.DictionaryContract.Dictionary.TABLE_NAME;
 
 
 public class LearnEnglishDatabaseHelper extends SQLiteOpenHelper {
@@ -19,13 +18,29 @@ public class LearnEnglishDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(getCreateDictionaryTableQuery().toString());
+        sqLiteDatabase.execSQL(DictionaryContract.Dictionary.getCreateTableQuery().toString());
+        sqLiteDatabase.execSQL(DictionaryContract.DictionaryTrainingStatistic.getCreateTableQuery()
+                .toString());
+        sqLiteDatabase.execSQL(DictionaryContract.DictionaryTrainingDateStatistic
+                .getCreateTableQuery().toString());
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL(BaseQueries.getDropTableQuery(DICTIONARY_TABLE_NAME).toString());
+        sqLiteDatabase.execSQL(
+                BaseQueries.getDropTableQuery(TABLE_NAME).toString()
+        );
+        sqLiteDatabase.execSQL(
+                BaseQueries.getDropTableQuery(
+                        DictionaryContract.DictionaryTrainingStatistic.TABLE_NAME
+                ).toString()
+        );
+        sqLiteDatabase.execSQL(
+                BaseQueries.getDropTableQuery(
+                        DictionaryContract.DictionaryTrainingDateStatistic.TABLE_NAME
+                ).toString()
+        );
         onCreate(sqLiteDatabase);
     }
 }

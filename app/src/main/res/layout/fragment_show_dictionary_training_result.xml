@@ -30,6 +30,18 @@
         android:layout_below="@id/complete"
         />
     <TextView
+        android:id="@+id/condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:layout_below="@id/results"
+        />
+    <TextView
         android:id="@+id/numberWords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +52,7 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:text="@string/title.wordsNumber"
-        android:layout_below="@+id/results"
+        android:layout_below="@+id/condition"
         />
     <TextView
         android:id="@+id/numberWordsValue"

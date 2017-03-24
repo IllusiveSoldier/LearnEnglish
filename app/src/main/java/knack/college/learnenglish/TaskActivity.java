@@ -9,6 +9,7 @@ import java.util.Random;
 
 import knack.college.learnenglish.fragments.TrainingFFragment;
 import knack.college.learnenglish.fragments.TrainingSFragment;
+import knack.college.learnenglish.fragments.TrainingTFragment;
 
 import static knack.college.learnenglish.model.Constant.BRAINSTORM_TASK_TITLE;
 import static knack.college.learnenglish.model.Constant.FRAGMENT_CODE;
@@ -31,7 +32,7 @@ public class TaskActivity extends AppCompatActivity {
             // Select show fragment
             if (fragmentCode.equals(BRAINSTORM_TASK_TITLE)) {
                 Random random = new Random();
-                final int randomItemId = random.nextInt(2);
+                final int randomItemId = random.nextInt(3);
 
                 if (randomItemId == 0) {
                     Fragment trainingFFragment = new TrainingFFragment();
@@ -46,6 +47,13 @@ public class TaskActivity extends AppCompatActivity {
                             .replace(
                                     R.id.activity_task,
                                     trainingSFragment
+                            ).commit();
+                } else if (randomItemId == 2) {
+                    Fragment trainingTFragment = new TrainingTFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(
+                                    R.id.activity_task,
+                                    trainingTFragment
                             ).commit();
                 }
             }

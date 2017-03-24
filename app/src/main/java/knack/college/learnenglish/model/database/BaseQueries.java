@@ -1,5 +1,6 @@
 package knack.college.learnenglish.model.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,6 +25,10 @@ public abstract class BaseQueries {
     private LearnEnglishDatabaseHelper databaseHelper;
     // Database
     private SQLiteDatabase database;
+
+    // Default table column
+    public static final String OUID = "OUID";
+    public static final String GUID = "GUID";
 
     // Constructors
     public BaseQueries(Context context) throws Exception {
@@ -191,6 +196,26 @@ public abstract class BaseQueries {
         }
 
         return numberSelectedRows >= 1;
+    }
+
+    /**
+     * Обёртка над стандартным методом обновления записей в таблице.
+     * Перед обновлением проверяет, что таблица существует.
+     * @param tableName - Название таблицы
+     * @param values - Какой столбец обновлять и каким значенеим
+     * @param condition - Предложение WHERE
+     * @throws DatabaseLEException
+     */
+    protected void updateValue(String tableName, ContentValues values, String condition)
+            throws DatabaseLEException {
+        try {
+            if (database != null && isExistTable(null, tableName) && values != null
+                    && values.size() > 0 && condition != null && !condition.isEmpty()) {
+                database.update(tableName, values, condition, null);
+            }
+        } catch (Exception e) {
+            throw new DatabaseLEException(e);
+        }
     }
 
     private void initializeDatabaseHelper() throws DatabaseLEException {
